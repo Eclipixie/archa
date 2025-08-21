@@ -1,0 +1,90 @@
+pragma Singleton
+
+import Quickshell
+import Quickshell.Io
+import QtQuick
+import QtQuick.Shapes;
+
+Singleton {
+    id: root;
+
+    property bool contrast: false;
+    property bool dark: true;
+    property bool gradientActive: preferredGradientActive;
+
+    property bool preferredGradientActive: false;
+
+    property var colors: [];
+
+    property string primary: colors[map?.primary] ?? "#181818";
+    property string secondary: colors[map?.secondary] ?? "#f1f1f1";
+    property string tertiary: colors[map?.tertiary] ?? "#f0f0f0";
+
+    property string active: colors[map?.active] ?? "#66cc99";
+    property string inactive: colors[map?.inactive] ?? "#5c5c5c";
+
+    property string error: colors[map?.error] ?? "#ffb4ab";
+    property string warning: colors[map?.warning] ?? "#f1c40f";
+
+    property string wallpaper: colors["image"] ?? "file:///home/eclipixie/Pictures/wallpapers/sunray-wallpaper.png";
+
+    property ColorMap map: ColorMap {
+        primary:   dark ? "surface_variant" : "on_surface";
+        secondary: dark ? "on_surface"      : "surface_variant";
+        tertiary: (contrast == dark) ? "primary" : "surface_bright";
+
+        gradient: (contrast == dark) ? 
+            [ "primary", "secondary" ] :
+            [ "primary_container", "secondary_container" ];
+
+        active:   "active";
+        inactive: "inactive";
+        error:    "error";
+        warning:  "warning";
+    }
+
+    property Gradient gradient: Gradient {
+        GradientStop { position: 0; color: colors[map?.gradient[0]] ?? "black"; }
+        GradientStop { position: 1; color: colors[map?.gradient[1]] ?? "red"; }
+    }
+
+    Process {
+        id: getColors;
+        command: ["cat", "/home/eclipixie/.config/matugen/colors-gen"];
+        running: true;
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                let lines = this.text.split("\n");
+
+                let newColors = [];
+
+                for (let i = 0; i < lines.length; i++) {
+                    let split = lines[i].split(":");
+
+                    newColors[split[0].trim()] = split[1].trim();
+                }
+
+                root.colors = newColors;
+            }
+        }
+    }
+
+    function updateColors(): void {
+        getColors.running = true;
+    }
+
+    component ColorMap: QtObject {
+        required property string primary;
+        required property string secondary;
+        required property string tertiary;
+
+        required property list<string> gradient;
+
+        required property string active;
+        required property string inactive;
+
+        required property string error;
+        required property string warning;
+    }
+}
