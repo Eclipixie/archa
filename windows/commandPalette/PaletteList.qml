@@ -41,7 +41,7 @@ Item {
         target: search
 
         function onTextChanged(): void {
-            current.search = root.search.text;
+            current.search = search.text.trim().split(" ").pop();
         }
     }
 }

@@ -18,7 +18,9 @@ UIModule {
     property string textColor: statusColor == "" ? Colors.secondary : statusColor;
     property string statusColor: "";
 
-    implicitWidth: text.implicitWidth + (height - text.implicitHeight) + 10 + Styling.outlines;
+    property Item surface: moduleSurface
+
+    implicitWidth: surface.implicitWidth + Styling.outlines * 2;
 
     state: (Visibilities.dashboard || moduleActive) ? "shown" : "hidden";
 
@@ -56,6 +58,10 @@ UIModule {
     Behavior on implicitWidth { animation: Styling.sizeEasing; }
 
     UIModule {
+        id: moduleSurface
+
+        implicitWidth: text.implicitWidth + (implicitHeight - text.implicitHeight) * 2;
+
         anchors {
             fill: parent;
 
@@ -64,6 +70,8 @@ UIModule {
 
         UIText {
             id: text;
+
+            visible: text != ""
 
             anchors.centerIn: parent;
 
