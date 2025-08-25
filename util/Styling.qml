@@ -16,8 +16,8 @@ Singleton {
 
     property string fontFamily: "FiraCode Nerd Font Propo";
 
-    property bool barSpacers: false;
-    property bool barBackground: false;
+    property bool barSpacers: true;
+    property bool barBackground: true;
 
     property AnchorAnimation anchorEasing: AnchorAnimation {
         duration: 300;

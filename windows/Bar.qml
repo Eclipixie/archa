@@ -119,6 +119,8 @@ Scope {
                     }
 
                     height: barWindow.height;
+
+                    c_surface: Component { Item { } }
                 }
 
                 SystemModule {

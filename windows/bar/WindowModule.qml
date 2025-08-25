@@ -1,9 +1,11 @@
 import Quickshell
 import QtQuick
 import Quickshell.Hyprland
+import QtQuick.Controls
 
 import qs.windows
 import qs.util
+import qs.services.apps
 
 BarModule {
     id: root
@@ -25,7 +27,7 @@ BarModule {
                     horizontalCenter: surface.horizontalCenter
                 }
 
-                model: getWorkspaces()
+                model: Hyprland.workspaces.values
                 delegate: c_listItem
             }
 
@@ -58,22 +60,6 @@ BarModule {
             (Styling.barHeight + Styling.spacing);
     }
 
-    function getWorkspaces(): var {
-        let l_workspaces = Hyprland.workspaces.values;
-
-        let newList = [];
-
-        for (var i = 0; i < l_workspaces.length; i++) {
-            newList.push(c_workspace.createObject(null, { name: l_workspaces[i].name[0] }));
-        }
-
-        return newList;
-    }
-
-    component Workspace: QtObject {
-        required property string name
-    }
-
     Component {
         id: c_listItem
         Item {
@@ -82,37 +68,36 @@ BarModule {
 
             required property string name
 
-            UIModule {
-                id: listItem
+            RoundButton {
+                radius: Styling.barModuleRadius
 
-                implicitWidth: implicitHeight
+                background: UIModule {
+                    id: listItem
 
-                UIText {
-                    anchors {
-                        verticalCenter: listItem.verticalCenter
-                        horizontalCenter: listItem.horizontalCenter
+                    implicitWidth: implicitHeight
+
+                    UIText {
+                        anchors {
+                            verticalCenter: listItem.verticalCenter
+                            horizontalCenter: listItem.horizontalCenter
+                        }
+
+                        text: name[0]
                     }
-
-                    text: name
                 }
-            }
+
+                onClicked: {
+                    Hyprland.dispatch("workspace " + name)
+                }
+            }            
         }
     }
 
-    Component {
-        id: c_workspace
-        Workspace { }
-    }
+    Connections {
+        target: Hypr
 
-    onTextChanged: {
-        moduleActive = true;
-        visibleTimer.restart();
-    }
-
-    Timer {
-        id: visibleTimer;
-        interval: 1000;
-        running: false;
-        onTriggered: moduleActive = false;
+        function onFocusedWorkspaceIDChanged(): void {
+            root.setActive(1000);
+        }
     }
 }

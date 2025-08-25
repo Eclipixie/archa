@@ -40,6 +40,18 @@ UIModule {
         }
     }
 
+    function setActive(time: int): void {
+        moduleActive = true;
+        t_visible.interval = time;
+        t_visible.restart();
+    }
+
+    Timer {
+        id: t_visible
+        interval: 1000
+        onTriggered: moduleActive = false
+    }
+
     property alias surface: surfaceLoader.item
 
     implicitWidth: surface.implicitWidth + Styling.spacing * 2;
