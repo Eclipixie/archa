@@ -8,7 +8,55 @@ import qs.util
 BarModule {
     id: root
 
-    implicitWidth: list.implicitWidth;
+    c_surface: Component {
+        UIModule {
+            implicitWidth: list.implicitWidth
+
+            ListView {
+                id: list
+
+                orientation: Qt.Horizontal
+
+                implicitWidth: (Styling.spacing + Styling.barHeight) * model.length - Styling.spacing
+                implicitHeight: Styling.barHeight
+
+                anchors {
+                    verticalCenter: surface.verticalCenter
+                    horizontalCenter: surface.horizontalCenter
+                }
+
+                model: getWorkspaces()
+                delegate: c_listItem
+            }
+
+            UIModule {
+                color: Colors.secondary
+
+                anchors {
+                    left: parent.left
+                    leftMargin: getWorkspaceOffset()
+                }
+
+                UIText {
+                    color: Colors.primary
+
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter
+                    }
+
+                    text: Hyprland.focusedWorkspace?.name[0] ?? ""
+                }
+
+                Behavior on anchors.leftMargin { animation: Styling.PropertyEasing { } }
+            }
+        }
+    }
+
+    function getWorkspaceOffset(): int {
+        return Hyprland.workspaces.indexOf(Hyprland.focusedWorkspace) * 
+            (Styling.barHeight + Styling.spacing);
+    }
 
     function getWorkspaces(): var {
         let l_workspaces = Hyprland.workspaces.values;
@@ -24,23 +72,6 @@ BarModule {
 
     component Workspace: QtObject {
         required property string name
-    }
-
-    ListView {
-        id: list
-
-        orientation: Qt.Horizontal
-
-        implicitWidth: (Styling.spacing + Styling.barHeight) * model.length - Styling.spacing
-        implicitHeight: Styling.barHeight
-
-        anchors {
-            verticalCenter: surface.verticalCenter
-            horizontalCenter: surface.horizontalCenter
-        }
-
-        model: getWorkspaces()
-        delegate: c_listItem
     }
 
     Component {

@@ -9,18 +9,40 @@ import qs.services.qs
 UIModule {
     id: root
 
-    property string text;
+    property string text
 
-    property bool moduleActive;
+    property bool moduleActive
 
     property ModuleHoverContents hoverContents: null;
 
     property string textColor: statusColor == "" ? Colors.secondary : statusColor;
     property string statusColor: "";
 
-    property Item surface: moduleSurface
+    property Component c_surface: Component {
+        UIModule {
+            implicitWidth: text.implicitWidth + (implicitHeight - text.implicitHeight) * 2;
 
-    implicitWidth: surface.implicitWidth + Styling.outlines * 2;
+            UIText {
+                id: text;
+
+                visible: text != ""
+
+                anchors.centerIn: parent;
+
+                anchors {
+                    margins: Styling.spacing;
+                }
+
+                text: root.text;
+
+                color: root.textColor;
+            }
+        }
+    }
+
+    property alias surface: surfaceLoader.item
+
+    implicitWidth: surface.implicitWidth + Styling.spacing * 2;
 
     state: (Visibilities.dashboard || moduleActive) ? "shown" : "hidden";
 
@@ -33,6 +55,8 @@ UIModule {
 
     topLeftRadius: 0;
     topRightRadius: 0;
+    bottomLeftRadius: Styling.barModuleRadius + Styling.spacing
+    bottomRightRadius: Styling.barModuleRadius + Styling.spacing
 
     states: [
         State {
@@ -55,33 +79,19 @@ UIModule {
 
     transitions: Transition { animations: [ Styling.anchorEasing ]; }
 
-    Behavior on implicitWidth { animation: Styling.sizeEasing; }
+    Behavior on implicitWidth { animation: Styling.PropertyEasing { } }
 
-    UIModule {
-        id: moduleSurface
+    Loader {
+        id: surfaceLoader
 
-        implicitWidth: text.implicitWidth + (implicitHeight - text.implicitHeight) * 2;
+        sourceComponent: c_surface
 
         anchors {
-            fill: parent;
+            right: root.right
+            left: root.left
+            bottom: root.bottom
 
-            margins: Styling.spacing;
-        }
-
-        UIText {
-            id: text;
-
-            visible: text != ""
-
-            anchors.centerIn: parent;
-
-            anchors {
-                margins: Styling.spacing;
-            }
-
-            text: root.text;
-
-            color: root.textColor;
+            margins: Styling.spacing
         }
     }
 

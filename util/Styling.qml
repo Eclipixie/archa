@@ -20,14 +20,13 @@ Singleton {
     property bool barBackground: false;
 
     property AnchorAnimation anchorEasing: AnchorAnimation {
-        duration: 500;
+        duration: 300;
         easing.type: Easing.OutQuint;
     }
 
-    property PropertyAnimation sizeEasing: PropertyAnimation {
-        duration: 500;
-        properties: "implicitWidth,implicitHeight";
-        easing.type: Easing.OutQuint;
+    component PropertyEasing: PropertyAnimation {
+        duration: 300;
+        easing.type: Easing.OutQuint
     }
 
     property var barRadiusMode: QtObject {
