@@ -19,24 +19,8 @@ UIModule {
     property string statusColor: "";
 
     property Component c_surface: Component {
-        UIModule {
-            implicitWidth: text.implicitWidth + (implicitHeight - text.implicitHeight) * 2;
-
-            UIText {
-                id: text;
-
-                visible: text != ""
-
-                anchors.centerIn: parent;
-
-                anchors {
-                    margins: Styling.spacing;
-                }
-
-                text: root.text;
-
-                color: root.textColor;
-            }
+        UITextModule {
+            text.text: root.text
         }
     }
 
@@ -89,7 +73,7 @@ UIModule {
         }
     ]
 
-    transitions: Transition { animations: [ Styling.anchorEasing ]; }
+    transitions: Transition { animations: [ Styling.AnchorEasing { } ] }
 
     Behavior on implicitWidth { animation: Styling.PropertyEasing { } }
 

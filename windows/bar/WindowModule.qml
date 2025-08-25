@@ -31,24 +31,19 @@ BarModule {
                 delegate: c_listItem
             }
 
-            UIModule {
+            UITextModule {
                 color: Colors.secondary
+
+                implicitWidth: Styling.barHeight
 
                 anchors {
                     left: parent.left
                     leftMargin: getWorkspaceOffset()
                 }
 
-                UIText {
-                    color: Colors.primary
+                text.color: Colors.primary
 
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        horizontalCenter: parent.horizontalCenter
-                    }
-
-                    text: Hyprland.focusedWorkspace?.name[0] ?? ""
-                }
+                text.text: Hyprland.focusedWorkspace?.name[0] ?? ""
 
                 Behavior on anchors.leftMargin { animation: Styling.PropertyEasing { } }
             }
@@ -71,19 +66,12 @@ BarModule {
             RoundButton {
                 radius: Styling.barModuleRadius
 
-                background: UIModule {
+                background: UITextModule {
                     id: listItem
 
                     implicitWidth: implicitHeight
 
-                    UIText {
-                        anchors {
-                            verticalCenter: listItem.verticalCenter
-                            horizontalCenter: listItem.horizontalCenter
-                        }
-
-                        text: name[0]
-                    }
+                    text.text: name[0]
                 }
 
                 onClicked: {

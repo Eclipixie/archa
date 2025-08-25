@@ -19,7 +19,7 @@ Singleton {
     property bool barSpacers: true;
     property bool barBackground: true;
 
-    property AnchorAnimation anchorEasing: AnchorAnimation {
+    component AnchorEasing: AnchorAnimation {
         duration: 300;
         easing.type: Easing.OutQuint;
     }

@@ -8,6 +8,7 @@ import qs.services.system
 import qs.util
 import qs.widgets
 import qs.widgets.controls
+import qs.windows
 
 BarModule {
     id: root;
@@ -35,9 +36,56 @@ BarModule {
         return out;
     }
 
-    onTextChanged: {
-        moduleActive = true;
-        visibleTimer.restart();
+    onTextChanged: { setActive(1000); }
+
+    c_surface: Component {
+        Item {
+            implicitHeight: Styling.barHeight
+            implicitWidth: sinkReadout.implicitWidth + sourceReadout.implicitWidth + brightnessReadout.implicitWidth + Styling.spacing * 2;
+
+            UITextModule {
+                id: sinkReadout
+
+                bottomRightRadius: 0
+                topRightRadius: 0
+
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                }
+
+                text.text: sinkChar() + " " + MathUtil.roundPercentage(Audio.sinkVolume) + "%"
+            }
+
+            UITextModule {
+                id: sourceReadout
+
+                radius: 0
+
+                anchors {
+                    left: sinkReadout.right
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: Styling.spacing
+                }
+
+                text.text: sourceChar() + " " + MathUtil.roundPercentage(Audio.sourceVolume) + "%"
+            }
+
+            UITextModule {
+                id: brightnessReadout
+
+                bottomLeftRadius: 0
+                topLeftRadius: 0
+
+                anchors {
+                    left: sourceReadout.right
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: Styling.spacing
+                }
+
+                text.text: brightnessChar() + " " + Brightness.brightness + "%"
+            }
+        }
     }
 
     hoverContents: ModuleHoverContents {
@@ -112,12 +160,5 @@ BarModule {
 
             slider.value: Brightness.brightness;
         }
-    }
-
-    Timer {
-        id: visibleTimer;
-        interval: 1000;
-        running: false;
-        onTriggered: moduleActive = false;
     }
 }
