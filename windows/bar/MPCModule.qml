@@ -64,8 +64,8 @@ BarModule {
             LabeledButton {
                 id: repeatButton;
 
-                text: "";
-                textColor: MPC.flowControls.repeat ? Colors.active : Colors.secondary;
+                a_background.text.text: "";
+                a_background.text.color: MPC.flowControls.repeat ? Colors.active : Colors.secondary;
 
                 onClicked: MPC.flowControls.control("repeat");
             }
@@ -73,8 +73,8 @@ BarModule {
             LabeledButton {
                 id: randomButton;
 
-                text: "";
-                textColor: MPC.flowControls.random ? Colors.active : Colors.secondary;
+                a_background.text.text: "";
+                a_background.text.color: MPC.flowControls.random ? Colors.active : Colors.secondary;
 
                 onClicked: MPC.flowControls.control("random");
             }
@@ -82,8 +82,8 @@ BarModule {
             LabeledButton {
                 id: consumeButton;
 
-                text: "";
-                textColor: MPC.flowControls.consume ? Colors.active : Colors.secondary;
+                a_background.text.text: "";
+                a_background.text.color: MPC.flowControls.consume ? Colors.active : Colors.secondary;
 
                 onClicked: MPC.flowControls.control("consume");
             }
@@ -91,8 +91,8 @@ BarModule {
             LabeledButton {
                 id: singleButton;
 
-                text: "";
-                textColor: MPC.flowControls.single ? Colors.active : Colors.secondary;
+                a_background.text.text: "";
+                a_background.text.color: MPC.flowControls.single ? Colors.active : Colors.secondary;
 
                 onClicked: MPC.flowControls.control("single");
             }

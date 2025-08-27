@@ -24,16 +24,19 @@ BarModule {
             name: "saver"
             icon: "󰌪"
             color: Colors.active
+            button: saverButton
         },
         ProfileInfo {
             name: "balanced"
             icon: "󰗑"
             color: Colors.secondary
+            button: balancedButton
         },
         ProfileInfo {
             name: "performance"
             icon: "󱐋"
             color: Colors.error
+            button: performanceButton
         }
     ]
 
@@ -128,89 +131,76 @@ BarModule {
         color: Colors.tertiary;
 
         implicitHeight: Styling.barHeight + Styling.spacing * 2;
-        implicitWidth: (balancedButton.implicitWidth + Styling.spacing) * 3 - Styling.spacing + Styling.spacing * 2;
+        implicitWidth: (Styling.barHeight + Styling.spacing) * 3 + Styling.spacing;
 
         bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
         bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
 
-        ProfileOption {
-            id: saverButton;
+        property Item selectedProfile: null
+
+        LabeledButton {
+            id: saverButton
 
             anchors {
-                verticalCenter: parent.verticalCenter;
-                left: parent.left;
-
-                margins: Styling.spacing;
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                margins: Styling.spacing
             }
 
-            profileID: 0
+            a_background.text.text: profiles[0].icon
+            onClicked: { Battery.setProfile(0) }
         }
-
-        ProfileOption {
-            id: balancedButton;
-
-            anchors.centerIn: parent
-
-            profileID: 1
-        }
-
-        ProfileOption {
-            id: performanceButton;
+        LabeledButton {
+            id: balancedButton
 
             anchors {
-                right: parent.right;
-                verticalCenter: parent.verticalCenter;
-
-                margins: Styling.spacing;
+                verticalCenter: parent.verticalCenter
+                left: saverButton.right
+                margins: Styling.spacing
             }
 
-            profileID: 2
+            a_background.text.text: profiles[1].icon
+            onClicked: { Battery.setProfile(1) }
+        }
+        LabeledButton {
+            id: performanceButton
+
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: balancedButton.right
+                margins: Styling.spacing
+            }
+
+            a_background.text.text: profiles[2].icon
+            onClicked: { Battery.setProfile(2) }
         }
 
         UITextModule {
             id: selector
 
-            implicitWidth: implicitHeight
+            property Item selectedOption: profiles[PowerProfiles.profile].button
 
-            color: profileColor()
+            implicitWidth: Styling.barHeight
 
-            transitions: Transition { Styling.AnchorEasing { } }
+            Behavior on x { Styling.PropertyEasing { } }
+            Behavior on y { Styling.PropertyEasing { } }
 
-            anchors.verticalCenter: saverButton.verticalCenter
+            x: selectedOption.x
+            y: selectedOption.y
 
-            states: [
-                saverButton.anchorState,
-                balancedButton.anchorState,
-                performanceButton.anchorState
-            ]
-
-            state: profiles[PowerProfiles.profile].name
-
-            text.text: profileChar()
+            color: Colors.secondary
             text.color: Colors.primary
         }
+
+        // UISwatch {
+        //     buttonParent: profileRow
+        // }
     }
 
     component ProfileInfo: QtObject {
         required property string name
         required property string icon
         required property string color
-    }
-
-    component ProfileOption: LabeledButton {
-        id: c_profileOption
-
-        required property int profileID
-
-        text: profiles[profileID].icon;
-
-        textColor: profiles[profileID].color;
-
-        onClicked: { Battery.setProfile(profileID); }
-
-        readonly property State anchorState: State {
-            name: profiles[profileID].name
-            AnchorChanges { target: selector; anchors.horizontalCenter: c_profileOption.horizontalCenter; }
-        }
+        required property Item button
     }
 }
