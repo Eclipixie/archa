@@ -19,6 +19,8 @@ BarModule {
 
     statusColor: getStatusColor();
 
+    readonly property ProfileInfo currentProfile: profiles[PowerProfiles.profile]
+
     readonly property list<ProfileInfo> profiles: [
         ProfileInfo {
             name: "saver"
@@ -136,8 +138,6 @@ BarModule {
         bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
         bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
 
-        property Item selectedProfile: null
-
         LabeledButton {
             id: saverButton
 
@@ -150,6 +150,7 @@ BarModule {
             a_background.text.text: profiles[0].icon
             onClicked: { Battery.setProfile(0) }
         }
+
         LabeledButton {
             id: balancedButton
 
@@ -162,6 +163,7 @@ BarModule {
             a_background.text.text: profiles[1].icon
             onClicked: { Battery.setProfile(1) }
         }
+
         LabeledButton {
             id: performanceButton
 
@@ -175,26 +177,26 @@ BarModule {
             onClicked: { Battery.setProfile(2) }
         }
 
-        UITextModule {
+        UISwatch {
             id: selector
 
-            property Item selectedOption: profiles[PowerProfiles.profile].button
+            state: currentProfile.icon
 
-            implicitWidth: Styling.barHeight
-
-            Behavior on x { Styling.PropertyEasing { } }
-            Behavior on y { Styling.PropertyEasing { } }
-
-            x: selectedOption.x
-            y: selectedOption.y
-
-            color: Colors.secondary
-            text.color: Colors.primary
+            options: [
+                UISwatch.OptionData { 
+                    name: profiles[0].icon;
+                    item: saverButton
+                },
+                UISwatch.OptionData { 
+                    name: profiles[1].icon;
+                    item: balancedButton
+                },
+                UISwatch.OptionData { 
+                    name: profiles[2].icon;
+                    item: performanceButton
+                }
+            ]
         }
-
-        // UISwatch {
-        //     buttonParent: profileRow
-        // }
     }
 
     component ProfileInfo: QtObject {

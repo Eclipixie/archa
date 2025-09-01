@@ -12,72 +12,67 @@ BarModule {
 
     c_surface: Component {
         UIModule {
+            id: surface
+
             implicitWidth: list.implicitWidth
 
-            ListView {
-                id: list
+            Row {
+                Repeater {
+                    id: list
 
-                orientation: Qt.Horizontal
+                    implicitWidth: (Styling.spacing + Styling.barHeight) * model.length - Styling.spacing
+                    implicitHeight: Styling.barHeight
 
-                implicitWidth: (Styling.spacing + Styling.barHeight) * model.length - Styling.spacing
-                implicitHeight: Styling.barHeight
-
-                anchors {
-                    verticalCenter: surface.verticalCenter
-                    horizontalCenter: surface.horizontalCenter
+                    model: Hypr.workspaceIDs
+                    delegate: c_listItem
                 }
-
-                model: Hyprland.workspaces.values
-                delegate: c_listItem
             }
 
-            UITextModule {
-                color: Colors.secondary
+            // UISwatch {
+            //     id: selector
 
-                implicitWidth: Styling.barHeight
+            //     options: variants.instances
 
-                anchors {
-                    left: parent.left
-                    leftMargin: getWorkspaceOffset()
-                }
+            //     state: Hypr.focusedWorkspaceID
+            // }
 
-                text.color: Colors.primary
+            // Variants {
+            //     id: variants
 
-                text.text: Hyprland.focusedWorkspace?.name[0] ?? ""
+            //     delegate: UISwatch.OptionData {
+            //         required property var modelData
+            //         name: modelData
+            //         item: list.itemAt(Hypr.workspaceIDs.indexOf(modelData))
+            //     }
 
-                Behavior on anchors.leftMargin { animation: Styling.PropertyEasing { } }
-            }
+            //     model: list.model
+            // }
         }
-    }
-
-    function getWorkspaceOffset(): int {
-        return Hyprland.workspaces.indexOf(Hyprland.focusedWorkspace) * 
-            (Styling.barHeight + Styling.spacing);
     }
 
     Component {
         id: c_listItem
-        Item {
+
+        RoundButton {
             implicitWidth: listItem.implicitWidth + Styling.spacing;
             implicitHeight: listItem.implicitHeight
 
-            required property string name
+            required property var modelData
+            readonly property string name: modelData
 
-            RoundButton {
-                radius: Styling.barModuleRadius
+            radius: Styling.barModuleRadius
 
-                background: UITextModule {
-                    id: listItem
+            background: UITextModule {
+                id: listItem
 
-                    implicitWidth: implicitHeight
+                implicitWidth: implicitHeight
 
-                    text.text: name[0]
-                }
+                text.text: name[0]
+            }
 
-                onClicked: {
-                    Hyprland.dispatch("workspace " + name)
-                }
-            }            
+            onClicked: {
+                Hyprland.dispatch("workspace " + name)
+            }
         }
     }
 

@@ -31,7 +31,8 @@ ListCommand {
             listEntry: Component {
                 Item {
                     id: wrapper
-                    required property string name
+                    required property var modelData
+                    readonly property string name: modelData.name
 
                     property bool focused: false
 
