@@ -16,7 +16,7 @@ BarModule {
         color: Colors.tertiary;
 
         implicitHeight: col.height + Styling.spacing * 2;
-        implicitWidth: settingsButtons.width + Styling.spacing * 2;
+        implicitWidth: powerRow.width + Styling.spacing * 2;
 
         ColumnLayout {
             id: col;
@@ -38,17 +38,25 @@ BarModule {
                 LabeledButton {
                     forceSquare: false;
 
-                    text: "󰒓 󰕾";
+                    a_background.text {
+                        text: "󰒓 󰕾";
+                    }
 
                     onClicked: System.pavucontrol();
+
+                    Layout.fillWidth: true
                 }
 
                 LabeledButton {
                     forceSquare: false;
 
-                    text: "󰒓 󰖯";
+                    a_background.text {
+                        text: "󰒓 󰖯";
+                    }
 
                     onClicked: System.nwglook();
+
+                    Layout.fillWidth: true
                 }
             }
 
@@ -69,7 +77,7 @@ BarModule {
             }
 
             UIModule {
-                border.width: 0;
+                id: powerRow
 
                 Layout.fillWidth: true;
 
@@ -79,19 +87,25 @@ BarModule {
                     anchors.centerIn: parent;
 
                     LabeledButton {
-                        text: "󰐥";
+                        a_background.text {
+                            text: "󰐥";
+                        }
 
                         onClicked: System.poweroff();
                     }
 
                     LabeledButton {
-                        text: "󰜉";
+                        a_background.text {
+                            text: "󰜉";
+                        }
 
                         onClicked: System.reboot();
                     }
 
                     LabeledButton {
-                        text: "󰤄";
+                        a_background.text {
+                            text: "󰤄";
+                        }
 
                         onClicked: System.suspend();
                     }

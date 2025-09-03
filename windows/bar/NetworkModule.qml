@@ -84,30 +84,29 @@ BarModule {
 
             implicitHeight: Styling.barHeight;
 
-            ColumnLayout {
+            RowLayout {
+                anchors {
+                    right: parent.right
+                    left: parent.left
+                }
+
                 spacing: Styling.spacing;
 
-                anchors.fill: parent;
+                UIModule {
+                    border.width: 0;
+                    Layout.fillWidth: true;
+                }
 
-                RowLayout {
-                    spacing: Styling.spacing;
+                LabeledButton {
+                    a_background.text.text: "󰤮";
 
-                    UIModule {
-                        border.width: 0;
-                        Layout.fillWidth: true;
-                    }
+                    enabled: networkActive();
+                }
 
-                    LabeledButton {
-                        text: "󰤮";
+                LabeledButton {
+                    a_background.text.text: "󰑓";
 
-                        enabled: networkActive();
-                    }
-
-                    LabeledButton {
-                        text: "󰑓";
-
-                        onClicked: Network.reloadNetworks();
-                    }
+                    onClicked: Network.reloadNetworks();
                 }
             }
         }

@@ -94,71 +94,71 @@ BarModule {
         implicitHeight: Styling.barHeight * 3 + (2 * Styling.spacing) * 2;
         implicitWidth: root.width;
 
-        LabeledSlider {
-            id: sinkContainer;
-
-            button.text: sinkChar();
-
-            button.onClicked: Audio.toggleSinkMute();
-
+        Column {
             anchors {
-                top: parent.top;
-                right: parent.right;
-                left: parent.left;
-
-                margins: Styling.spacing;
+                fill: parent
+                margins: Styling.spacing
             }
 
-            slider.onValueChanged: {
-                Audio.setSinkVolume(slider.value);
+            spacing: Styling.spacing
+
+            LabeledSlider {
+                id: sinkContainer;
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                button.a_background.text.text: sinkChar();
+
+                button.onClicked: Audio.toggleSinkMute();
+
+                slider.onValueChanged: {
+                    Audio.setSinkVolume(slider.value);
+                }
+
+                slider.value: Audio.sinkVolume;
             }
 
-            slider.value: Audio.sinkVolume;
-        }
+            LabeledSlider {
+                id: sourceContainer;
 
-        LabeledSlider {
-            id: sourceContainer;
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
-            button.text: sourceChar();
+                button.a_background.text.text: sourceChar();
 
-            button.onClicked: Audio.toggleSourceMute();
+                button.onClicked: Audio.toggleSourceMute();
 
-            anchors {
-                top: sinkContainer.bottom;
-                right: parent.right;
-                left: parent.left;
+                slider.onValueChanged: {
+                    Audio.setSourceVolume(slider.value);
+                }
 
-                margins: Styling.spacing;
+                slider.value: Audio.sourceVolume;
             }
 
-            slider.onValueChanged: {
-                Audio.setSourceVolume(slider.value);
+            LabeledSlider {
+                id: brightnessContainer;
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                button.a_background.text.text: brightnessChar();
+
+                slider.to: 100;
+                slider.stepSize: 1;
+
+                slider.onValueChanged: {
+                    Brightness.setBrightness(slider.value);
+                }
+
+                slider.value: Brightness.brightness;
             }
-
-            slider.value: Audio.sourceVolume;
-        }
-
-        LabeledSlider {
-            id: brightnessContainer;
-
-            button.text: brightnessChar();
-
-            anchors {
-                top: sourceContainer.bottom;
-                right: parent.right;
-                left: parent.left;
-
-                margins: Styling.spacing;
-            }
-
-            slider.to: 100;
-            slider.stepSize: 1;
-
-            slider.onValueChanged: {
-                Brightness.setBrightness(slider.value);
-            }
-
-            slider.value: Brightness.brightness;
         }
     }
 }
