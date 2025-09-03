@@ -2,7 +2,7 @@ import Quickshell
 import QtQuick
 
 UIModule {
-    readonly property UIText text: o_text
+    readonly property alias text: o_text
 
     implicitWidth: text.implicitWidth + (implicitHeight - text.implicitHeight) * 2
 

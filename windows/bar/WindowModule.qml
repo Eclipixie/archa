@@ -2,10 +2,12 @@ import Quickshell
 import QtQuick
 import Quickshell.Hyprland
 import QtQuick.Controls
+import QtQuick.Layouts
 
 import qs.windows
 import qs.util
 import qs.services.apps
+import qs.widgets.controls
 
 BarModule {
     id: root
@@ -16,58 +18,56 @@ BarModule {
 
             implicitWidth: list.implicitWidth
 
-            Row {
-                Repeater {
-                    id: list
+            Repeater {
+                id: list
 
-                    implicitWidth: (Styling.spacing + Styling.barHeight) * model.length - Styling.spacing
-                    implicitHeight: Styling.barHeight
+                implicitWidth: (Styling.spacing + Styling.barHeight) * model.length - Styling.spacing
+                implicitHeight: Styling.barHeight
 
-                    model: Hypr.workspaceIDs
-                    delegate: c_listItem
-                }
+                model: Hypr.workspaceIDs
+                delegate: c_listItem
             }
 
-            // UISwatch {
-            //     id: selector
+            UISwatch {
+                id: selector
 
-            //     options: variants.instances
+                options: variants.instances
 
-            //     state: Hypr.focusedWorkspaceID
-            // }
+                state: Hypr.focusedWorkspaceID
+            }
 
-            // Variants {
-            //     id: variants
+            Variants {
+                id: variants
 
-            //     delegate: UISwatch.OptionData {
-            //         required property var modelData
-            //         name: modelData
-            //         item: list.itemAt(Hypr.workspaceIDs.indexOf(modelData))
-            //     }
+                delegate: UISwatch.OptionData {
+                    required property var modelData
+                    name: modelData
+                    item: list.itemAt(Hypr.workspaceIDs.indexOf(modelData))
+                }
 
-            //     model: list.model
-            // }
+                model: list.model
+            }
         }
     }
 
     Component {
         id: c_listItem
 
-        RoundButton {
-            implicitWidth: listItem.implicitWidth + Styling.spacing;
-            implicitHeight: listItem.implicitHeight
-
+        LabeledButton {
             required property var modelData
+            required property int index
             readonly property string name: modelData
 
-            radius: Styling.barModuleRadius
+            a_background {
+                text {
+                    text: name[0]
+                }
+            }
 
-            background: UITextModule {
-                id: listItem
-
-                implicitWidth: implicitHeight
-
-                text.text: name[0]
+            // cursed workaround to make the uiswatch work properly
+            anchors {
+                left: parent.left
+                leftMargin: index * Styling.barHeight + (index - 1) * Styling.spacing
             }
 
             onClicked: {
