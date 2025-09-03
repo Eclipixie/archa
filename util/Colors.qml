@@ -12,7 +12,7 @@ Singleton {
     property bool dark: true;
     property bool gradientActive: preferredGradientActive;
 
-    property bool preferredGradientActive: false;
+    property bool preferredGradientActive: true;
 
     property var colors: [];
 
@@ -35,7 +35,7 @@ Singleton {
 
         gradient: (contrast == dark) ? 
             [ "primary", "secondary" ] :
-            [ "primary_container", "secondary_container" ];
+            [ "surface_bright", "surface_container_highest" ];
 
         active:   "active";
         inactive: "inactive";
@@ -46,6 +46,8 @@ Singleton {
     property Gradient gradient: Gradient {
         GradientStop { position: 0; color: colors[map?.gradient[0]] ?? "black"; }
         GradientStop { position: 1; color: colors[map?.gradient[1]] ?? "red"; }
+
+        orientation: Gradient.Vertical
     }
 
     Process {

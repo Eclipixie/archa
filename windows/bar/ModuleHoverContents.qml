@@ -9,5 +9,6 @@ UIModule {
 
     border.width: 0;
 
-    gradient: Colors.gradientActive ? Colors.gradient : null;
+    color: 'white'
+    gradient: Colors.gradient;
 }

@@ -66,8 +66,6 @@ BarModule {
     hoverContents: ModuleHoverContents {
         id: hoverRoot;
 
-        color: Colors.tertiary;
-
         implicitHeight: list.implicitHeight + controls.implicitHeight + Styling.spacing + Styling.spacing * 2;
         implicitWidth: 200;
 
