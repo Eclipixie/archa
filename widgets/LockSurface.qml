@@ -1,20 +1,29 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
+import Quickshell
 import Quickshell.Wayland
 
 import qs.services.system
 import qs.util
 import qs.windows
 
-Image {
+Item {
 	id: root
 	required property LockContext context
 
-	fillMode: Image.PreserveAspectCrop;
+	LazyLoader {
+		loading: true
 
-	source: Colors.wallpaper;
+		Image {
+			fillMode: Image.PreserveAspectCrop;
 
+			source: Colors.wallpaper;
+
+			anchors.fill: root
+		}
+	}
+	
 	UIModule {
 		anchors {
 			horizontalCenter: parent.horizontalCenter;

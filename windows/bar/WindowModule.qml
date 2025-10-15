@@ -67,7 +67,7 @@ BarModule {
             // cursed workaround to make the uiswatch work properly
             anchors {
                 left: parent.left
-                leftMargin: index * Styling.barHeight + (index - 1) * Styling.spacing
+                leftMargin: index * (Styling.barHeight + Styling.spacing)
             }
 
             onClicked: {

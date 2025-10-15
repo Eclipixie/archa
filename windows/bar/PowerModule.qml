@@ -21,7 +21,7 @@ BarModule {
 
     readonly property ProfileInfo currentProfile: profiles[PowerProfiles.profile]
 
-    readonly property list<ProfileInfo> profiles: [
+    readonly property list<QtObject> profiles: [
         ProfileInfo {
             name: "saver"
             icon: "󰌪"

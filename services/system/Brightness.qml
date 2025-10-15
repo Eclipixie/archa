@@ -7,39 +7,35 @@ import QtQuick
 Singleton {
     id: root;
     property string brightness: "20";
-    property Timer proc: timer;
 
-    Process {
-        id: checkBrightness;
-        command: ["brightnessctl", "g"];
-        running: true;
+    property string monitor: "acpi_video0";
 
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root.brightness = this.text.split("\n")[0];
-            }
+    FileView {
+        id: brightness
+
+        watchChanges: true
+        onFileChanged: this.reload()
+
+        path: "/sys/class/backlight/"+root.monitor+"/brightness"
+        onLoaded: {
+            root.brightness = text().split("\n")[0];
         }
     }
 
     Process {
-        id: setBrightnessProc;
+        id: p_setBrightness;
         running: false;
 
         property string target: "0";
 
         command: ["brightnessctl", "s", target];
+        stdout: StdioCollector {
+            onStreamFinished: { root.brightness = p_setBrightness.target; }
+        }
     }
 
     function setBrightness(brightness): void {
-        setBrightnessProc.target = brightness;
-        setBrightnessProc.running = true;
-        root.brightness = brightness;
-    }
-
-    Timer {
-        id: timer;
-        interval: 10;
-        running: false;
-        onTriggered: checkBrightness.running = true;
+        p_setBrightness.target = brightness;
+        p_setBrightness.running = true;
     }
 }

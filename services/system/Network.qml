@@ -59,7 +59,7 @@ Singleton {
                         bssid: net[4],
                         security: net[5]
                     };
-                });
+                }).filter((obj) => obj.ssid != "" && obj.strength >= 30);
 
                 const newNetworks = []
 
@@ -70,9 +70,6 @@ Singleton {
 
                     if (seen.includes(network.ssid.toString())) continue;
                     else seen.push(network.ssid.toString());
-
-                    if (network.strength <= 30) continue;
-                    if (network.ssid == "") continue;
 
                     let obj = apComp.createObject(root, { lastIpcObject: network });
 

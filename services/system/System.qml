@@ -246,9 +246,7 @@ Singleton {
         command: ["poweroff"];
     }
 
-    function poweroff() {
-        poweroff.running = true;
-    }
+    function poweroff() { poweroff.running = true; }
 
     Process {
         id: reboot;
@@ -256,9 +254,7 @@ Singleton {
         command: ["reboot"];
     }
 
-    function reboot() {
-        reboot.running = true;
-    }
+    function reboot() { reboot.running = true; }
 
     Process {
         id: suspend;
@@ -266,7 +262,5 @@ Singleton {
         command: ["systemctl", "suspend"];
     }
 
-    function suspend() {
-        suspend.running = true;
-    }
+    function suspend() { suspend.running = true; }
 }
