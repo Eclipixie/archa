@@ -142,9 +142,11 @@ BarModule {
                 height: Styling.barHeight + Styling.spacing;
                 width: hoverContents.width - Styling.spacing * 2;
 
-                required property string strength
-                required property string ssid
-                required property bool active
+                required property var modelData
+
+                readonly property string strength: modelData.strength
+                readonly property string ssid: modelData.ssid
+                readonly property bool active: modelData.active
 
                 Button {
                     height: Styling.barHeight;

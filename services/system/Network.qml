@@ -7,7 +7,7 @@ import QtQuick
 Singleton {
     id: root
 
-    property var networks: []
+    property alias networks: v_networks.instances
     readonly property AccessPoint activeAP: networks.find(n => n.active) ?? null
     readonly property bool active: activeAP != null || activeDevice != null;
 
@@ -18,6 +18,25 @@ Singleton {
     onNetworksChanged: root.networksUpdated(root.networks);
 
     reloadableId: "network"
+
+    property list<string> networkRows: [];
+
+    Variants {
+        id: v_networks
+
+        model: networkRows
+
+        delegate: AccessPoint {
+            required property var modelData
+            property var net: modelData.split(":");
+            active: net[0] === "yes"
+            strength: parseInt(net[1])
+            frequency: parseInt(net[2].split(" ")[0])
+            ssid: net[3]
+            bssid: net[4]
+            security: net[5]
+        }
+    }
 
     Process {
         running: true;
@@ -47,39 +66,22 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 const netstr = this.text.trim().split("\n");
-                netstr.pop();
 
-                const networks = netstr.map(n => {
-                    const net = n.split(":");
-                    return {
-                        active: net[0] === "yes",
-                        strength: parseInt(net[1]),
-                        frequency: parseInt(net[2].split(" ")[0]),
-                        ssid: net[3],
-                        bssid: net[4],
-                        security: net[5]
-                    };
-                }).filter((obj) => obj.ssid != "" && obj.strength >= 30);
+                let ssids = [];
 
-                const newNetworks = []
+                let uniques = [];
 
-                let seen = [];
+                for (let i = 0; i < netstr.length; i++) {
+                    let ssid = netstr[i].split(":")[3];
 
-                for (const network of networks) {
-                    // supposedly each subsequent network has a worse connection strength, so "identical" networks should simply be skipped
-
-                    if (seen.includes(network.ssid.toString())) continue;
-                    else seen.push(network.ssid.toString());
-
-                    let obj = apComp.createObject(root, { lastIpcObject: network });
-
-                    if (network.active) 
-                        newNetworks.unshift(obj); 
-                    else 
-                        newNetworks.push(obj);
+                    if (ssid != "" && !ssids.includes(ssid)) {
+                        ssids.push(ssid);
+                        // removing bssid colons
+                        uniques.push(netstr[i].split(/\\:/).join(""));
+                    }
                 }
 
-                root.networks = newNetworks;
+                root.networkRows = uniques;
             }
         }
     }
@@ -116,18 +118,11 @@ Singleton {
     }
 
     component AccessPoint: QtObject {
-        required property var lastIpcObject
-        readonly property string ssid: lastIpcObject.ssid
-        readonly property string bssid: lastIpcObject.bssid
-        readonly property int strength: lastIpcObject.strength
-        readonly property int frequency: lastIpcObject.frequency
-        readonly property bool active: lastIpcObject.active
-        readonly property string security: lastIpcObject.security
-    }
-
-    Component {
-        id: apComp
-
-        AccessPoint { }
+        required property string ssid
+        required property string bssid
+        required property int strength
+        required property int frequency
+        required property bool active
+        required property string security
     }
 }
