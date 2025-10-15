@@ -11,13 +11,8 @@ Singleton {
 
     property list<string> wallpapers: []
 
-    function wallpaper(name: string): void {
-        matugen.wallpaper = name;
-        matugen.running = true;
-    }
-
     Process {
-        id: getWallpapers
+        id: p_getWallpapers
         command: ["ls", wallpaperLoc]
         running: true;
         stdout: StdioCollector {
@@ -27,9 +22,18 @@ Singleton {
         }
     }
 
+    function getWallpapers() {
+        p_getWallpapers.running = true;
+    }
+
     Process {
-        id: matugen
+        id: p_matugen
         property string wallpaper: ""
         command: ["matugen", "image", wallpaperLoc + wallpaper]
+    }
+
+    function wallpaper(name: string): void {
+        p_matugen.wallpaper = name;
+        p_matugen.running = true;
     }
 }

@@ -20,11 +20,11 @@ Singleton {
     }
 
     function reloadProfiles() {
-        catProfiles.running = true;
+        p_getProfiles.running = true;
     }
 
     Process {
-        id: catProfiles;
+        id: p_getProfiles;
         command: ["sh", "-c", "cat " + path + " | grep Name"];
         running: true;
 

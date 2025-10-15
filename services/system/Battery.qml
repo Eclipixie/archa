@@ -32,7 +32,7 @@ Singleton {
     }
 
     Process {
-        id: checkCurrent;
+        id: p_checkCurrent;
         command: ["cat", "/sys/class/power_supply/"+bat_id+"/charge_now"];
         running: true;
 
@@ -42,7 +42,7 @@ Singleton {
     }
 
     Process {
-        id: checkMax;
+        id: p_checkMax;
         command: ["cat", "/sys/class/power_supply/"+bat_id+"/charge_full"];
         running: true;
 
@@ -54,13 +54,13 @@ Singleton {
     property int counter: 0;
 
     function tick() {
-        checkCurrent.running = true;
+        p_checkCurrent.running = true;
 
         counter++;
 
         if (counter > 60) {
             counter = 0;
-            checkMax.running = true;
+            p_checkMax.running = true;
         }
     }
 

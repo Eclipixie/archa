@@ -11,8 +11,6 @@ Singleton {
     property string monitor: "acpi_video0";
 
     FileView {
-        id: brightness
-
         watchChanges: true
         onFileChanged: this.reload()
 

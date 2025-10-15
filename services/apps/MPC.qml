@@ -13,10 +13,10 @@ Singleton {
     property string timeInfo: "";
     property string statusInfo: "";
 
-    property Item flowControls: flowControlsObject;
+    property alias flowControls: flowControlsObject;
 
     Process {
-        id: songInfo;
+        id: p_songInfo;
         command: ["mpc", "current", "-f", "%title%"];
         running: true;
 
@@ -26,7 +26,7 @@ Singleton {
     }
 
     Process {
-        id: songInfoAwait;
+        id: p_songInfoAwait;
         command: ["mpc", "current", "--wait", "-f", "%title%"];
         running: true;
 
@@ -38,7 +38,7 @@ Singleton {
     }
 
     Process {
-        id: statusRepeat;
+        id: p_statusRepeat;
         command: ["mpc", "status", "%state%,%currenttime%-%totaltime%"];
         running: true;
 
@@ -63,7 +63,7 @@ Singleton {
     }
 
     function timers() {
-        statusRepeat.running = true;
+        p_statusRepeat.running = true;
     }
 
     Timer {

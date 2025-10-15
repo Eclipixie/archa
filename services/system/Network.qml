@@ -52,15 +52,15 @@ Singleton {
         interval: 5000;
         repeat: false;
 
-        onTriggered: getNetworks.running = true;
+        onTriggered: p_getNetworks.running = true;
     }
 
     function reloadNetworks() {
-        getNetworks.running = true;
+        p_getNetworks.running = true;
     }
 
     Process {
-        id: getNetworks
+        id: p_getNetworks
         running: true
         command: ["nmcli", "-g", "ACTIVE,SIGNAL,FREQ,SSID,BSSID,SECURITY", "d", "w"]
         stdout: StdioCollector {
@@ -87,7 +87,7 @@ Singleton {
     }
 
     Process {
-        id: getActiveDevices
+        id: p_getActiveDevices
         running: true;
         command: ["nmcli", "-g", "common", "d"];
         stdout: StdioCollector {

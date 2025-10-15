@@ -51,7 +51,7 @@ Singleton {
     }
 
     Process {
-        id: getColors;
+        id: p_getColors;
         command: ["cat", "/home/eclipixie/.config/matugen/colors-gen"];
         running: true;
 
@@ -73,7 +73,7 @@ Singleton {
     }
 
     function updateColors(): void {
-        getColors.running = true;
+        p_getColors.running = true;
     }
 
     component ColorMap: QtObject {

@@ -58,16 +58,16 @@ Singleton {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            stat.reload();
-            meminfo.reload();
-            storage.running = true;
-            gpuUsage.running = true;
-            sensors.running = true;
+            f_stat.reload();
+            f_meminfo.reload();
+            p_storage.running = true;
+            p_gpuUsage.running = true;
+            p_sensors.running = true;
         }
     }
 
     FileView {
-        id: stat
+        id: f_stat
 
         path: "/proc/stat"
         onLoaded: {
@@ -88,7 +88,7 @@ Singleton {
     }
 
     FileView {
-        id: meminfo
+        id: f_meminfo
 
         path: "/proc/meminfo"
         onLoaded: {
@@ -99,7 +99,7 @@ Singleton {
     }
 
     Process {
-        id: storage
+        id: p_storage
 
         command: ["sh", "-c", "df | grep '^/dev/' | awk '{print $1, $3, $4}'"]
         stdout: StdioCollector {
@@ -141,7 +141,7 @@ Singleton {
     }
 
     Process {
-        id: gpuTypeCheck
+        id: p_gpuTypeCheck
 
         running: true
         command: ["sh", "-c", "if ls /sys/class/drm/card*/device/gpu_busy_percent 2>/dev/null | grep -q .; then echo GENERIC; elif command -v nvidia-smi >/dev/null; then echo NVIDIA; else echo NONE; fi"]
@@ -151,7 +151,7 @@ Singleton {
     }
 
     Process {
-        id: gpuUsage
+        id: p_gpuUsage
 
         command: root.gpuType === "GENERIC" ? ["sh", "-c", "cat /sys/class/drm/card*/device/gpu_busy_percent"] : root.gpuType === "NVIDIA" ? ["nvidia-smi", "--query-gpu=utilization.gpu,temperature.gpu", "--format=csv,noheader,nounits"] : ["echo"]
         stdout: StdioCollector {
@@ -173,7 +173,7 @@ Singleton {
     }
 
     Process {
-        id: sensors
+        id: p_sensors
 
         command: ["sensors"]
         environment: ({
@@ -221,46 +221,42 @@ Singleton {
     }
 
     Process {
-        id: pavucontrol;
+        id: p_pavucontrol;
         running: false;
         command: ["pavucontrol"];
     }
 
-    function pavucontrol(): void {
-        pavucontrol.running = true;
-    }
+    function pavucontrol(): void { p_pavucontrol.running = true; }
 
     Process {
-        id: nwglook;
+        id: p_nwglook;
         running: false;
         command: ["nwg-look"];
     }
 
-    function nwglook(): void {
-        nwglook.running = true;
-    }
+    function nwglook(): void { p_nwglook.running = true; }
 
     Process {
-        id: poweroff;
+        id: p_poweroff;
         running: false;
         command: ["poweroff"];
     }
 
-    function poweroff() { poweroff.running = true; }
+    function poweroff() { p_poweroff.running = true; }
 
     Process {
-        id: reboot;
+        id: p_reboot;
         running: false;
         command: ["reboot"];
     }
 
-    function reboot() { reboot.running = true; }
+    function reboot() { p_reboot.running = true; }
 
     Process {
-        id: suspend;
+        id: p_suspend;
         running: false;
-        command: ["systemctl", "suspend"];
+        command: ["systemctl", "p_suspend"];
     }
 
-    function suspend() { suspend.running = true; }
+    function suspend() { p_suspend.running = true; }
 }

@@ -11,14 +11,14 @@ Singleton {
     property list<string> workspaceIDs: getWorkspaces()
 
     function getWorkspaces(): var {
-        let l_workspaces = Hyprland.workspaces.values;
+        let workspaces = Hyprland.workspaces.values;
 
-        let newList = [];
+        let workspaceNames = [];
 
-        for (var i = 0; i < l_workspaces.length; i++) {
-            newList.push(l_workspaces[i].name);
+        for (var i = 0; i < workspaces.length; i++) {
+            workspaceNames.push(workspaces[i].name);
         }
 
-        return newList;
+        return workspaceNames;
     }
 }

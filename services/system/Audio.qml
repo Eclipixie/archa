@@ -18,7 +18,7 @@ Singleton {
     readonly property real sourceVolume: source?.audio?.volume ?? 0;
 
     Process {
-        id: setSinkVolumeProc;
+        id: p_setSinkVolume;
         running: false;
 
         property real target: 0;
@@ -27,23 +27,23 @@ Singleton {
     }
 
     Process {
-        id: toggleSinkMuteProc;
+        id: p_toggleSinkMute;
         running: false;
 
         command: ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"];
     }
 
     function setSinkVolume(volume): void {
-        setSinkVolumeProc.target = volume;
-        setSinkVolumeProc.running = true;
+        p_setSinkVolume.target = volume;
+        p_setSinkVolume.running = true;
     }
 
     function toggleSinkMute(): void {
-        toggleSinkMuteProc.running = true;
+        p_toggleSinkMute.running = true;
     }
 
     Process {
-        id: setSourceVolumeProc;
+        id: p_setSourceVolume;
         running: false;
 
         property real target: 0;
@@ -52,19 +52,19 @@ Singleton {
     }
 
     Process {
-        id: toggleSourceMuteProc;
+        id: p_toggleSourceMute;
         running: false;
 
         command: ["wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "toggle"];
     }
 
     function setSourceVolume(volume): void {
-        setSourceVolumeProc.target = volume;
-        setSourceVolumeProc.running = true;
+        p_setSourceVolume.target = volume;
+        p_setSourceVolume.running = true;
     }
 
     function toggleSourceMute(): void {
-        toggleSinkMuteProc.running = true;
+        p_toggleSinkMute.running = true;
     }
 
     PwObjectTracker {
