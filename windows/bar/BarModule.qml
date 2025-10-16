@@ -45,6 +45,9 @@ UIModule {
     anchors {
         top: parent.top;
         bottom: parent.bottom;
+
+        rightMargin: -Styling.spacing
+        leftMargin: -Styling.spacing
     }
 
     color: Styling.barBackground ? Colors.tertiary : "transparent";

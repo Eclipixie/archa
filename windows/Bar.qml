@@ -40,7 +40,7 @@ Scope {
             implicitHeight: BarPopoutHelper.popoutHeight + 2;
 
             margins {
-                top: Styling.barHeight + (Styling.spacing * 2) - 
+                top: Styling.barHeight + (Styling.spacing * 2) - 1 - Styling.spacing - 
                     (BarPopoutHelper.popoutActive ? 0 : height + Styling.barHeight + Styling.spacing * 2);
                 left: Math.max(BarPopoutHelper.targetCenterX - (BarPopoutHelper.popoutWidth * .5), 0);
             }
@@ -77,7 +77,7 @@ Scope {
         PanelWindow {
             id: barWindow;
 
-            exclusiveZone: Visibilities.dashboard ? height : 0;
+            exclusiveZone: Visibilities.dashboard ? height + Styling.spacing : 0;
 
             surfaceFormat.opaque: false;
 
@@ -103,6 +103,9 @@ Scope {
                     right: parent.right;
                     left: parent.left;
                     verticalCenter: parent.top;
+                    
+                    rightMargin: Styling.spacing
+                    leftMargin: Styling.spacing
                 }
 
                 BarModule {
