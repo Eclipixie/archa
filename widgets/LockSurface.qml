@@ -12,16 +12,19 @@ Item {
 	id: root
 	required property LockContext context
 
-	LazyLoader {
-		loading: true
+	Rectangle {
+		anchors.fill: root
+		color: Colors.secondary
+	}
 
-		Image {
-			fillMode: Image.PreserveAspectCrop;
+	Image {
+		asynchronous: true
 
-			source: Colors.wallpaper;
+		fillMode: Image.PreserveAspectCrop;
 
-			anchors.fill: root
-		}
+		source: Colors.wallpaper;
+
+		anchors.fill: parent
 	}
 	
 	UIModule {
