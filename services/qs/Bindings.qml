@@ -3,6 +3,7 @@ import Quickshell.Io
 
 import qs.widgets
 import qs.services.qs
+import qs.services.system
 import qs.util
 
 Scope {
@@ -31,14 +32,6 @@ Scope {
         description: "Activate command palette"
         onPressed: {
             Visibilities.commandPalette = !Visibilities.commandPalette;
-        }
-    }
-
-    CustomShortcut {
-        name: "updateBrightness"
-        description: "Updates brightness"
-        onPressed: {
-            Brightness.proc.running = true;
         }
     }
 
