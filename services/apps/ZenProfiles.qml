@@ -4,9 +4,12 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
+import qs.services.system
+
 Singleton {
     id: root;
-    readonly property string path: "/home/eclipixie/.zen/profiles.ini";
+    readonly property string path: "/.zen/profiles.ini";
+    readonly property string absPath: System.home + path
     property list<string> profiles: [];
 
     function parseProfiles(_profiles: string) {
@@ -25,7 +28,7 @@ Singleton {
 
     Process {
         id: p_getProfiles;
-        command: ["sh", "-c", "cat " + path + " | grep Name"];
+        command: ["sh", "-c", "cat " + absPath + " | grep Name"];
         running: true;
 
         stdout: StdioCollector {

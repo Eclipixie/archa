@@ -8,7 +8,7 @@ Singleton {
     id: root;
     property string brightness: "20";
 
-    property string monitor: "acpi_video0";
+    property string monitor: System.backlightID;
 
     FileView {
         watchChanges: true

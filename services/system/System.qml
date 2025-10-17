@@ -9,6 +9,10 @@ import qs.services.qs
 Singleton {
     id: root
 
+    property string home: "/home/eclipixie"
+    property string batteryID: "BAT0"
+    property string backlightID: "acpi_video0"
+
     property real cpuPerc
     property real cpuTemp
     property string gpuType: "NONE"

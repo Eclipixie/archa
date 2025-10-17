@@ -5,15 +5,18 @@ import QtQuick
 import Quickshell.Io
 
 import qs.util
+import qs.services.system
 
 Singleton {
-    property string wallpaperLoc: "/home/eclipixie/Pictures/wallpapers/"
+    property string wallpaperLoc: "/Pictures/wallpapers/"
+
+    property string absWallpaperLoc: System.home + wallpaperLoc
 
     property list<string> wallpapers: []
 
     Process {
         id: p_getWallpapers
-        command: ["ls", wallpaperLoc]
+        command: ["ls", absWallpaperLoc]
         running: true;
         stdout: StdioCollector {
             onStreamFinished: {
@@ -29,7 +32,7 @@ Singleton {
     Process {
         id: p_matugen
         property string wallpaper: ""
-        command: ["matugen", "image", wallpaperLoc + wallpaper]
+        command: ["matugen", "image", absWallpaperLoc + wallpaper]
     }
 
     function wallpaper(name: string): void {

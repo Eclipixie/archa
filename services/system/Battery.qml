@@ -7,10 +7,11 @@ import QtQuick
 import Quickshell.Services.UPower
 
 import qs.util
+import qs.services.system
 
 Singleton {
     id: root
-    property string bat_id: "BAT0";
+    property string bat_id: System.batteryID;
     property string currentCharge: "0";
     property string fullCharge: "1";
 
