@@ -61,19 +61,45 @@ BarModule {
             }
 
             HardwareReadout {
-                id: cpuRead;
+                id: utilised;
 
                 Layout.fillWidth: true;
 
-                textObject.text: " " + Math.floor(System.cpuPerc * 100) + "% 󰔏 " + System.cpuTemp;
+                textObject.text: "" + Math.floor(System.cpuPerc * 100) + "% 󰄀" + Math.floor(System.gpuPerc * 100) + "%";
             }
 
-            HardwareReadout {
-                id: gpuRead;
+            UIModule {
+                id: tempContainer
 
-                Layout.fillWidth: true;
+                Layout.fillWidth: true
 
-                textObject.text: "󰄀 " + Math.floor(System.gpuPerc * 100) + "% 󰔏 " + System.gpuTemp;
+                implicitHeight: Temperature.temps.length / 2 * (Styling.barHeight + Styling.spacing) - Styling.spacing
+
+                Flow {
+                    anchors.fill: parent
+
+                    leftPadding: Styling.spacing
+                    rightPadding: Styling.spacing
+
+                    Repeater {
+                        id: temps
+                        model: Temperature.temps
+
+                        Item {
+                            required property string modelData
+
+                            implicitWidth: tempContainer.width / 2 - Styling.spacing
+                            implicitHeight: Styling.barHeight
+
+                            UIText {
+                                anchors.centerIn: parent
+
+                                id: textObject
+                                text: "󰔏 " + Math.round(MathUtil.toDegrees(modelData)); 
+                            }
+                        }
+                    }
+                }
             }
 
             UIModule {
@@ -118,7 +144,7 @@ BarModule {
 
             border.width: 0;
 
-            property Text textObject: text;
+            property alias textObject: text;
 
             UIText {
                 id: text;

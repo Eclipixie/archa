@@ -6,7 +6,7 @@ import QtQuick
 
 Singleton {
     id: root;
-    property string brightness: "20";
+    property string brightness: "0";
 
     property string monitor: System.backlightID;
 
