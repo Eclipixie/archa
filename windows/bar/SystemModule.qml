@@ -95,7 +95,7 @@ BarModule {
                                 anchors.centerIn: parent
 
                                 id: textObject
-                                text: "󰔏 " + Math.round(MathUtil.toDegrees(modelData)); 
+                                text: "󰔏" + Math.round(MathUtil.toDegrees(modelData)); 
                             }
                         }
                     }
