@@ -165,10 +165,8 @@ Singleton {
                 } else if (root.gpuType === "NVIDIA") {
                     const [usage, temp] = text.trim().split(",");
                     root.gpuPerc = parseInt(usage, 10) / 100;
-                    root.gpuTemp = parseInt(temp, 10);
                 } else {
                     root.gpuPerc = 0;
-                    root.gpuTemp = 0;
                 }
             }
         }
