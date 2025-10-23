@@ -10,68 +10,109 @@ SettingsZone {
 
     surface: Component {
         ColumnLayout {
-            anchors.fill: parent
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+            }
 
-            spacing: Styling.spacing
+            spacing: Styling.spacing * 2
 
             UIZone {
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+                id: shapesZone
 
-                implicitHeight: 200
+                Layout.fillWidth: true
+
+                implicitHeight: shapesColumn.implicitHeight + Styling.spacing * 2
                 width: parent.width
 
                 ColumnLayout {
+                    id: shapesColumn
+                    spacing: Styling.spacing
+
                     anchors {
                         fill: parent
                         margins: Styling.spacing
                     }
 
-                    Item {
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
-                    
-                        implicitWidth: Styling.barHeight
-
-                        UITextModule {
-                            id: l_rounding
-                            implicitWidth: 200
-
-                            topRightRadius: 0
-                            bottomRightRadius: 0
-
-                            text.text: "Rounding"
+                    DropDownSetting {
+                        settingName: "Rounding"
+                        model: ["Capsule", "Rounded", "Square"]
+                        onSettingChanged: {
+                            switch (setting) {
+                                case "Capsule":
+                                    Styling.barModuleRadius = Styling.barRadiusMode.capsule;
+                                    break;
+                                case "Rounded":
+                                    Styling.barModuleRadius = Styling.barRadiusMode.rounded;
+                                    break;
+                                case "Square":
+                                    Styling.barModuleRadius = Styling.barRadiusMode.square;
+                                    break;
+                            }
                         }
+                    }
 
-                        UIDropDown {
-                            surfaceBackground.topLeftRadius: 0
-                            surfaceBackground.bottomLeftRadius: 0
-
-                            anchors {
-                                left: l_rounding.right
-                                right: parent.right
-                                leftMargin: Styling.spacing
-                            }
-
-                            model: ["Capsule", "Rounded", "Square"]
-
-                            onCurrentIndexChanged: {
-                                switch (currentIndex) {
-                                    case 0:
-                                        Styling.barModuleRadius = Styling.barRadiusMode.capsule;
-                                        break;
-                                    case 1:
-                                        Styling.barModuleRadius = Styling.barRadiusMode.rounded;
-                                        break;
-                                    case 2:
-                                        Styling.barModuleRadius = Styling.barRadiusMode.square;
-                                        break;
-                                }
-                            }
+                    DropDownSetting {
+                        settingName: "Font"
+                        model: Styling.availableFonts
+                        onSettingChanged: {
+                            Styling.fontFamily = setting
                         }
                     }
                 }
             }
+
+            Item {
+                implicitHeight: Styling.spacing
+                Layout.fillWidth: true
+
+                Rectangle {
+                    implicitHeight: Styling.spacing
+                    color: Colors.secondary
+                    radius: Styling.spacing / 2
+                    anchors {
+                        fill: parent
+                        leftMargin: Styling.spacing * 2
+                        rightMargin: Styling.spacing * 2
+                    }
+                }
+            }
+        }
+    }
+
+    component DropDownSetting: Item {
+        id: dropDownSetting
+        required property string settingName
+        required property list<string> model
+        readonly property string setting: control.currentText
+
+        Layout.fillWidth: true
+    
+        implicitHeight: Styling.barHeight
+
+        UITextModule {
+            id: l_rounding
+            implicitWidth: 200
+
+            topRightRadius: 0
+            bottomRightRadius: 0
+
+            text.text: settingName
+        }
+
+        UIDropDown {
+            id: control
+            surfaceBackground.topLeftRadius: 0
+            surfaceBackground.bottomLeftRadius: 0
+
+            anchors {
+                left: l_rounding.right
+                right: parent.right
+                leftMargin: Styling.spacing
+            }
+
+            model: dropDownSetting.model
         }
     }
 }

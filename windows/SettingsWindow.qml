@@ -74,7 +74,11 @@ Scope {
                 Loader {
                     id: zoneLoader
 
-                    anchors.fill: parent
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                    }
 
                     sourceComponent: zoneList.zones[zoneList.currentIndex].surface ?? null;
                 }
