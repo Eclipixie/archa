@@ -14,6 +14,7 @@ ListView {
         Item {
             id: wrapper;
             required property var modelData
+            required property int index
             readonly property string name: modelData.name
             
             property bool focused: false
@@ -30,6 +31,12 @@ ListView {
                     top: wrapper.top;
                     right: wrapper.right;
                     left: wrapper.left;
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: { root.currentIndex = index; }
                 }
 
                 UIText {

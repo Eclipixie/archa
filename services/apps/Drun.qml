@@ -5,7 +5,10 @@ import Quickshell.Io
 import QtQuick
 
 Singleton {
-    property list<QtObject> apps: []
+    id: root
+
+    property list<QtObject> appdata: []
+    property list<QtObject> apps: v_apps.instances
 
     Process {
         id: p_getDrun
@@ -14,8 +17,9 @@ Singleton {
         command: ["sh", "-c", "ls -d1 /usr/share/applications/*.desktop | xargs cat"]
         stdout: StdioCollector {
             onStreamFinished: {
+                console.log(text);
                 let apps = []
-                let curApp = {}
+                let curApp = []
 
                 let lines = text.split("\n");
 
@@ -25,12 +29,12 @@ Singleton {
                     if (lines[i] == "") continue;
 
                     if (lines[i].includes("Desktop Action") && actionKey != "") 
-                        curApp[actionKey] = actionVal;
+                        curApp.push(actionKey+":"+actionVal);
 
                     if (lines[i] == "[Desktop Entry]") {
                         if (actionKey != "")
-                            curApp[actionKey] = actionVal;
-                        apps.push(curApp);
+                            curApp.push(actionKey+":"+actionVal);
+                        apps.push(curApp.join(","));
                         curApp = {};
                         continue;
                     }
@@ -41,9 +45,22 @@ Singleton {
                     if (key == "Exec") actionVal = val;
                 }
 
-                root.apps = apps;
-                print(apps);
+                root.appdata = apps;
+                console.log(apps);
             }
+        }
+    }
+
+    Variants {
+        id: v_apps
+
+        model: root.appdata
+
+        delegate: DrunApp {
+            required property var modelData
+
+            name: modelData.split(",")[0].split(":")[0]
+            options: []
         }
     }
 

@@ -3,6 +3,7 @@ import QtQuick
 
 import qs.windows.commandPalette.commands.primitives
 import qs.util
+import qs.services.qs
 
 ListCommand {
     id: root
@@ -36,6 +37,9 @@ ListCommand {
         BoolCommand { name: "gradient"
             onExec: { Colors.preferredGradientActive = value; }
         },
-        WallpaperCommand { name: "wallpaper" }
+        WallpaperCommand { name: "wallpaper" },
+        ListCommand { name: "open"
+            onExec: { Visibilities.settingsWindow = true; }
+        }
     ]
 }
