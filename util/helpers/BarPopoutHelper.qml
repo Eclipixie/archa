@@ -4,6 +4,7 @@ import Quickshell
 import QtQuick
 
 import qs.components.ui
+import qs.services.qs
 
 Singleton {
     property int popoutWidth: targetModule?.hoverContents?.implicitWidth ?? 0;

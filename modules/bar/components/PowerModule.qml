@@ -25,19 +25,16 @@ BarModule {
             name: "saver"
             icon: "󰌪"
             color: Colors.active
-            button: saverButton
         },
         ProfileInfo {
             name: "balanced"
             icon: "󰗑"
             color: Colors.secondary
-            button: balancedButton
         },
         ProfileInfo {
             name: "performance"
             icon: "󱐋"
             color: Colors.error
-            button: performanceButton
         }
     ]
 
@@ -137,64 +134,36 @@ BarModule {
         bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
         bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
 
-        UIButton {
-            id: saverButton
+        // UIButton {
+        //     id: saverButton
 
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                margins: Styling.spacing
-            }
+        //     anchors {
+        //         verticalCenter: parent.verticalCenter
+        //         left: parent.left
+        //         margins: Styling.spacing
+        //     }
 
-            a_background.text.text: profiles[0].icon
-            onClicked: { Battery.setProfile(0) }
-        }
-
-        UIButton {
-            id: balancedButton
-
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: saverButton.right
-                margins: Styling.spacing
-            }
-
-            a_background.text.text: profiles[1].icon
-            onClicked: { Battery.setProfile(1) }
-        }
-
-        UIButton {
-            id: performanceButton
-
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: balancedButton.right
-                margins: Styling.spacing
-            }
-
-            a_background.text.text: profiles[2].icon
-            onClicked: { Battery.setProfile(2) }
-        }
+        //     a_background.text.text: profiles[0].icon
+        //     onClicked: { Battery.setProfile(0) }
+        // }
 
         UISwatch {
             id: selector
 
-            state: currentProfile.icon
+            anchors {
+                top: parent.top
+                left: parent.left
+                topMargin: Styling.spacing
+                leftMargin: Styling.spacing
+            }
 
-            options: [
-                UISwatch.OptionData { 
-                    name: profiles[0].icon;
-                    item: saverButton
-                },
-                UISwatch.OptionData { 
-                    name: profiles[1].icon;
-                    item: balancedButton
-                },
-                UISwatch.OptionData { 
-                    name: profiles[2].icon;
-                    item: performanceButton
-                }
-            ]
+            model: [profiles[0].icon, profiles[1].icon, profiles[2].icon]
+
+            group.checkedButton: group.buttons[PowerProfiles.profile]
+
+            onValueChanged: {
+                Battery.setProfile(group.checkedButtonIndex);
+            }
         }
     }
 
@@ -202,6 +171,5 @@ BarModule {
         required property string name
         required property string icon
         required property string color
-        required property Item button
     }
 }

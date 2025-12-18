@@ -4,6 +4,7 @@ import QtQuick
 import qs.components.ui
 import qs.modules.commandPalette.commands.primitives
 import qs.services.qs
+import qs.config
 
 ListCommand {
     id: root

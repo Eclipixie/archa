@@ -5,48 +5,41 @@ import QtQuick.Controls
 import qs.config
 import qs.components.primitives
 
-UITextModule {
+Item {
     id: root
 
-    implicitWidth: Styling.barHeight
+    implicitWidth: row.implicitWidth
+    implicitHeight: Styling.barHeight
 
-    color: Colors.secondary
-    text.color: Colors.primary
-    text.text: state
+    required property list<string> model
 
-    property list<QtObject> options
+    property alias group: buttonGroup
 
-    states: variants.instances
+    property string value: ""
 
-    Variants {
-        id: variants
+    ButtonGroup {
+        id: buttonGroup
 
-        model: options
+        property int checkedButtonIndex: buttons.indexOf(checkedButton)
+    }
 
-        delegate: State {
-            required property var modelData
-            readonly property Item item: modelData.item
-            name: modelData.name
+    Row {
+        id: row
+        spacing: Styling.spacing
 
-            AnchorChanges {
-                target: root
+        Repeater {
+            model: root.model
+            delegate: UIRadioButton {
+                required property var modelData
 
-                anchors.left: item.left
-                anchors.right: item.right
-                anchors.top: item.top
-                anchors.bottom: item.bottom
+                a_background.text.text: modelData
+
+                ButtonGroup.group: buttonGroup
+
+                onClicked: {
+                    root.value = modelData;
+                }
             }
         }
     }
-
-    transitions: Transition {
-        Styling.AnchorEasing { }
-    }
-
-    component OptionData: QtObject {
-        required property Item item
-        required property string name
-    }
-
-    property Component c_OptionData: OptionData { }
 }

@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 import qs.config
 
-Button {
+RadioButton {
     id: root;
 
     property alias a_background: backgroundObject
