@@ -70,7 +70,7 @@ Scope {
                     enabled: Visibilities.commandPalette;
                     focusReason: Qt.ShortcutFocusReason;
 
-                    font.family: Styling.fontFamily;
+                    font: Styling.bodyFont
                     
                     placeholderText: "Command";
                     placeholderTextColor: Colors.secondary;

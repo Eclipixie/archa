@@ -36,10 +36,6 @@ ListCommand {
         },
         BoolCommand { name: "gradient"
             onExec: { Colors.preferredGradientActive = value; }
-        },
-        WallpaperCommand { name: "wallpaper" },
-        ListCommand { name: "open"
-            onExec: { Visibilities.settingsWindow = true; }
         }
     ]
 }

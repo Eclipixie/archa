@@ -8,7 +8,5 @@ ShellRoot {
 
     CommandPalette { }
 
-    SettingsWindow { }
-
     Bindings { }
 }

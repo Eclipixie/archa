@@ -4,10 +4,7 @@ import QtQuick
 import qs.util
 
 Text {
-    font {
-        family: Styling.fontFamily;
-        pointSize: Styling.barFontPointSize;
-    }
+    font: Styling.bodyFont
 
     color: Colors.secondary;
 }

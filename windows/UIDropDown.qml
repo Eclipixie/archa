@@ -19,6 +19,13 @@ ComboBox {
         bottomRightRadius: popup.visible ? 0 : Styling.barModuleRadius
     }
 
+    indicator: UIText {
+        y: (root.height - height) / 2
+        x: root.width - width - y * 2
+        
+        text: root.popup.visible ? "󰁢" : "󰁊"
+    }
+
     contentItem: null
 
     delegate: ItemDelegate {

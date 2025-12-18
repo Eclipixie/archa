@@ -36,7 +36,7 @@ BarModule {
         }
         else if (Network.activeDevice.type == "ethernet")
             return ""
-        return "󰤮!"
+        return "󰤫"
     }
 
     function strengthChar(strength: int): string {
