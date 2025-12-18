@@ -4,7 +4,6 @@ import Quickshell
 import QtQuick
 import Quickshell.Io
 
-import qs.util
 import qs.services.system
 
 Singleton {

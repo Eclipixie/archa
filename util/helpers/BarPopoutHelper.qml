@@ -3,8 +3,7 @@ pragma Singleton
 import Quickshell
 import QtQuick
 
-import qs.windows.bar
-import qs.services.qs
+import qs.components.ui
 
 Singleton {
     property int popoutWidth: targetModule?.hoverContents?.implicitWidth ?? 0;

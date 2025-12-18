@@ -6,7 +6,6 @@ import QtQuick
 
 import Quickshell.Services.UPower
 
-import qs.util
 import qs.services.system
 
 Singleton {

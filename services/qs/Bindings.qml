@@ -4,7 +4,6 @@ import Quickshell.Io
 import qs.widgets
 import qs.services.qs
 import qs.services.system
-import qs.util
 
 Scope {
     id: root;

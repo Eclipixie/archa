@@ -3,7 +3,7 @@ pragma Singleton
 import Quickshell
 import Quickshell.Wayland
 
-import qs.widgets
+import qs.modules.lock
 
 Singleton {
     property WlSessionLock sessionLock: lock;

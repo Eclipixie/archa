@@ -1,6 +1,7 @@
 import Quickshell
 
-import qs.windows
+import qs.modules.bar
+import qs.modules.commandPalette
 import qs.services.qs
 
 ShellRoot {
