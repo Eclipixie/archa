@@ -20,12 +20,4 @@ BarModule {
             }
         }
     }
-
-    Connections {
-        target: Hypr
-
-        function onFocusedWorkspaceIDChanged(): void {
-            root.setActive(1000);
-        }
-    }
 }

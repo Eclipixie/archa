@@ -12,8 +12,6 @@ import qs.components.primitives
 BarModule {
     id: root;
 
-    text: genText();
-
     moduleActive: !networkActive();
 
     function networkActive(): bool {
@@ -48,24 +46,32 @@ BarModule {
         return "󰤨";
     }
 
-    Connections {
-        target: Network
+    c_surface: UITextModule {
+        id: surfaceRoot
 
-        function onActiveDeviceChanged(): void {
-            root.text = root.genText();
-        }
+        text.text: root.genText()
 
-        function onActiveAPChanged(): void {
-            root.text = root.genText();
-        }
+        Connections {
+            target: Network
 
-        function networksUpdated(newNetworks): void {
-            print("updated");
+            function onActiveDeviceChanged(): void {
+                surfaceRoot.text.text = root.genText();
+            }
+
+            function onActiveAPChanged(): void {
+                surfaceRoot.text.text = root.genText();
+            }
+
+            function networksUpdated(newNetworks): void {
+                print("updated");
+            }
         }
     }
 
-    hoverContents: ModuleHoverContents {
+    c_hoverContents: UIModule {
         id: hoverRoot;
+
+        color: Colors.tertiary
 
         implicitHeight: list.implicitHeight + controls.implicitHeight + Styling.spacing + Styling.spacing * 2;
         implicitWidth: 200;
@@ -143,7 +149,7 @@ BarModule {
                 id: visualInfo
 
                 height: Styling.barHeight + Styling.spacing;
-                width: root.hoverContents.width - Styling.spacing * 2;
+                width: hoverRoot.width - Styling.spacing * 2;
 
                 required property var modelData
 

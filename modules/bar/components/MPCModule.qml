@@ -1,19 +1,23 @@
-import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
 import qs.config
 import qs.services.apps
 import qs.components.ui
+import qs.components.primitives
 
 BarModule {
     id: root;
 
-    text: MPC.info;
+    // text: MPC.info;
 
     property bool songActive: !(MPC.statusInfo == "" || MPC.statusInfo == "!");
 
-    hoverContents: ModuleHoverContents {
+    c_surface: UITextModule {
+        text.text: MPC.info
+    }
+
+    c_hoverContents: UIModule {
         color: Colors.tertiary;
 
         implicitHeight: (Styling.barHeight + Styling.spacing) * 2 + Styling.spacing;

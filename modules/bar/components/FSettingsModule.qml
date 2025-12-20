@@ -5,13 +5,14 @@ import QtQuick
 import qs.services.system
 import qs.config
 import qs.components.ui
+import qs.components.primitives
 
 BarModule {
     id: root;
 
-    text: sinkChar() + " " + MathUtil.roundPercentage(Audio.sinkVolume) + "% | " +
-        sourceChar() + " " + MathUtil.roundPercentage(Audio.sourceVolume) + "% | " +
-        brightnessChar() + " " + Brightness.brightness + "%";
+    // text: sinkChar() + " " + MathUtil.roundPercentage(Audio.sinkVolume) + "% | " +
+    //     sourceChar() + " " + MathUtil.roundPercentage(Audio.sourceVolume) + "% | " +
+    //     brightnessChar() + " " + Brightness.brightness + "%";
 
     function sinkChar(): string {
         return (Audio.sinkMuted ? "󰖁" : "󰕾");
@@ -31,8 +32,6 @@ BarModule {
         if (Brightness.brightness < 14.3) out = "󰃚";
         return out;
     }
-
-    onTextChanged: { setActive(1000); }
 
     c_surface: Component {
         Item {
@@ -84,7 +83,7 @@ BarModule {
         }
     }
 
-    hoverContents: ModuleHoverContents {
+    c_hoverContents: UIModule {
         color: Colors.tertiary;
 
         implicitHeight: Styling.barHeight * 3 + (2 * Styling.spacing) * 2;

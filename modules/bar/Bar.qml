@@ -3,109 +3,112 @@ import QtQuick
 import qs.components.ui
 import qs.modules.bar.components
 import qs.config
-import qs.util.helpers
+import qs.components.primitives
+import qs.util
 
 Item {
     id: row;
 
-    implicitHeight: (Styling.barHeight + Styling.spacing * 2) * 2;
+    property list<Item> regionMasks: [
+        container,
+        systemModule,
+        mpcModule,
+        fSettingsModule,
+        windowModule,
+        networkModule,
+        powerModule,
+        timeModule
+    ]
+
+    implicitHeight: Styling.barHeight + Styling.spacing * 2;
 
     anchors {
         right: parent.right;
         left: parent.left;
-        verticalCenter: parent.top;
-        
-        rightMargin: Styling.spacing
-        leftMargin: Styling.spacing
+        top: parent.top;
     }
 
-    BarModule {
-        color: Colors.tertiary;
+    UIModule {
+        id: container
 
         visible: Styling.barBackground;
 
-        radius: 0;
+        topLeftRadius: 0
+        topRightRadius: 0
+
+        color: Colors.tertiary
 
         anchors {
-            margins: 0;
-            right: parent.right;
-            left: parent.left;
+            fill: parent
+            margins: 0
         }
 
-        c_surface: Component { Item { } }
-    }
+        Item {
+            anchors {
+                fill: parent
+                margins: Styling.spacing
+            }
 
-    SystemModule {
-        id: systemModule;
+            Row {
+                id: leftRow 
 
-        anchors.left: parent.left;
-    }
+                height: Styling.barHeight
 
-    MPCModule {
-        id: mpcModule;
+                anchors.left: parent.left
 
-        anchors.left: systemModule.right;
-    }
+                spacing: Styling.spacing
 
-    FSettingsModule {
-        id: fSettingsModule;
+                SystemModule { id: systemModule; }
 
-        anchors.left: mpcModule.right;
-    }
+                MPCModule { id: mpcModule; }
 
-    BarModule {
-        anchors.left: fSettingsModule.right;
-        anchors.right: windowModule.left;
+                FSettingsModule { id: fSettingsModule; }
+            }
 
-        visible: Styling.barSpacers;
-    }
+            BarModule {
+                anchors.left: leftRow.right;
+                anchors.right: middleRow.left;
 
-    WindowModule {
-        id: windowModule;
+                anchors.leftMargin: Styling.spacing
+                anchors.rightMargin: Styling.spacing
 
-        anchors.horizontalCenter: parent.horizontalCenter;
-    }
+                visible: Styling.barSpacers;
+            }
 
-    BarModule {
-        anchors.left: windowModule.right;
-        anchors.right: networkModule.left;
+            Row {
+                id: middleRow
 
-        visible: Styling.barSpacers;
-    }
+                height: Styling.barHeight
 
-    NetworkModule {
-        id: networkModule;
+                anchors.horizontalCenter: parent.horizontalCenter
 
-        anchors.right: powerModule.left;
-    }
+                WindowModule { id: windowModule; }
+            }
 
-    PowerModule {
-        id: powerModule
+            BarModule {
+                anchors.left: middleRow.right;
+                anchors.right: rightRow.left
 
-        anchors.right: timeModule.left;
-    }
+                anchors.leftMargin: Styling.spacing
+                anchors.rightMargin: Styling.spacing
 
-    TimeModule {
-        id: timeModule
+                visible: Styling.barSpacers;
+            }
 
-        anchors.right: parent.right;
-    }
+            Row {
+                id: rightRow 
 
-    Item {
-        anchors {
-            fill: BarPopoutHelper.targetModule;
-            margins: -Styling.spacing * 2;
-        }
+                height: Styling.barHeight
 
-        HoverHandler {
-            id: mouseHover;
-            acceptedDevices: PointerDevice.AllDevices;
+                anchors.right: parent.right
 
-            onHoveredChanged: {
-                if (!hovered)
-                    BarPopoutHelper.hoveredModule = null;
-                else
-                    BarPopoutHelper.hoveredModule = BarPopoutHelper.targetModule;
+                spacing: Styling.spacing
+
+                NetworkModule { id: networkModule; }
+
+                PowerModule { id: powerModule }
+
+                TimeModule { id: timeModule }
             }
         }
     }

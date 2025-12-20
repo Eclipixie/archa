@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 
 import qs.services.system
@@ -6,7 +8,9 @@ import qs.components.ui
 BarModule {
     id: root;
 
-    text: timeChar() + " " + Qt.formatDateTime(Time.clock.date, "hh:mm:ss");
+    c_surface: UITextModule {
+        text.text: root.timeChar() + " " + Qt.formatDateTime(Time.clock.date, "hh:mm:ss");
+    }
 
     function timeChar(): string {
         var hr = parseInt(Qt.formatDateTime(Time.clock.date, "hh"));

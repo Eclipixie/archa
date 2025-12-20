@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Layouts;
 
 import qs.config
 import qs.services.system
@@ -9,29 +8,29 @@ import qs.components.ui
 import qs.components.primitives
 
 BarModule {
-    text: "󰣇";
+    c_surface: UITextModule {
+        text.text: "󰣇";
+    }
 
-    implicitWidth: height;
-
-    hoverContents: ModuleHoverContents {
+    c_hoverContents: UIModule {
         color: Colors.tertiary;
 
         implicitHeight: col.height + Styling.spacing * 2;
-        implicitWidth: powerRow.width + Styling.spacing * 2;
+        implicitWidth: col.width;
 
-        ColumnLayout {
+        Column {
             id: col;
 
             spacing: Styling.spacing;
 
             anchors {
-                left: parent.left;
-                top: parent.top;
+                left: parent.left
+                bottom: parent.bottom
 
                 margins: Styling.spacing;
             }
 
-            RowLayout {
+            Row {
                 id: settingsButtons;
 
                 spacing: Styling.spacing;
@@ -44,8 +43,6 @@ BarModule {
                     }
 
                     onClicked: System.pavucontrol();
-
-                    Layout.fillWidth: true
                 }
 
                 UIButton {
@@ -56,15 +53,16 @@ BarModule {
                     }
 
                     onClicked: System.nwglook();
-
-                    Layout.fillWidth: true
                 }
             }
 
             HardwareReadout {
                 id: utilised;
 
-                Layout.fillWidth: true;
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
                 textObject.text: "" + Math.floor(System.cpuPerc * 100) + "% 󰄀" + Math.floor(System.gpuPerc * 100) + "%";
             }
@@ -72,7 +70,10 @@ BarModule {
             UIModule {
                 id: tempContainer
 
-                Layout.fillWidth: true
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
                 implicitHeight: Temperature.temps.length / 2 * (Styling.barHeight + Styling.spacing) - Styling.spacing
 
@@ -108,9 +109,12 @@ BarModule {
             UIModule {
                 id: powerRow
 
-                Layout.fillWidth: true;
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
 
-                RowLayout {
+                Row {
                     spacing: 0;
 
                     anchors.centerIn: parent;

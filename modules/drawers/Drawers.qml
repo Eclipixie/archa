@@ -3,6 +3,7 @@ import QtQuick
 
 import qs.config
 import qs.modules.bar
+import qs.util
 
 Variants {
     id: root
@@ -16,15 +17,15 @@ Variants {
         PanelWindow {
             id: excluder
             
-            height: Styling.barHeight + Styling.spacing * 2
+            implicitHeight: Styling.barHeight + Styling.spacing * 2
+
+            color: "transparent"
 
             anchors {
                 top: true
                 left: true
                 right: true
             }
-
-            color: "transparent"
         }
 
         PanelWindow {
@@ -41,14 +42,19 @@ Variants {
                 bottom: true
             }
 
+            Bar { id: bar }
+
             mask: Region {
-                x: 0
-                y: 0
-                width: scope.modelData.width
-                height: bar.height
+                regions: regionMasks.masks
+
+                intersection: Intersection.Combine
             }
 
-            Bar { id: bar }
+            RegionMasks {
+                id: regionMasks
+
+                bar: bar
+            }
         }
     }
 }

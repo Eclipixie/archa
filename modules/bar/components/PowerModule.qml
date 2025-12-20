@@ -6,13 +6,10 @@ import Quickshell.Services.UPower
 import qs.config
 import qs.services.system
 import qs.components.ui
+import qs.components.primitives
 
 BarModule {
     id: root
-
-    text: profileChar() + " | " + 
-        batteryChar() + " " + 
-        MathUtil.roundPercentage(power) + "%";
     
     readonly property double power: Battery.percentage;
 
@@ -127,11 +124,11 @@ BarModule {
     // 1 is balanced
     // 2 is performance
 
-    hoverContents: ModuleHoverContents {
+    c_hoverContents: UIModule {
         color: Colors.tertiary;
 
         implicitHeight: Styling.barHeight + Styling.spacing * 2;
-        implicitWidth: (Styling.barHeight + Styling.spacing) * 3 + Styling.spacing;
+        implicitWidth: (Styling.barHeight + Styling.spacing) * 3 - Styling.spacing;
 
         bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
         bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
@@ -141,9 +138,8 @@ BarModule {
 
             anchors {
                 top: parent.top
-                left: parent.left
+                horizontalCenter: parent.horizontalCenter
                 topMargin: Styling.spacing
-                leftMargin: Styling.spacing
             }
 
             model: [root.profiles[0].icon, root.profiles[1].icon, root.profiles[2].icon]
