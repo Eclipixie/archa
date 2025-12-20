@@ -1,7 +1,6 @@
-import Quickshell
 import QtQuick
 
-import qs.util
+import qs.config
 
 Rectangle {
     color: Colors.tertiary

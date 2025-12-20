@@ -1,4 +1,5 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 
 import qs.config
@@ -26,7 +27,7 @@ ListView {
             UIModule {
                 id: surface;
 
-                color: focused ? Colors.secondary : Colors.primary;
+                color: wrapper.focused ? Colors.secondary : Colors.primary;
 
                 anchors {
                     top: wrapper.top;
@@ -37,12 +38,12 @@ ListView {
                 MouseArea {
                     anchors.fill: parent
 
-                    onClicked: { root.currentIndex = index; }
+                    onClicked: { root.currentIndex = wrapper.index; }
                 }
 
                 UIText {
-                    text: name;
-                    color: focused ? Colors.primary : Colors.secondary;
+                    text: wrapper.name;
+                    color: wrapper.focused ? Colors.primary : Colors.secondary;
 
                     anchors {
                         left: parent.left;

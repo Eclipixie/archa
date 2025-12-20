@@ -1,4 +1,3 @@
-import Quickshell
 import QtQuick
 import QtQuick.Controls.Fusion
 
@@ -31,14 +30,14 @@ Item {
 
         anchors.fill: root;
 
-        sourceComponent: current.display;
+        sourceComponent: root.current.display;
     }
 
     Connections {
-        target: search
+        target: root.search
 
         function onTextChanged(): void {
-            current.search = search.text.trim().split(" ").pop();
+            root.current.search = root.search.text.trim().split(" ").pop();
         }
     }
 }

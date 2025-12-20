@@ -1,8 +1,10 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 
-import qs.util
+import qs.config
+import qs.components.primitives
 
 ComboBox {
     id: root
@@ -15,8 +17,8 @@ ComboBox {
         id: o_background
         text.text: root.currentText
 
-        bottomLeftRadius: popup.visible ? 0 : Styling.barModuleRadius
-        bottomRightRadius: popup.visible ? 0 : Styling.barModuleRadius
+        bottomLeftRadius: root.popup.visible ? 0 : Styling.barModuleRadius
+        bottomRightRadius: root.popup.visible ? 0 : Styling.barModuleRadius
     }
 
     indicator: UIText {
@@ -29,6 +31,8 @@ ComboBox {
     contentItem: null
 
     delegate: ItemDelegate {
+        id: delegateRoot
+
         required property var modelData
         implicitHeight: container.implicitHeight
 
@@ -39,7 +43,7 @@ ComboBox {
 
             UITextModule {
                 id: surface
-                text.text: modelData
+                text.text: delegateRoot.modelData
 
                 anchors {
                     left: parent.left

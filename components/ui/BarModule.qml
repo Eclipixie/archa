@@ -1,4 +1,5 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 
 import qs.config
@@ -33,14 +34,12 @@ UIModule {
     Timer {
         id: t_visible
         interval: 1000
-        onTriggered: moduleActive = false
+        onTriggered: root.moduleActive = false
     }
 
     property alias surface: surfaceLoader.item
 
     implicitWidth: surface.implicitWidth + Styling.spacing * 2;
-
-    state: (Visibilities.dashboard || moduleActive) ? "shown" : "hidden";
 
     anchors {
         top: parent.top;
@@ -57,25 +56,6 @@ UIModule {
     bottomLeftRadius: Styling.barModuleRadius + Styling.spacing
     bottomRightRadius: Styling.barModuleRadius + Styling.spacing
 
-    states: [
-        State {
-            name: "hidden";
-            AnchorChanges {
-                target: root;
-                anchors.top: parent.top;
-                anchors.bottom: parent.verticalCenter;
-            }
-        },
-        State {
-            name: "shown";
-            AnchorChanges {
-                target: root;
-                anchors.top: parent.verticalCenter;
-                anchors.bottom: parent.bottom;
-            }
-        }
-    ]
-
     transitions: Transition { animations: [ Styling.AnchorEasing { } ] }
 
     Behavior on implicitWidth { animation: Styling.PropertyEasing { } }
@@ -83,7 +63,7 @@ UIModule {
     Loader {
         id: surfaceLoader
 
-        sourceComponent: c_surface
+        sourceComponent: root.c_surface
 
         anchors {
             right: root.right

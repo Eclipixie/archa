@@ -1,4 +1,3 @@
-import Quickshell
 import QtQuick
 
 import qs.config
@@ -8,7 +7,7 @@ Rectangle {
 
     color: Colors.primary;
 
-    implicitHeight: Styling.barHeight + border.width * 2;
+    implicitHeight: Styling.barHeight;
     implicitWidth: Styling.barHeight;
 
     radius: Styling.barModuleRadius;
@@ -17,4 +16,11 @@ Rectangle {
         color: Colors.tertiary;
         width: Styling.outlines;
     }
+
+    Behavior on color { Anim.ColorAnim { } }
+
+    Behavior on implicitWidth { Anim.NumberAnim { } }
+    Behavior on implicitHeight { Anim.NumberAnim { } }
+    Behavior on x { Anim.NumberAnim { } }
+    Behavior on y { Anim.NumberAnim { } }
 }

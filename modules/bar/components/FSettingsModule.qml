@@ -1,8 +1,6 @@
-import Quickshell
-import QtQuick
-import QtQuick.Layouts
+pragma ComponentBehavior: Bound
 
-import Quickshell.Services.Pipewire
+import QtQuick
 
 import qs.services.system
 import qs.config
@@ -52,7 +50,7 @@ BarModule {
                     verticalCenter: parent.verticalCenter
                 }
 
-                text.text: sinkChar() + " " + MathUtil.roundPercentage(Audio.sinkVolume) + "%"
+                text.text: root.sinkChar() + " " + MathUtil.roundPercentage(Audio.sinkVolume) + "%"
             }
 
             UITextModule {
@@ -66,7 +64,7 @@ BarModule {
                     leftMargin: Styling.spacing
                 }
 
-                text.text: sourceChar() + " " + MathUtil.roundPercentage(Audio.sourceVolume) + "%"
+                text.text: root.sourceChar() + " " + MathUtil.roundPercentage(Audio.sourceVolume) + "%"
             }
 
             UITextModule {
@@ -81,7 +79,7 @@ BarModule {
                     leftMargin: Styling.spacing
                 }
 
-                text.text: brightnessChar() + " " + Brightness.brightness + "%"
+                text.text: root.brightnessChar() + " " + Brightness.brightness + "%"
             }
         }
     }
@@ -108,7 +106,7 @@ BarModule {
                     right: parent.right
                 }
 
-                button.a_background.text.text: sinkChar();
+                button.a_background.text.text: root.sinkChar();
 
                 button.onClicked: Audio.toggleSinkMute();
 
@@ -127,7 +125,7 @@ BarModule {
                     right: parent.right
                 }
 
-                button.a_background.text.text: sourceChar();
+                button.a_background.text.text: root.sourceChar();
 
                 button.onClicked: Audio.toggleSourceMute();
 
@@ -146,7 +144,7 @@ BarModule {
                     right: parent.right
                 }
 
-                button.a_background.text.text: brightnessChar();
+                button.a_background.text.text: root.brightnessChar();
 
                 slider.to: 100;
                 slider.stepSize: 1;

@@ -7,7 +7,8 @@ import QtQuick
 import qs.services.system
 
 Singleton {
-    id: root;
+    id: root
+    
     readonly property string path: "/.zen/profiles.ini";
     readonly property string absPath: System.home + path
     property list<string> profiles: [];
@@ -28,11 +29,11 @@ Singleton {
 
     Process {
         id: p_getProfiles;
-        command: ["sh", "-c", "cat " + absPath + " | grep Name"];
+        command: ["sh", "-c", "cat " + root.absPath + " | grep Name"];
         running: true;
 
         stdout: StdioCollector {
-            onStreamFinished: parseProfiles(this.text);
+            onStreamFinished: root.parseProfiles(this.text);
         }
     }
 }

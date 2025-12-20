@@ -7,19 +7,19 @@ import Quickshell.Io
 import qs.services.system
 
 Singleton {
+    id: root
+
     property string wallpaperLoc: "/Pictures/wallpapers/"
-
     property string absWallpaperLoc: System.home + wallpaperLoc
-
     property list<string> wallpapers: []
 
     Process {
         id: p_getWallpapers
-        command: ["ls", absWallpaperLoc]
+        command: ["ls", root.absWallpaperLoc]
         running: true;
         stdout: StdioCollector {
             onStreamFinished: {
-                wallpapers = this.text.trim().split("\n");
+                root.wallpapers = this.text.trim().split("\n");
             }
         }
     }
@@ -31,7 +31,7 @@ Singleton {
     Process {
         id: p_matugen
         property string wallpaper: ""
-        command: ["matugen", "image", absWallpaperLoc + wallpaper]
+        command: ["matugen", "image", root.absWallpaperLoc + wallpaper]
     }
 
     function wallpaper(name: string): void {

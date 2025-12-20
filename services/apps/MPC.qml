@@ -21,7 +21,7 @@ Singleton {
         running: true;
 
         stdout: StdioCollector {
-            onStreamFinished: title = this.text.split("\n")[0];
+            onStreamFinished: root.title = this.text.split("\n")[0];
         }
     }
 
@@ -33,7 +33,7 @@ Singleton {
         onRunningChanged: if (!running) running = true;
 
         stdout: StdioCollector {
-            onStreamFinished: title = this.text.split("\n")[0];
+            onStreamFinished: root.title = this.text.split("\n")[0];
         }
     }
 
@@ -45,7 +45,7 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 let info = text.split("\n")[0].split(",");
-                root.statusInfo = statusChar(info[0]);
+                root.statusInfo = root.statusChar(info[0]);
                 root.timeInfo = info[1];
             }
         }
@@ -70,7 +70,7 @@ Singleton {
         interval: 1000;
         running: true;
         repeat: true;
-        onTriggered: timers();
+        onTriggered: root.timers();
     }
 
     Item {

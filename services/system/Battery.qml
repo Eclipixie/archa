@@ -34,7 +34,7 @@ Singleton {
 
     Process {
         id: p_checkCurrent;
-        command: ["cat", "/sys/class/power_supply/"+bat_id+"/charge_now"];
+        command: ["cat", "/sys/class/power_supply/"+root.bat_id+"/charge_now"];
         running: true;
 
         stdout: StdioCollector {
@@ -44,7 +44,7 @@ Singleton {
 
     Process {
         id: p_checkMax;
-        command: ["cat", "/sys/class/power_supply/"+bat_id+"/charge_full"];
+        command: ["cat", "/sys/class/power_supply/"+root.bat_id+"/charge_full"];
         running: true;
 
         stdout: StdioCollector {
@@ -70,6 +70,6 @@ Singleton {
         interval: 60000;
         running: true;
         repeat: true;
-        onTriggered: tick();
+        onTriggered: root.tick();
     }
 }

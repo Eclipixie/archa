@@ -1,4 +1,3 @@
-import Quickshell
 import QtQuick
 import QtQuick.Controls
 
@@ -19,7 +18,7 @@ RadioButton {
 
         border.width: 0;
 
-        implicitWidth: forceSquare ? Styling.barHeight : text.implicitWidth + 20;
+        implicitWidth: root.forceSquare ? Styling.barHeight : text.implicitWidth + 20;
 
         color: root.checked ? Colors.secondary : Colors.primary
         text.color: root.checked ? Colors.primary : Colors.secondary

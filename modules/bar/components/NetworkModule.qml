@@ -1,4 +1,5 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -51,11 +52,11 @@ BarModule {
         target: Network
 
         function onActiveDeviceChanged(): void {
-            root.text = genText();
+            root.text = root.genText();
         }
 
         function onActiveAPChanged(): void {
-            root.text = genText();
+            root.text = root.genText();
         }
 
         function networksUpdated(newNetworks): void {
@@ -98,7 +99,7 @@ BarModule {
                 UIButton {
                     a_background.text.text: "󰤮";
 
-                    enabled: networkActive();
+                    enabled: root.networkActive();
                 }
 
                 UIButton {
@@ -125,7 +126,7 @@ BarModule {
 
             Connections {
                 target: Network;
-                function onNetworksUpdated(newNetworks: list<AccessPoint>) { 
+                function onNetworksUpdated(newNetworks: var) { 
                     list.model = newNetworks; 
                 }
             }
@@ -139,8 +140,10 @@ BarModule {
             id: visualInfoRoot;
 
             Item {
+                id: visualInfo
+
                 height: Styling.barHeight + Styling.spacing;
-                width: hoverContents.width - Styling.spacing * 2;
+                width: root.hoverContents.width - Styling.spacing * 2;
 
                 required property var modelData
 
@@ -175,11 +178,11 @@ BarModule {
                             implicitWidth: parent.height;
 
                             UIText {
-                                color: active ? Colors.active : Colors.inactive;
+                                color: visualInfo.active ? Colors.active : Colors.inactive;
 
                                 anchors.centerIn: parent;
 
-                                text: root.strengthChar(strength);
+                                text: root.strengthChar(visualInfo.strength);
                             }
                         }
 
@@ -194,7 +197,7 @@ BarModule {
                             }
 
                             UIText {
-                                text: ssid;
+                                text: visualInfo.ssid;
 
                                 anchors {
                                     verticalCenter: parent.verticalCenter;

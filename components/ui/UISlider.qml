@@ -1,4 +1,3 @@
-import Quickshell
 import QtQuick
 import QtQuick.Controls
 
@@ -50,7 +49,7 @@ Item {
             Rectangle {
                 color: Colors.secondary;
 
-                y: sliderObject.topPadding + (slider.availableHeight - height) / 2;
+                y: sliderObject.topPadding + (root.slider.availableHeight - height) / 2;
 
                 implicitHeight: 2;
 

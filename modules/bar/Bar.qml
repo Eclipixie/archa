@@ -1,210 +1,111 @@
-import Quickshell
 import QtQuick
-import QtQuick.Layouts
 
 import qs.components.ui
 import qs.modules.bar.components
 import qs.config
 import qs.util.helpers
-import qs.services.qs
 
-Scope {
-    id: root;
+Item {
+    id: row;
 
-    property bool unsecure: true;
+    implicitHeight: (Styling.barHeight + Styling.spacing * 2) * 2;
 
-    Variants {
-        model: Quickshell.screens;
-
-        PanelWindow {
-            id: popoutWindow;
-
-            property var modelData;
-            screen: modelData;
-
-            color: "transparent";
-
-            property BarModule target: BarPopoutHelper.targetModule;
-
-            onTargetChanged: {
-                if (target != null) {
-                    container.children = [target.hoverContents];
-
-                    container.children[0].anchors.left = container.left;
-                    container.children[0].anchors.right = container.right;
-                }
-            }
-
-            exclusionMode: ExclusionMode.Ignore;
-
-            implicitWidth: BarPopoutHelper.popoutWidth + 2;
-            implicitHeight: BarPopoutHelper.popoutHeight + 2;
-
-            margins {
-                top: Styling.barHeight + (Styling.spacing * 2) - 1 - Styling.spacing - 
-                    (BarPopoutHelper.popoutActive ? 0 : height + Styling.barHeight + Styling.spacing * 2);
-                left: Math.max(BarPopoutHelper.targetCenterX - (BarPopoutHelper.popoutWidth * .5), 0);
-            }
-
-            anchors {
-                top: true;
-                left: true;
-            }
-
-            Item {
-                id: container;
-
-                anchors.fill: parent;
-                anchors.margins: 1;
-            }
-
-            HoverHandler {
-                id: mouseHover;
-                acceptedDevices: PointerDevice.AllDevices;
-
-                onHoveredChanged: {
-                    if (!hovered)
-                        BarPopoutHelper.hoveredModule = null;
-                    else
-                        BarPopoutHelper.hoveredModule = BarPopoutHelper.targetModule;
-                }
-            }
-        }
+    anchors {
+        right: parent.right;
+        left: parent.left;
+        verticalCenter: parent.top;
+        
+        rightMargin: Styling.spacing
+        leftMargin: Styling.spacing
     }
 
-    Variants {
-        model: Quickshell.screens
+    BarModule {
+        color: Colors.tertiary;
 
-        PanelWindow {
-            id: barWindow;
+        visible: Styling.barBackground;
 
-            exclusiveZone: Visibilities.dashboard ? height + Styling.spacing : 0;
+        radius: 0;
 
-            surfaceFormat.opaque: false;
+        anchors {
+            margins: 0;
+            right: parent.right;
+            left: parent.left;
+        }
 
-            color: "transparent";
+        c_surface: Component { Item { } }
+    }
 
-            property var modelData;
-            screen: modelData;
+    SystemModule {
+        id: systemModule;
 
-            anchors {
-                top: true
-                left: true
-                right: true
-            }
+        anchors.left: parent.left;
+    }
 
-            implicitHeight: row.implicitHeight / 2;
+    MPCModule {
+        id: mpcModule;
 
-            Item {
-                id: row;
+        anchors.left: systemModule.right;
+    }
 
-                implicitHeight: (Styling.barHeight + Styling.spacing * 2) * 2;
+    FSettingsModule {
+        id: fSettingsModule;
 
-                anchors {
-                    right: parent.right;
-                    left: parent.left;
-                    verticalCenter: parent.top;
-                    
-                    rightMargin: Styling.spacing
-                    leftMargin: Styling.spacing
-                }
+        anchors.left: mpcModule.right;
+    }
 
-                BarModule {
-                    color: Colors.tertiary;
+    BarModule {
+        anchors.left: fSettingsModule.right;
+        anchors.right: windowModule.left;
 
-                    visible: Styling.barBackground;
+        visible: Styling.barSpacers;
+    }
 
-                    radius: 0;
+    WindowModule {
+        id: windowModule;
 
-                    anchors {
-                        margins: 0;
-                        right: parent.right;
-                        left: parent.left;
-                    }
+        anchors.horizontalCenter: parent.horizontalCenter;
+    }
 
-                    height: barWindow.height;
+    BarModule {
+        anchors.left: windowModule.right;
+        anchors.right: networkModule.left;
 
-                    c_surface: Component { Item { } }
-                }
+        visible: Styling.barSpacers;
+    }
 
-                SystemModule {
-                    id: systemModule;
+    NetworkModule {
+        id: networkModule;
 
-                    visible: root.unsecure;
+        anchors.right: powerModule.left;
+    }
 
-                    anchors.left: parent.left;
-                }
+    PowerModule {
+        id: powerModule
 
-                MPCModule {
-                    id: mpcModule;
+        anchors.right: timeModule.left;
+    }
 
-                    anchors.left: systemModule.right;
-                }
+    TimeModule {
+        id: timeModule
 
-                FSettingsModule {
-                    id: fSettingsModule;
+        anchors.right: parent.right;
+    }
 
-                    anchors.left: mpcModule.right;
-                }
+    Item {
+        anchors {
+            fill: BarPopoutHelper.targetModule;
+            margins: -Styling.spacing * 2;
+        }
 
-                BarModule {
-                    anchors.left: fSettingsModule.right;
-                    anchors.right: windowModule.left;
+        HoverHandler {
+            id: mouseHover;
+            acceptedDevices: PointerDevice.AllDevices;
 
-                    visible: Styling.barSpacers;
-                }
-
-                WindowModule {
-                    id: windowModule;
-
-                    visible: root.unsecure;
-
-                    anchors.horizontalCenter: parent.horizontalCenter;
-                }
-
-                BarModule {
-                    anchors.left: windowModule.right;
-                    anchors.right: networkModule.left;
-
-                    visible: Styling.barSpacers;
-                }
-
-                NetworkModule {
-                    id: networkModule;
-
-                    anchors.right: powerModule.left;
-                }
-
-                PowerModule {
-                    id: powerModule
-
-                    anchors.right: timeModule.left;
-                }
-
-                TimeModule {
-                    id: timeModule
-
-                    anchors.right: parent.right;
-                }
-
-                Item {
-                    anchors {
-                        fill: BarPopoutHelper.targetModule;
-                        margins: -Styling.spacing * 2;
-                    }
-
-                    HoverHandler {
-                        id: mouseHover;
-                        acceptedDevices: PointerDevice.AllDevices;
-
-                        onHoveredChanged: {
-                            if (!hovered)
-                                BarPopoutHelper.hoveredModule = null;
-                            else
-                                BarPopoutHelper.hoveredModule = BarPopoutHelper.targetModule;
-                        }
-                    }
-                }
+            onHoveredChanged: {
+                if (!hovered)
+                    BarPopoutHelper.hoveredModule = null;
+                else
+                    BarPopoutHelper.hoveredModule = BarPopoutHelper.targetModule;
             }
         }
     }

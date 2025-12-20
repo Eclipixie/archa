@@ -1,6 +1,6 @@
-import Quickshell
-import QtQuick
+pragma ComponentBehavior: Bound
 
+import QtQuick
 import Quickshell.Services.UPower
 
 import qs.config
@@ -8,6 +8,8 @@ import qs.services.system
 import qs.components.ui
 
 BarModule {
+    id: root
+
     text: profileChar() + " | " + 
         batteryChar() + " " + 
         MathUtil.roundPercentage(power) + "%";
@@ -99,7 +101,7 @@ BarModule {
                     verticalCenter: parent.verticalCenter
                 }
 
-                text.text: profileChar()
+                text.text: root.profileChar()
             }
 
             UITextModule {
@@ -115,8 +117,8 @@ BarModule {
                     leftMargin: Styling.spacing
                 }
 
-                text.text: batteryChar() + " " + MathUtil.roundPercentage(power) + "%"
-                text.color: getStatusColor()
+                text.text: root.batteryChar() + " " + MathUtil.roundPercentage(root.power) + "%"
+                text.color: root.getStatusColor()
             }
         }
     }
@@ -134,19 +136,6 @@ BarModule {
         bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
         bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
 
-        // UIButton {
-        //     id: saverButton
-
-        //     anchors {
-        //         verticalCenter: parent.verticalCenter
-        //         left: parent.left
-        //         margins: Styling.spacing
-        //     }
-
-        //     a_background.text.text: profiles[0].icon
-        //     onClicked: { Battery.setProfile(0) }
-        // }
-
         UISwatch {
             id: selector
 
@@ -157,7 +146,7 @@ BarModule {
                 leftMargin: Styling.spacing
             }
 
-            model: [profiles[0].icon, profiles[1].icon, profiles[2].icon]
+            model: [root.profiles[0].icon, root.profiles[1].icon, root.profiles[2].icon]
 
             group.checkedButton: group.buttons[PowerProfiles.profile]
 

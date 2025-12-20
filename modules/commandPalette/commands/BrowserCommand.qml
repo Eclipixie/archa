@@ -1,4 +1,3 @@
-import Quickshell
 import QtQuick
 import Quickshell.Io
 
@@ -22,19 +21,20 @@ ListCommand {
             let profiles = ZenProfiles.profiles;
 
             for (let i = 0; i < profiles.length; i++) {
-                sublist.push(profileCommand.createObject(null, { name: profiles[i] }));
+                root.sublist.push(root.profileCommand.createObject(null, { name: profiles[i] }));
             }
         }
     }
 
     component BrowserProfileListCommand : ListCommand {
+        id: bplcRoot
         property string name
 
         onExec: { browserStart.startDetached(); }
 
         property Process browserStart: Process {
             id: browserStart
-            command: ["zen-browser", "-P", name]
+            command: ["zen-browser", "-P", bplcRoot.name]
         }
     }
 

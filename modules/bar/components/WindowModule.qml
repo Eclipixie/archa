@@ -1,13 +1,8 @@
-import Quickshell
 import QtQuick
 import Quickshell.Hyprland
-import QtQuick.Controls
-import QtQuick.Layouts
 
-import qs.config
 import qs.services.apps
 import qs.components.ui
-import qs.components.primitives
 
 BarModule {
     id: root

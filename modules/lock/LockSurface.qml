@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Fusion
-import Quickshell
-import Quickshell.Wayland
 
 import qs.services.system
 import qs.config
@@ -110,7 +108,7 @@ Item {
 				font.family: Styling.fontFamily;
 
 				background: UIModule {
-					border.width: Styling.borders;
+					border.width: Styling.outlines;
 
 					color: root.context.showFailure ? 
 						Colors.error :

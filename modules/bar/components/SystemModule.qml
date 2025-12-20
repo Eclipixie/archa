@@ -1,4 +1,5 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts;
 
@@ -86,6 +87,8 @@ BarModule {
                         model: Temperature.temps
 
                         Item {
+                            id: tempsDelegate
+
                             required property string modelData
 
                             implicitWidth: tempContainer.width / 2 - Styling.spacing
@@ -95,7 +98,7 @@ BarModule {
                                 anchors.centerIn: parent
 
                                 id: textObject
-                                text: "󰔏" + Math.round(MathUtil.toDegrees(modelData)); 
+                                text: "󰔏" + Math.round(MathUtil.toDegrees(tempsDelegate.modelData)); 
                             }
                         }
                     }

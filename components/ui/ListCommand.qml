@@ -1,7 +1,6 @@
-import Quickshell
-import QtQuick
+pragma ComponentBehavior: Bound
 
-import qs.config
+import QtQuick
 
 QtObject {
     id: root;
@@ -35,6 +34,6 @@ QtObject {
     }
 
     property Component display: Component { UIList {
-        model: queryList(search);
+        model: root.queryList(root.search);
     } }
 }

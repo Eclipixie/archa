@@ -1,9 +1,9 @@
-import Quickshell
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 
 import qs.config
-import qs.components.primitives
 
 Item {
     id: root

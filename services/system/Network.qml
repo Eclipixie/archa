@@ -24,7 +24,7 @@ Singleton {
     Variants {
         id: v_networks
 
-        model: networkRows
+        model: root.networkRows
 
         delegate: AccessPoint {
             required property var modelData
@@ -42,7 +42,7 @@ Singleton {
         running: true;
         command: ["nmcli", "m"];
         stdout: SplitParser {
-            onRead: reloadNetworks();
+            onRead: root.reloadNetworks();
         }
     }
 

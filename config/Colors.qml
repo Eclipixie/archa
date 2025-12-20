@@ -3,7 +3,6 @@ pragma Singleton
 import Quickshell
 import Quickshell.Io
 import QtQuick
-import QtQuick.Shapes;
 
 Singleton {
     id: root;
@@ -29,11 +28,11 @@ Singleton {
     property string wallpaper: colors["image"] ?? "file:///home/eclipixie/Pictures/wallpapers/sunray-wallpaper.png";
 
     property ColorMap map: ColorMap {
-        primary:   dark ? "surface_variant" : "on_surface";
-        secondary: dark ? "on_surface"      : "surface_variant";
-        tertiary: (contrast == dark) ? "primary" : "surface_bright";
+        primary:   root.dark ? "surface_variant" : "on_surface";
+        secondary: root.dark ? "on_surface"      : "surface_variant";
+        tertiary: (root.contrast == root.dark) ? "primary" : "surface_bright";
 
-        gradient: (contrast == dark) ? 
+        gradient: (root.contrast == root.dark) ? 
             [ "primary", "secondary" ] :
             [ "surface_bright", "surface_container_highest" ];
 
@@ -44,8 +43,8 @@ Singleton {
     }
 
     property Gradient gradient: Gradient {
-        GradientStop { position: 0; color: colors[map?.gradient[0]] ?? "black"; }
-        GradientStop { position: 1; color: colors[map?.gradient[1]] ?? "red"; }
+        GradientStop { position: 0; color: root.colors[root.map?.gradient[0]] ?? "black"; }
+        GradientStop { position: 1; color: root.colors[root.map?.gradient[1]] ?? "red"; }
 
         orientation: Gradient.Vertical
     }

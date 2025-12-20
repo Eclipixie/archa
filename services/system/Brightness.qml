@@ -4,6 +4,8 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
+import qs.services.system
+
 Singleton {
     id: root;
     property string brightness: "0";
