@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Controls
 
 import qs.config
+import qs.components.primitives
 
 Item {
     id: root
@@ -23,21 +24,28 @@ Item {
         property int checkedButtonIndex: buttons.indexOf(checkedButton)
     }
 
-    Row {
-        id: row
-        spacing: Styling.spacing
+    UIModule {
+        implicitHeight: row.implicitHeight
+        implicitWidth: row.implicitWidth
 
-        Repeater {
-            model: root.model
-            delegate: UIRadioButton {
-                required property var modelData
+        Row {
+            id: row
+            spacing: Styling.spacing
 
-                a_background.text.text: modelData
+            Repeater {
+                model: root.model
+                delegate: UIRadioButton {
+                    required property var modelData
 
-                ButtonGroup.group: buttonGroup
+                    a_background.text.text: modelData
 
-                onClicked: {
-                    root.value = modelData;
+                    ButtonGroup.group: buttonGroup
+
+                    onClicked: {
+                        root.value = modelData;
+
+                        print(row.children[row.children.length - 2]);
+                    }
                 }
             }
         }

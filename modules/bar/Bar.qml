@@ -4,7 +4,6 @@ import qs.components.ui
 import qs.modules.bar.components
 import qs.config
 import qs.components.primitives
-import qs.util
 
 Item {
     id: row;
@@ -31,12 +30,9 @@ Item {
     UIModule {
         id: container
 
-        visible: Styling.barBackground;
+        radius: 0
 
-        topLeftRadius: 0
-        topRightRadius: 0
-
-        color: Colors.tertiary
+        color: Styling.barBackground ? Colors.tertiary : "transparent"
 
         anchors {
             fill: parent

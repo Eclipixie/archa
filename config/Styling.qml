@@ -7,9 +7,10 @@ import QtQuick
 Singleton {
     id: root;
 
-    property double spacing: 4;
-    property double outlines: 0;
-    property double barHeight: 30;
+    property double spacing: 4
+    property double outlines: 0
+    property double separator: 2
+    property double barHeight: 30
     property double barModuleRadius: barRadiusMode.capsule;
 
     property double lockScreenFontPointSize: 80;

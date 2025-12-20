@@ -12,10 +12,8 @@ BarModule {
         text.text: "󰣇";
     }
 
-    c_hoverContents: UIModule {
-        color: Colors.tertiary;
-
-        implicitHeight: col.height + Styling.spacing * 2;
+    c_hoverContents: Item {
+        implicitHeight: col.height;
         implicitWidth: col.width;
 
         Column {
@@ -26,8 +24,6 @@ BarModule {
             anchors {
                 left: parent.left
                 bottom: parent.bottom
-
-                margins: Styling.spacing;
             }
 
             Row {

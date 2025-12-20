@@ -13,8 +13,6 @@ BarModule {
     
     readonly property double power: Battery.percentage;
 
-    moduleActive: power <= 0.20;
-
     statusColor: getStatusColor();
 
     readonly property ProfileInfo currentProfile: profiles[PowerProfiles.profile]
@@ -124,14 +122,9 @@ BarModule {
     // 1 is balanced
     // 2 is performance
 
-    c_hoverContents: UIModule {
-        color: Colors.tertiary;
-
-        implicitHeight: Styling.barHeight + Styling.spacing * 2;
-        implicitWidth: (Styling.barHeight + Styling.spacing) * 3 - Styling.spacing;
-
-        bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
-        bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
+    c_hoverContents: Item {
+        implicitHeight: Styling.barHeight
+        implicitWidth: selector.implicitWidth
 
         UISwatch {
             id: selector
@@ -139,7 +132,6 @@ BarModule {
             anchors {
                 top: parent.top
                 horizontalCenter: parent.horizontalCenter
-                topMargin: Styling.spacing
             }
 
             model: [root.profiles[0].icon, root.profiles[1].icon, root.profiles[2].icon]

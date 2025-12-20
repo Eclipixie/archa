@@ -12,8 +12,6 @@ import qs.components.primitives
 BarModule {
     id: root;
 
-    moduleActive: !networkActive();
-
     function networkActive(): bool {
         return Network.active;
     }
@@ -68,12 +66,10 @@ BarModule {
         }
     }
 
-    c_hoverContents: UIModule {
+    c_hoverContents: Item {
         id: hoverRoot;
 
-        color: Colors.tertiary
-
-        implicitHeight: list.implicitHeight + controls.implicitHeight + Styling.spacing + Styling.spacing * 2;
+        implicitHeight: list.implicitHeight + controls.implicitHeight
         implicitWidth: 200;
 
         Item {
@@ -83,8 +79,6 @@ BarModule {
                 top: parent.top;
                 left: parent.left;
                 right: parent.right;
-
-                margins: Styling.spacing;
             }
 
             implicitHeight: Styling.barHeight;
@@ -116,30 +110,21 @@ BarModule {
             }
         }
 
-        ListView {
+        Column {
             id: list;
-            
-            implicitHeight: Math.min(800, 
-                Network.networks.length * (Styling.barHeight + Styling.spacing) - Styling.spacing);
 
             anchors {
                 top: controls.bottom;
                 left: parent.left;
                 right: parent.right;
-
-                margins: Styling.spacing;
+                topMargin: Styling.spacing
             }
 
-            Connections {
-                target: Network;
-                function onNetworksUpdated(newNetworks: var) { 
-                    list.model = newNetworks; 
-                }
+            Repeater {
+                model: Network.networks;
+
+                delegate: visualInfoRoot
             }
-
-            model: Network.networks;
-
-            delegate: visualInfoRoot
         }
 
         Component {
@@ -148,8 +133,8 @@ BarModule {
             Item {
                 id: visualInfo
 
-                height: Styling.barHeight + Styling.spacing;
-                width: hoverRoot.width - Styling.spacing * 2;
+                height: Styling.barHeight + Styling.spacing
+                width: hoverRoot.width
 
                 required property var modelData
 

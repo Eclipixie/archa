@@ -83,16 +83,13 @@ BarModule {
         }
     }
 
-    c_hoverContents: UIModule {
-        color: Colors.tertiary;
-
-        implicitHeight: Styling.barHeight * 3 + (2 * Styling.spacing) * 2;
+    c_hoverContents: Item {
+        implicitHeight: Styling.barHeight * 3 + Styling.spacing * 2
         implicitWidth: root.width;
 
         Column {
             anchors {
                 fill: parent
-                margins: Styling.spacing
             }
 
             spacing: Styling.spacing

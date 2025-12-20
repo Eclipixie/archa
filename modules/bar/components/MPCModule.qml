@@ -9,8 +9,6 @@ import qs.components.primitives
 BarModule {
     id: root;
 
-    // text: MPC.info;
-
     property bool songActive: !(MPC.statusInfo == "" || MPC.statusInfo == "!");
 
     c_surface: UITextModule {
@@ -20,8 +18,8 @@ BarModule {
     c_hoverContents: UIModule {
         color: Colors.tertiary;
 
-        implicitHeight: (Styling.barHeight + Styling.spacing) * 2 + Styling.spacing;
-        implicitWidth: (Styling.barHeight + Styling.spacing) * 7 + Styling.spacing;
+        implicitHeight: Styling.barHeight * 2 + Styling.spacing
+        implicitWidth: (Styling.barHeight + Styling.spacing) * 7 + Styling.spacing
 
         bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
         bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
@@ -33,8 +31,6 @@ BarModule {
                 left: parent.left;
                 right: parent.right;
                 top: parent.top;
-
-                margins: Styling.spacing;
             }
 
             UIButton {
@@ -123,8 +119,6 @@ BarModule {
                 left: parent.left;
                 right: parent.right;
                 bottom: parent.bottom;
-
-                margins: Styling.spacing;
             }
 
             button {
