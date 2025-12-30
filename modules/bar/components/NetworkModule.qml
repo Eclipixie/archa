@@ -26,6 +26,8 @@ BarModule {
     function statusChar(): string {
         if (!networkActive()) return "󰤮";
 
+        // print(Network.activeAP);
+
         if (Network.activeAP != null) {
             var strength = Network.activeAP.strength;
 
@@ -48,22 +50,6 @@ BarModule {
         id: surfaceRoot
 
         text.text: root.genText()
-
-        Connections {
-            target: Network
-
-            function onActiveDeviceChanged(): void {
-                surfaceRoot.text.text = root.genText();
-            }
-
-            function onActiveAPChanged(): void {
-                surfaceRoot.text.text = root.genText();
-            }
-
-            function networksUpdated(newNetworks): void {
-                print("updated");
-            }
-        }
     }
 
     c_hoverContents: Item {

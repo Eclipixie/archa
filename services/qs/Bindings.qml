@@ -28,7 +28,7 @@ Scope {
         name: "commandPalette"
         description: "Activate command palette"
         onPressed: {
-            Visibilities.commandPalette = !Visibilities.commandPalette;
+            Visibilities.launcher = !Visibilities.launcher;
         }
     }
 

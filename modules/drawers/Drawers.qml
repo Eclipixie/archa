@@ -1,9 +1,12 @@
 import Quickshell
 import QtQuick
+import Quickshell.Wayland
 
 import qs.config
 import qs.modules.bar
+import qs.modules.launcher
 import qs.util
+import qs.services.qs
 
 Variants {
     id: root
@@ -32,6 +35,7 @@ Variants {
             id: window
 
             exclusionMode: ExclusionMode.Ignore
+            WlrLayershell.keyboardFocus: Visibilities.launcher
 
             color: "transparent"
 
@@ -41,8 +45,6 @@ Variants {
                 right: true
                 bottom: true
             }
-
-            Bar { id: bar }
 
             mask: Region {
                 regions: regionMasks.masks
@@ -54,6 +56,17 @@ Variants {
                 id: regionMasks
 
                 bar: bar
+                launcher: launcher
+            }
+
+            Bar { id: bar }
+
+            Launcher {
+                id: launcher
+
+                anchors {
+                    centerIn: parent
+                }
             }
         }
     }

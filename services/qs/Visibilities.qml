@@ -5,5 +5,5 @@ import QtQuick
 
 Singleton {
     property bool dashboard: true;
-    property bool commandPalette: false;
+    property bool launcher: false;
 }

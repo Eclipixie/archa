@@ -9,8 +9,7 @@ import qs.services.system
 Singleton {
     id: root
     
-    readonly property string path: "/.zen/profiles.ini";
-    readonly property string absPath: System.home + path
+    readonly property string absPath: System.home + "/.zen/profiles.ini"
     property list<string> profiles: [];
 
     function parseProfiles(_profiles: string) {

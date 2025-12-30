@@ -8,8 +8,6 @@ import qs.components.primitives
 ListView {
     id: root;
 
-    implicitHeight: model.length * (Styling.barHeight + Styling.spacing) - Styling.spacing;
-
     delegate: listEntry;
 
     property Component listEntry: Component {
