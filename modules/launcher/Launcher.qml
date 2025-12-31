@@ -9,7 +9,7 @@ import qs.modules.launcher.entries
 UIModule {
     id: root
 
-    implicitHeight: search.height + list.height + Styling.spacing * 2
+    implicitHeight: search.implicitHeight + list.height + Styling.spacing
     implicitWidth: 300
 
     visible: Visibilities.launcher
@@ -114,8 +114,6 @@ UIModule {
 
                 margins: Styling.spacing
             }
-
-            height: 300
 
             sourceComponent: root.current?.list ?? null
         }

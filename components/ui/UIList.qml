@@ -10,6 +10,8 @@ ListView {
 
     delegate: listEntry;
 
+    implicitHeight: model.length * (Styling.barHeight + Styling.spacing)
+
     property Component listEntry: Component {
         Item {
             id: wrapper;
