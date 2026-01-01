@@ -43,8 +43,6 @@ Item {
 
                     onClicked: {
                         root.value = modelData;
-
-                        print(row.children[row.children.length - 2]);
                     }
                 }
             }

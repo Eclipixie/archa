@@ -7,6 +7,7 @@ import qs.modules.bar
 import qs.modules.launcher
 import qs.util
 import qs.services.qs
+import qs.components.primitives
 
 Variants {
     id: root
@@ -67,6 +68,13 @@ Variants {
                 anchors {
                     centerIn: parent
                 }
+            }
+
+            UIModule {
+                implicitHeight: 200
+                implicitWidth: 200
+
+                visible: Visibilities.controlPanel
             }
         }
     }

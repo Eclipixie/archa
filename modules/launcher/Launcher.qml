@@ -9,17 +9,26 @@ import qs.modules.launcher.entries
 UIModule {
     id: root
 
-    implicitHeight: search.implicitHeight + list.height + Styling.spacing
-    implicitWidth: 300
+    implicitHeight: search.implicitHeight + list.height + Styling.spacing * 3
+    implicitWidth: 500
 
     visible: Visibilities.launcher
 
-    onVisibleChanged: {
-        search.forceActiveFocus();
-        treePath = [];
-        search.text = "";
+    border {
+        width: Styling.outlines
+        color: Colors.secondary
+    }
 
-        root.current = root.tree.trace(root.treePath);
+    radius: Styling.barModuleRadius + Styling.spacing
+
+    onVisibleChanged: {
+        if (visible) {
+            search.forceActiveFocus();
+            treePath = [];
+            search.text = "";
+
+            root.current = root.tree.trace(root.treePath);
+        }
     }
 
     color: Colors.tertiary
@@ -41,9 +50,12 @@ UIModule {
     property Launchable current: tree
 
     Column {
-        anchors.fill: parent
-
         spacing: Styling.spacing
+
+        anchors {
+            fill: parent
+            margins: Styling.outlines + Styling.spacing
+        }
 
         TextField {
             id: search
@@ -70,7 +82,8 @@ UIModule {
             }
 
             Keys.onEscapePressed: {
-                if (root.treePath.length == 0) Visibilities.launcher = false;
+                if (root.treePath.length == 0)
+                    Visibilities.launcher = false;
 
                 root.treePath.pop();
 
@@ -94,8 +107,9 @@ UIModule {
 
                 selected.launch();
                 
-                if (root.current.branches.length == 0) {
+                if (selected.branches.length == 0) {
                     root.treePath = [];
+                    Visibilities.launcher = false;
                 }
                 else {
                     root.treePath.push(selected.name);
@@ -111,8 +125,6 @@ UIModule {
             anchors {
                 left: parent.left
                 right: parent.right
-
-                margins: Styling.spacing
             }
 
             sourceComponent: root.current?.list ?? null

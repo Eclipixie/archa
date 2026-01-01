@@ -1,3 +1,4 @@
+import QtQuick
 import Quickshell
 
 import qs.services.qs
@@ -6,13 +7,22 @@ import qs.widgets
 Scope {
     id: root;
 
-    property bool launcherInterrupted;
-
-    CustomShortcut {
-        name: "dashboard";
-        description: "Toggle the dashboard"
-        onPressed: {
-            Visibilities.dashboard = !Visibilities.dashboard;
+    property QtObject keyboardLayers: QtObject {
+        property string base: "󱊷󰃞󰃠" + Visibilities.controlPanel ? "󰖮" : "󰖱" + "󱂬󰥻󰌌󰒮󰐎󰒭󰕿󰖀󰕾󰐥" +
+            "`1234567890-=" +
+            "󰌒qwertyuiop   " +
+            "󰌎asdfghjkl;'󰌑" +
+            "󰘶zxcvbnm,./󰘶" +
+            "󰊕󰘴󰘵󰘳 󰘳󰘵󰁍󰁝󰁅󰁔"
+        property var sup: {
+            "q": "",
+            "e": "󰉋",
+            // "s": Visibilities.controlPanel ? "󰖮" : "󰖱",
+            "l": "󰌾",
+            "b": "󰖟"
+        }
+        property var supShift: {
+            "p": "󰌧"
         }
     }
 
@@ -29,6 +39,14 @@ Scope {
         description: "Activate command palette"
         onPressed: {
             Visibilities.launcher = !Visibilities.launcher;
+        }
+    }
+
+    CustomShortcut {
+        name: "controlPanel"
+        description: "Toggle control panel"
+        onPressed: {
+            Visibilities.controlPanel = !Visibilities.controlPanel
         }
     }
 

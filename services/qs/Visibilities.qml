@@ -4,6 +4,6 @@ import Quickshell
 import QtQuick
 
 Singleton {
-    property bool dashboard: true;
-    property bool launcher: false;
+    property bool launcher: false
+    property bool controlPanel: false
 }

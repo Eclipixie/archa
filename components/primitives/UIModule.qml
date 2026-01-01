@@ -12,11 +12,6 @@ Rectangle {
 
     radius: Styling.barModuleRadius;
 
-    border {
-        color: Colors.tertiary;
-        width: Styling.outlines;
-    }
-
     Behavior on color { Anim.ColorAnim { } }
 
     Behavior on implicitWidth { Anim.NumberAnim { } }

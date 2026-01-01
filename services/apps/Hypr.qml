@@ -16,6 +16,9 @@ Singleton {
         let workspaceNames = [];
 
         for (var i = 0; i < workspaces.length; i++) {
+            // filtering out special workspaces
+            if (isNaN(workspaces[i].name))
+                continue;
             workspaceNames.push(workspaces[i].name);
         }
 

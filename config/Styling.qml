@@ -8,7 +8,7 @@ Singleton {
     id: root;
 
     property double spacing: 4
-    property double outlines: 0
+    property double outlines: 2
     property double separator: 2
     property double barHeight: 30
     property double barModuleRadius: barRadiusMode.capsule;
