@@ -3,6 +3,7 @@ import Quickshell
 
 import qs.services.qs
 import qs.widgets
+import qs.config
 
 Scope {
     id: root;
