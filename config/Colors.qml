@@ -25,7 +25,7 @@ Singleton {
     property string error: colors[map?.error] ?? "#ffb4ab";
     property string warning: colors[map?.warning] ?? "#f1c40f";
 
-    property string wallpaper: colors["image"] ?? "file:///home/eclipixie/Pictures/wallpapers/sunray-wallpaper.png";
+    property string wallpaper: "file:///home/eclipixie/" + (colors["image"] ?? "Pictures/wallpapers/sunray-wallpaper.png")
 
     property ColorMap map: ColorMap {
         primary:   root.dark ? "surface_variant" : "on_surface";
@@ -65,6 +65,8 @@ Singleton {
 
                     newColors[split[0].trim()] = split[1].trim();
                 }
+
+                print(newColors["image"]);
 
                 root.colors = newColors;
             }
