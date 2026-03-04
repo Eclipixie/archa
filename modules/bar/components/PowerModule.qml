@@ -6,7 +6,6 @@ import Quickshell.Services.UPower
 import qs.config
 import qs.services.system
 import qs.components.ui
-import qs.components.primitives
 
 BarModule {
     id: root
@@ -136,10 +135,9 @@ BarModule {
 
             model: [root.profiles[0].icon, root.profiles[1].icon, root.profiles[2].icon]
 
-            group.checkedButton: group.buttons[PowerProfiles.profile]
-
-            onValueChanged: {
-                Battery.setProfile(group.checkedButtonIndex);
+            onClicked: function(newValue: string) {
+                if (index >= 0)
+                    Battery.setProfile(index);
             }
         }
     }

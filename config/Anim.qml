@@ -8,7 +8,7 @@ import qs.config
 Singleton {
     id: root
 
-    property int duration: 200
+    property int duration: 100
     property var easing: Easing.InOutCubic
 
     component NumberAnim: NumberAnimation {

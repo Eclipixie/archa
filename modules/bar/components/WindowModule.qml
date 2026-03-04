@@ -11,12 +11,20 @@ BarModule {
         UISwatch {
             id: swatch
 
-            group.checkedButton: group.buttons[Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)] ?? null
+            index: Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
+
+            Connections {
+                target: Hypr
+
+                function onFocusedWorkspaceIDChanged() {
+                    swatch.index = Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
+                }
+            }
 
             model: Hypr.workspaceIDs
 
-            onValueChanged: {
-                Hyprland.dispatch("workspace " + value);
+            onClicked: function(newValue: string) {
+                Hyprland.dispatch("workspace " + newValue);
             }
         }
     }
