@@ -14,10 +14,10 @@ UIModule {
 
     visible: Visibilities.launcher
 
-    border {
-        width: Styling.outlines
-        color: Colors.secondary
-    }
+    // border {
+    //     width: Styling.outlines
+    //     color: Colors.secondary
+    // }
 
     radius: Styling.barModuleRadius + Styling.spacing
 
@@ -43,7 +43,8 @@ UIModule {
         name: "root"
 
         branches: [
-            BrowserLauncher { }
+            BrowserLauncher { },
+            SettingsLauncher { }
         ]
     }
 
@@ -54,7 +55,7 @@ UIModule {
 
         anchors {
             fill: parent
-            margins: Styling.outlines + Styling.spacing
+            margins: Styling.spacing
         }
 
         TextField {
@@ -89,6 +90,7 @@ UIModule {
 
                 text = "";
 
+                root.current.reset();
                 root.current = root.tree.trace(root.treePath);
             }
 
@@ -115,6 +117,7 @@ UIModule {
                     root.treePath.push(selected.name);
                 }
 
+                root.current.reset();
                 root.current = root.tree.trace(root.treePath);
             }
         }

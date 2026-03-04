@@ -31,7 +31,10 @@ Singleton {
     Process {
         id: p_matugen
         property string wallpaper: ""
-        command: ["matugen", "image", root.absWallpaperLoc + wallpaper]
+        command: ["matugen", "image", 
+            "--source-color-index", "0", 
+            "-q", 
+            root.absWallpaperLoc + wallpaper]
     }
 
     function wallpaper(name: string): void {

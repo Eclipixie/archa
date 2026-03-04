@@ -17,6 +17,10 @@ QtObject {
 
     signal launch()
 
+    function reset(): void {
+        searched = branches
+    }
+
     function searchList(search: string): void {
         searched = branches.filter((launchable) => launchable.name.includes(search));
     }
