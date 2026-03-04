@@ -9,15 +9,10 @@ import qs.modules.launcher.entries
 UIModule {
     id: root
 
-    implicitHeight: search.implicitHeight + list.height + Styling.spacing * 3
+    implicitHeight: search.implicitHeight + list.height + Styling.spacing * 2
     implicitWidth: 500
 
     visible: Visibilities.launcher
-
-    // border {
-    //     width: Styling.outlines
-    //     color: Colors.secondary
-    // }
 
     radius: Styling.barModuleRadius + Styling.spacing
 

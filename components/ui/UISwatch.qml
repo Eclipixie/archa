@@ -10,7 +10,11 @@ UIModule {
     id: root
 
     implicitHeight: row.implicitHeight
-    implicitWidth: row.implicitWidth
+    implicitWidth: collapsed ? Styling.barHeight : row.implicitWidth
+
+    Behavior on implicitWidth { Anim.NumberAnim { } }
+
+    property bool collapsed: false
 
     required property list<string> model
 
@@ -64,7 +68,9 @@ UIModule {
 
         Behavior on x { Anim.NumberAnim { } }
 
-        x: root.group.buttons[root.index]?.x ?? 0
+        x: root.collapsed ? 
+            (root.implicitWidth - Styling.barHeight) / 2
+            : root.group.buttons[root.index]?.x ?? 0
 
         a_background.text.text: root.group.buttons[root.index]?.value ?? ""
 
