@@ -58,4 +58,17 @@ Scope {
             Colors.updateColors();
         }
     }
+
+    CustomShortcut {
+        name: "super"
+        description: "Bind for detecting when SUPER key is pressed"
+        onPressed: {
+            Visibilities.superDown = true
+            print("down")
+        }
+        onReleased: {
+            Visibilities.superDown = false
+            print("up")
+        }
+    }
 }

@@ -59,7 +59,7 @@ UIModule {
         }
     }
 
-    UIRadioButton {
+    UIButton {
         id: selector
 
         enabled: false
@@ -70,11 +70,8 @@ UIModule {
 
         x: root.collapsed ? 
             (root.implicitWidth - Styling.barHeight) / 2
-            : root.group.buttons[root.index]?.x ?? 0
+            : Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
 
         a_background.text.text: root.group.buttons[root.index]?.value ?? ""
-
-        width: Styling.barHeight
-        height: Styling.barHeight
     }
 }

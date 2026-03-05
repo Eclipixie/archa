@@ -1,8 +1,10 @@
 import QtQuick
 import Quickshell.Hyprland
 
+import qs.config
 import qs.services.apps
 import qs.components.ui
+import qs.services.qs
 
 BarModule {
     id: root
@@ -13,17 +15,13 @@ BarModule {
 
             index: Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
 
-            collapsed: true
+            collapsed: !(hover.hovered || Visibilities.superDown)
 
-            Timer {
-                id: timer
+            HoverHandler {
+                id: hover
+                acceptedDevices: PointerDevice.AllDevices
 
-                interval: 2000
-                repeat: false
-
-                onTriggered: {
-                    swatch.collapsed = true
-                }
+                margin: Styling.spacing
             }
 
             Connections {
@@ -36,23 +34,8 @@ BarModule {
 
             model: Hypr.workspaceIDs
 
-            onIndexChanged: { 
-                swatch.collapsed = false
-
-                timer.running = true
-            }
-
             onClicked: function(newValue: string) {
                 Hyprland.dispatch("workspace " + newValue);
-            }
-
-            Keys.enabled: true
-
-            Keys.onPressed: (event) => {
-                print("event")
-                if (event.key == Qt.Key_Left) {
-                    print("super")
-                }
             }
         }
     }
