@@ -9,11 +9,9 @@ import qs.components.primitives
 ComboBox {
     id: root
 
-    property alias surfaceBackground: o_background
+    property UITextModule surface: o_background
 
-    background: o_background
-    
-    UITextModule {
+    background: UITextModule {
         id: o_background
         text.text: root.currentText
 

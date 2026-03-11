@@ -6,7 +6,7 @@ import qs.config
 RadioButton {
     id: root;
 
-    property alias a_background: backgroundObject
+    property UITextModule surface: backgroundObject
 
     property bool forceSquare: true;
 
