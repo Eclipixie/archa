@@ -11,21 +11,21 @@ Item {
     property string textColor: statusColor == "" ? Colors.secondary : statusColor;
     property string statusColor: "";
 
-    property Component c_surface: Component { UIModule { } }
+    property Item surface: surfaceObject
+
+    // property Component c_surface: Component { UIModule { } }
 
     property Component c_hoverContents
-
-    property alias surface: surfaceLoader.item
 
     readonly property bool open: (surfaceHover.hovered || dropdownHover.hovered) && 
         root.c_hoverContents != null
 
     implicitWidth: open ? 
-        Math.max(surfaceLoader.implicitWidth, dropdownLoader.implicitWidth) :
-        surfaceLoader.implicitWidth
+        Math.max(surface.implicitWidth, dropdownLoader.implicitWidth) :
+        surface.implicitWidth
     implicitHeight: open ?
-        surfaceLoader.implicitHeight + dropdownLoader.implicitHeight + Styling.spacing :
-        surfaceLoader.implicitHeight
+        surface.implicitHeight + dropdownLoader.implicitHeight + Styling.spacing * 2 :
+        surface.implicitHeight
 
     Behavior on implicitHeight { Anim.NumberAnim { } }
 
@@ -44,12 +44,14 @@ Item {
 
         anchors {
             fill: parent
-            margins: -Styling.spacing
+            // margins: root.open ? -Styling.spacing : 0
         }
     }
 
     Loader {
         id: dropdownLoader
+
+        active: root.open
 
         sourceComponent: root.c_hoverContents
 
@@ -57,6 +59,7 @@ Item {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
+            margins: Styling.spacing
         }
 
         HoverHandler {
@@ -67,19 +70,10 @@ Item {
         }
     }
 
-    Rectangle {
-        color: Colors.tertiary
+    Item {
+        id: surfaceObject
 
-        anchors {
-            fill: surfaceLoader
-            margins: -Styling.spacing
-        }
-    }
-
-    Loader {
-        id: surfaceLoader
-
-        sourceComponent: root.c_surface
+        implicitHeight: Styling.barHeight
 
         anchors {
             top: parent.top

@@ -18,8 +18,8 @@ Singleton {
     property string fontFamily: "FiraCode Nerd Font Propo";
     property list<string> availableFonts: []
 
-    property bool barSpacers: true;
-    property bool barBackground: true;
+    property bool barSpacers: false;
+    property bool barBackground: false;
 
     property font bodyFont: ({
         family: root.fontFamily,

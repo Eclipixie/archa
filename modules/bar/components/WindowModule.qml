@@ -9,34 +9,31 @@ import qs.services.qs
 BarModule {
     id: root
 
-    c_surface: Component {
-        UISwatch {
-            id: swatch
+    surface {
+        implicitWidth: swatch.implicitWidth
 
-            index: Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
+        children: [
+            UISwatch {
+                id: swatch
 
-            collapsed: !(hover.hovered || Visibilities.superDown)
+                index: Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
 
-            HoverHandler {
-                id: hover
-                acceptedDevices: PointerDevice.AllDevices
+                collapsed: !(root.open || Visibilities.superDown)
 
-                margin: Styling.spacing
-            }
+                Connections {
+                    target: Hypr
 
-            Connections {
-                target: Hypr
+                    function onFocusedWorkspaceIDChanged() {
+                        swatch.index = Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
+                    }
+                }
 
-                function onFocusedWorkspaceIDChanged() {
-                    swatch.index = Hypr.workspaceIDs.indexOf(Hypr.focusedWorkspaceID)
+                model: Hypr.workspaceIDs
+
+                onClicked: function(newValue: string) {
+                    Hyprland.dispatch("workspace " + newValue);
                 }
             }
-
-            model: Hypr.workspaceIDs
-
-            onClicked: function(newValue: string) {
-                Hyprland.dispatch("workspace " + newValue);
-            }
-        }
+        ]
     }
 }

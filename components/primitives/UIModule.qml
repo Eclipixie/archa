@@ -18,4 +18,6 @@ Rectangle {
     Behavior on implicitHeight { Anim.NumberAnim { } }
     Behavior on x { Anim.NumberAnim { } }
     Behavior on y { Anim.NumberAnim { } }
+
+    Behavior on anchors.margins { Anim.NumberAnim { } }
 }

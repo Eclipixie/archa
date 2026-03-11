@@ -8,8 +8,15 @@ import qs.components.ui
 BarModule {
     id: root;
 
-    c_surface: UITextModule {
-        text.text: root.timeChar() + " " + Qt.formatDateTime(Time.clock.date, "hh:mm:ss");
+    surface {
+        implicitWidth: surfaceRoot.implicitWidth
+
+        children: [
+            UITextModule {
+                id: surfaceRoot
+                text.text: root.timeChar() + " " + Qt.formatDateTime(Time.clock.date, "hh:mm:ss");
+            }
+        ]
     }
 
     function timeChar(): string {

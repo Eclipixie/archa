@@ -9,8 +9,10 @@ import qs.components.primitives
 UIModule {
     id: root
 
+    color: Colors.tertiary
+
     implicitHeight: row.implicitHeight
-    implicitWidth: collapsed ? Styling.barHeight : row.implicitWidth
+    implicitWidth: collapsed ? Styling.barHeight : row.uncollapsedWidth
 
     Behavior on implicitWidth { Anim.NumberAnim { } }
 
@@ -37,9 +39,13 @@ UIModule {
 
     Row {
         id: row
-        spacing: Styling.spacing
+        spacing: (root.width - (Styling.barHeight * repeater.count)) / (repeater.count - 1)
+
+        property int uncollapsedWidth: repeater.count * (Styling.barHeight + Styling.spacing) - Styling.spacing
 
         Repeater {
+            id: repeater
+
             model: root.model
             delegate: UIButton {
                 required property var modelData
@@ -66,11 +72,9 @@ UIModule {
 
         checked: true
 
-        Behavior on x { Anim.NumberAnim { } }
+        // Behavior on x { Anim.NumberAnim { } }
 
-        x: root.collapsed ? 
-            (root.implicitWidth - Styling.barHeight) / 2
-            : Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
+        x: Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
 
         surface.text.text: root.group.buttons[root.index]?.value ?? ""
     }

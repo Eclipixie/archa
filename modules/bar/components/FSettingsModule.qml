@@ -33,11 +33,10 @@ BarModule {
         return out;
     }
 
-    c_surface: Component {
-        Item {
-            implicitHeight: Styling.barHeight
-            implicitWidth: sinkReadout.implicitWidth + sourceReadout.implicitWidth + brightnessReadout.implicitWidth + Styling.spacing * 2;
+    surface {
+        implicitWidth: sinkReadout.implicitWidth + sourceReadout.implicitWidth + brightnessReadout.implicitWidth + Styling.spacing * 2;
 
+        children: [
             UITextModule {
                 id: sinkReadout
 
@@ -50,8 +49,7 @@ BarModule {
                 }
 
                 text.text: root.sinkChar() + " " + MathUtil.roundPercentage(Audio.sinkVolume) + "%"
-            }
-
+            },
             UITextModule {
                 id: sourceReadout
 
@@ -64,8 +62,7 @@ BarModule {
                 }
 
                 text.text: root.sourceChar() + " " + MathUtil.roundPercentage(Audio.sourceVolume) + "%"
-            }
-
+            },
             UITextModule {
                 id: brightnessReadout
 
@@ -80,7 +77,7 @@ BarModule {
 
                 text.text: root.brightnessChar() + " " + Brightness.brightness + "%"
             }
-        }
+        ]
     }
 
     c_hoverContents: Item {

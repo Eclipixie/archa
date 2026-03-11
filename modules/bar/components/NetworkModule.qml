@@ -46,10 +46,21 @@ BarModule {
         return "󰤨";
     }
 
-    c_surface: UITextModule {
-        id: surfaceRoot
+    surface {
+        implicitWidth: surfaceRoot.implicitWidth
 
-        text.text: root.genText()
+        children: [
+            UITextModule {
+                id: surfaceRoot
+
+                text.text: root.genText()
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+        ]
     }
 
     c_hoverContents: Item {

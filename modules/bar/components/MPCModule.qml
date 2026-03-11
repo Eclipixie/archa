@@ -13,18 +13,27 @@ BarModule {
 
     property bool songActive: !(MPC.statusInfo == "" || MPC.statusInfo == "!");
 
-    c_surface: UITextModule {
-        text.text: MPC.info
+    surface {
+        implicitWidth: readout.implicitWidth
+
+        children: [
+            UITextModule {
+                id: readout
+                text.text: MPC.info
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+        ]
     }
 
     c_hoverContents: UIModule {
         color: Colors.tertiary;
 
         implicitHeight: row.implicitHeight + seekSlider.implicitHeight + Styling.spacing
-        implicitWidth: row.implicitWidth
-
-        bottomLeftRadius: Styling.barModuleRadius + Styling.spacing;
-        bottomRightRadius: Styling.barModuleRadius + Styling.spacing;
+        implicitWidth: row.implicitWidth + Styling.spacing * 2 // nfi why i need to add padding here
 
         RowLayout {
             id: row
@@ -33,7 +42,7 @@ BarModule {
 
             anchors {
                 left: parent.left;
-                // right: parent.right;
+                right: parent.right;
                 top: parent.top;
             }
 

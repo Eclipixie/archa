@@ -77,11 +77,11 @@ BarModule {
         return Colors.secondary;
     }
 
-    c_surface: Component {
-        Item {
-            implicitHeight: Styling.barHeight
-            implicitWidth: profileReadout.implicitWidth + powerReadout.implicitWidth + Styling.spacing
+    surface {
+        implicitHeight: Styling.barHeight
+        implicitWidth: profileReadout.implicitWidth + powerReadout.implicitWidth + Styling.spacing
 
+        children: [
             UITextModule {
                 id: profileReadout
 
@@ -96,8 +96,7 @@ BarModule {
                 }
 
                 text.text: root.profileChar()
-            }
-
+            },
             UITextModule {
                 id: powerReadout
 
@@ -114,7 +113,7 @@ BarModule {
                 text.text: root.batteryChar() + " " + MathUtil.roundPercentage(root.power) + "%"
                 text.color: root.getStatusColor()
             }
-        }
+        ]
     }
 
     // 0 is power saver

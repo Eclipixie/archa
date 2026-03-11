@@ -8,8 +8,20 @@ import qs.components.ui
 import qs.components.primitives
 
 BarModule {
-    c_surface: UITextModule {
-        text.text: "󰣇";
+    surface {
+        implicitWidth: Styling.barHeight
+        children: [
+            UITextModule {
+                text.text: "󰣇";
+
+                implicitWidth: implicitHeight
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+        ]
     }
 
     c_hoverContents: Item {
