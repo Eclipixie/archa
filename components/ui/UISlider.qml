@@ -35,6 +35,8 @@ Item {
     Slider {
         id: sliderObject;
 
+        property UIModule surface: o_background
+
         from: 0;
         to: 1;
 
@@ -47,6 +49,7 @@ Item {
         }
 
         background: UIModule {
+            id: o_background
             anchors.fill: parent;
 
             border.width: 0;

@@ -19,15 +19,37 @@ Launchable {
             
             branches: root.wallpaperVariants.instances
         },
-        BoolLauncher {
-            name: "dark"
+        Launchable {
+            name: "colour"
 
-            onLaunchBool: function(value) { Colors.dark = value }
+            branches: [
+                BoolLauncher {
+                    name: "dark"
+
+                    onLaunchBool: function(value) { Colors.dark = value }
+                },
+                BoolLauncher {
+                    name: "contrast"
+
+                    onLaunchBool: function(value) { Colors.contrast = value }
+                }
+            ]
         },
-        BoolLauncher {
-            name: "contrast"
+        Launchable {
+            name: "bar"
 
-            onLaunchBool: function(value) { Colors.contrast = value }
+            branches: [
+                BoolLauncher {
+                    name: "background"
+
+                    onLaunchBool: function(value) { Styling.barBackground = value }
+                },
+                BoolLauncher {
+                    name: "spacers"
+
+                    onLaunchBool: function(value) { Styling.barSpacers = value }
+                }
+            ]
         }
     ]
 
