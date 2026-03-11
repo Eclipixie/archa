@@ -3,7 +3,7 @@ import QtQuick
 import qs.components.primitives
 
 UIModule {
-    readonly property alias text: o_text
+    property UIText text: o_text
 
     implicitWidth: text.implicitWidth + (implicitHeight - text.implicitHeight) * 2
 

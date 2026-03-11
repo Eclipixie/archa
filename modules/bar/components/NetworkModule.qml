@@ -83,13 +83,13 @@ BarModule {
                 }
 
                 UIButton {
-                    a_background.text.text: "󰤮";
+                    surface.text.text: "󰤮";
 
                     enabled: root.networkActive();
                 }
 
                 UIButton {
-                    a_background.text.text: "󰑓";
+                    surface.text.text: "󰑓";
 
                     onClicked: Network.reloadNetworks();
                 }

@@ -34,8 +34,8 @@ BarModule {
                 UIButton {
                     forceSquare: false;
 
-                    a_background.text {
-                        text: "󰒓 󰕾";
+                    surface {
+                        text.text: "󰒓 󰕾";
                     }
 
                     onClicked: System.pavucontrol();
@@ -44,8 +44,8 @@ BarModule {
                 UIButton {
                     forceSquare: false;
 
-                    a_background.text {
-                        text: "󰒓 󰖯";
+                    surface {
+                        text.text: "󰒓 󰖯";
                     }
 
                     onClicked: System.nwglook();
@@ -116,24 +116,24 @@ BarModule {
                     anchors.centerIn: parent;
 
                     UIButton {
-                        a_background.text {
-                            text: "󰐥";
+                        surface {
+                            text.text: "󰐥";
                         }
 
                         onClicked: System.poweroff();
                     }
 
                     UIButton {
-                        a_background.text {
-                            text: "󰜉";
+                        surface {
+                            text.text: "󰜉";
                         }
 
                         onClicked: System.reboot();
                     }
 
                     UIButton {
-                        a_background.text {
-                            text: "󰤄";
+                        surface {
+                            text.text: "󰤄";
                         }
 
                         onClicked: System.suspend();

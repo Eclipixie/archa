@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 
@@ -29,15 +31,20 @@ BarModule {
 
             anchors {
                 left: parent.left;
-                right: parent.right;
+                // right: parent.right;
                 top: parent.top;
             }
 
             UIButton {
                 id: backButton;
 
-                a_background.text {
-                    text: "";
+                surface {
+                    text {
+                        text: "";
+                    }
+                    
+                    topRightRadius: 0
+                    bottomRightRadius: 0
                 }
 
                 onClicked: MPC.flowControls.mainControl("prev");
@@ -48,8 +55,12 @@ BarModule {
             UIButton {
                 id: playPauseButton;
 
-                a_background.text {
-                    text: MPC.statusInfo;
+                surface {
+                    text {
+                        text: MPC.statusInfo;
+                    }
+
+                    radius: 0
                 }
 
                 onClicked: MPC.flowControls.mainControl("toggle");
@@ -58,8 +69,13 @@ BarModule {
             UIButton {
                 id: nextButton;
 
-                a_background.text {
-                    text: "";
+                surface {
+                        text {
+                        text: "";
+                    }
+
+                    topLeftRadius: 0
+                    bottomLeftRadius: 0
                 }
 
                 onClicked: MPC.flowControls.mainControl("next");
@@ -70,9 +86,14 @@ BarModule {
             UIButton {
                 id: repeatButton;
 
-                a_background.text {
-                    text: "";
-                    color: MPC.flowControls.repeat ? Colors.active : Colors.secondary;
+                surface {
+                    text {
+                        text: "";
+                        color: MPC.flowControls.repeat ? Colors.active : Colors.secondary;
+                    }
+
+                    topRightRadius: 0
+                    bottomRightRadius: 0
                 }
 
                 onClicked: MPC.flowControls.control("repeat");
@@ -81,9 +102,13 @@ BarModule {
             UIButton {
                 id: randomButton;
 
-                a_background.text {
-                    text: "";
-                    color: MPC.flowControls.random ? Colors.active : Colors.secondary;
+                surface { 
+                    text {
+                        text: "";
+                        color: MPC.flowControls.random ? Colors.active : Colors.secondary;
+                    }
+
+                    radius: 0
                 }
 
                 onClicked: MPC.flowControls.control("random");
@@ -92,20 +117,29 @@ BarModule {
             UIButton {
                 id: consumeButton;
 
-                a_background.text {
-                    text: "";
-                    color: MPC.flowControls.consume ? Colors.active : Colors.secondary;
-                }
-
                 onClicked: MPC.flowControls.control("consume");
+
+                surface {
+                    radius: 0
+
+                    text {
+                        text: "";
+                        color: MPC.flowControls.consume ? Colors.active : Colors.secondary;
+                    }
+                }
             }
 
             UIButton {
                 id: singleButton;
 
-                a_background.text {
-                    text: "";
-                    color: MPC.flowControls.single ? Colors.active : Colors.secondary;
+                surface {
+                    text {
+                        text: "";
+                        color: MPC.flowControls.single ? Colors.active : Colors.secondary;
+                    }
+
+                    topLeftRadius: 0
+                    bottomLeftRadius: 0
                 }
 
                 onClicked: MPC.flowControls.control("single");
@@ -122,8 +156,10 @@ BarModule {
             }
 
             button {
-                a_background.text {
-                    text: ""
+                surface {
+                    text {
+                        text: ""
+                    }
                 }
 
                 onClicked: MPC.flowControls.mainControl("stop");

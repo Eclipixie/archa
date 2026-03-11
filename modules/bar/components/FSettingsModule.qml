@@ -102,15 +102,21 @@ BarModule {
                     right: parent.right
                 }
 
-                button.a_background.text.text: root.sinkChar();
+                button {
+                    surface {
+                        text { text: root.sinkChar() }
+                    }
+                }
 
                 button.onClicked: Audio.toggleSinkMute();
 
-                slider.onValueChanged: {
-                    Audio.setSinkVolume(slider.value);
-                }
+                slider {
+                    onValueChanged: {
+                        Audio.setSinkVolume(slider.value);
+                    }
 
-                slider.value: Audio.sinkVolume;
+                    value: Audio.sinkVolume;
+                }
             }
 
             UISlider {
@@ -121,15 +127,21 @@ BarModule {
                     right: parent.right
                 }
 
-                button.a_background.text.text: root.sourceChar();
+                button { 
+                    surface { 
+                        text { text: root.sourceChar() }
+                    }
 
-                button.onClicked: Audio.toggleSourceMute();
-
-                slider.onValueChanged: {
-                    Audio.setSourceVolume(slider.value);
+                    onClicked: Audio.toggleSourceMute();
                 }
 
-                slider.value: Audio.sourceVolume;
+                slider {
+                    onValueChanged: {
+                        Audio.setSourceVolume(slider.value);
+                    }
+
+                    value: Audio.sourceVolume;
+                }
             }
 
             UISlider {
@@ -140,16 +152,18 @@ BarModule {
                     right: parent.right
                 }
 
-                button.a_background.text.text: root.brightnessChar();
+                button.surface.text.text: root.brightnessChar();
 
-                slider.to: 100;
-                slider.stepSize: 1;
+                slider {
+                    to: 100;
+                    stepSize: 1;
 
-                slider.onValueChanged: {
-                    Brightness.setBrightness(slider.value);
+                    onValueChanged: {
+                        Brightness.setBrightness(slider.value);
+                    }
+
+                    value: Brightness.brightness;
                 }
-
-                slider.value: Brightness.brightness;
             }
         }
     }

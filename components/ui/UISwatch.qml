@@ -46,7 +46,7 @@ UIModule {
 
                 property string value: modelData
 
-                a_background.text.text: value
+                surface.text.text: value
 
                 ButtonGroup.group: root.group
 
@@ -72,6 +72,6 @@ UIModule {
             (root.implicitWidth - Styling.barHeight) / 2
             : Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
 
-        a_background.text.text: root.group.buttons[root.index]?.value ?? ""
+        surface.text.text: root.group.buttons[root.index]?.value ?? ""
     }
 }

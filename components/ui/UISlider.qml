@@ -25,6 +25,11 @@ Item {
             leftMargin: (root.height - width) * .5;
             rightMargin: (root.height - width) * .5;
         }
+
+        surface {
+            topRightRadius: 0
+            bottomRightRadius: 0
+        }
     }
 
     Slider {
@@ -60,6 +65,9 @@ Item {
                     margins: sliderObject.leftPadding + sliderObject.handle.width / 2;
                 }
             }
+
+            topLeftRadius: 0
+            bottomLeftRadius: 0
         }
 
         handle: Rectangle {
