@@ -14,8 +14,6 @@ UIModule {
     implicitHeight: row.implicitHeight
     implicitWidth: collapsed ? Styling.barHeight : row.uncollapsedWidth
 
-    Behavior on implicitWidth { Anim.NumberAnim { } }
-
     property bool collapsed: false
 
     required property list<string> model
@@ -72,9 +70,9 @@ UIModule {
 
         checked: true
 
-        // Behavior on x { Anim.NumberAnim { } }
+        Behavior on x { Anim.NumberAnim { } }
 
-        x: Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
+        x: root.collapsed ? 0 : Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
 
         surface.text.text: root.group.buttons[root.index]?.value ?? ""
     }

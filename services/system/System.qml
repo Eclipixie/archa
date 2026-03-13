@@ -4,12 +4,10 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-import qs.services.qs
-
 Singleton {
     id: root
 
-    property string home: "/home/eclipixie"
+    readonly property string home: Quickshell.env("HOME")
     property string batteryID: "BAT0"
     property string backlightID: "acpi_video0"
 
