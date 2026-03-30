@@ -8,37 +8,50 @@ import qs.components.primitives
 Item {
     id: root
 
-    property string textColor: statusColor == "" ? Colors.secondary : statusColor;
     property string statusColor: "";
 
     property Item surface: surfaceObject
 
-    // property Component c_surface: Component { UIModule { } }
+    // misleading name, should change later
+    property Component hoverContents
 
-    property Component c_hoverContents
+    // flag to actually render the drawer
+    // this should never be controlled by something other than BarModule unless absolutely necessary
+    //    (i don't know if i can scope this properly)
+    property bool drawerVisible: false
 
+    // whether the drawer is open
     readonly property bool open: (surfaceHover.hovered || dropdownHover.hovered) && 
-        root.c_hoverContents != null
+        root.hoverContents != null
+
+    onOpenChanged: if (open) drawerVisible = true
 
     implicitWidth: open ? 
         Math.max(surface.implicitWidth, dropdownLoader.implicitWidth) :
         surface.implicitWidth
-    implicitHeight: open ?
+    implicitHeight: drawerVisible ?
         surface.implicitHeight + dropdownLoader.implicitHeight + Styling.spacing * 2 :
         surface.implicitHeight
 
-    Behavior on implicitHeight { Anim.NumberAnim { } }
+    Behavior on implicitHeight { Anim.NumberAnim { duration: 0 } }
 
     anchors {
         top: parent.top;
     }
 
-    transitions: Transition { animations: [ Styling.AnchorEasing { } ] }
-
-    Behavior on implicitWidth { animation: Styling.PropertyEasing { } }
+    Behavior on implicitWidth { animation: Anim.NumberAnim { } }
 
     UIModule {
+        id: background
+
         color: Colors.tertiary
+
+        visible: root.drawerVisible
+        opacity: root.open ? 1 : 0
+
+        Behavior on opacity { Anim.NumberAnim {
+            onRunningChanged: if (!running) root.drawerVisible = (background.opacity == 1)
+        } }
 
         radius: Styling.barModuleRadius + Styling.spacing
 
@@ -51,14 +64,18 @@ Item {
     Loader {
         id: dropdownLoader
 
-        active: root.open
+        active: root.drawerVisible
+        opacity: root.open ? 1 : 0
 
-        sourceComponent: root.c_hoverContents
+        Behavior on opacity { Anim.NumberAnim { } }
+
+        sourceComponent: root.hoverContents
 
         anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
+            bottom: background.bottom
+            left: background.left
+            right: background.right
+
             margins: Styling.spacing
         }
 
@@ -85,7 +102,9 @@ Item {
             id: surfaceHover;
             acceptedDevices: PointerDevice.AllDevices;
 
-            margin: Styling.spacing
+            // so, idk why, but having this be negative is the only way i can get the 
+            //    drawer to remain open when the surface is not hovered.
+            margin: -Styling.spacing
         }
     }
 }

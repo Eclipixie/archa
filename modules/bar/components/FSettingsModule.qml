@@ -80,7 +80,7 @@ BarModule {
         ]
     }
 
-    c_hoverContents: Item {
+    hoverContents: Item {
         implicitHeight: Styling.barHeight * 3 + Styling.spacing * 2
         implicitWidth: root.width;
 

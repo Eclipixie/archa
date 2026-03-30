@@ -24,7 +24,7 @@ BarModule {
         ]
     }
 
-    c_hoverContents: Item {
+    hoverContents: Item {
         implicitHeight: col.height;
         implicitWidth: col.width;
 

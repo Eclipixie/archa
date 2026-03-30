@@ -106,6 +106,7 @@ BarModule {
                 anchors {
                     left: profileReadout.right
                     verticalCenter: parent.verticalCenter
+                    right: parent.right
 
                     leftMargin: Styling.spacing
                 }
@@ -120,9 +121,9 @@ BarModule {
     // 1 is balanced
     // 2 is performance
 
-    c_hoverContents: Item {
+    hoverContents: Item {
         implicitHeight: Styling.barHeight
-        implicitWidth: selector.implicitWidth
+        implicitWidth: selector.implicitWidth + Styling.spacing * 2
 
         UISwatch {
             id: selector

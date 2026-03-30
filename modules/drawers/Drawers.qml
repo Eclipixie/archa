@@ -21,7 +21,9 @@ Variants {
         PanelWindow {
             id: excluder
             
-            implicitHeight: Styling.barHeight + Styling.spacing * 2
+            implicitHeight: Styling.barBackground ? 
+                Styling.barHeight + Styling.spacing * 2 :
+                Styling.barHeight + Styling.spacing
 
             color: "transparent"
 

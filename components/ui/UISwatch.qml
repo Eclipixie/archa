@@ -6,15 +6,21 @@ import QtQuick.Controls
 import qs.config
 import qs.components.primitives
 
-UIModule {
+Item {
     id: root
-
-    color: Colors.tertiary
 
     implicitHeight: row.implicitHeight
     implicitWidth: collapsed ? Styling.barHeight : row.uncollapsedWidth
 
     property bool collapsed: false
+
+    UIModule {
+        anchors.fill: parent
+
+        color: Colors.tertiary
+
+        Behavior on implicitWidth { Anim.NumberAnim { duration: 0 } }
+    }
 
     required property list<string> model
 
@@ -23,7 +29,13 @@ UIModule {
     property int index: 0
     property string value: group[index]?.value ?? ""
 
+    // do not rebind this, i can't make it readonly without breaking the behavior
+    property double visualIndex: index
+    Behavior on visualIndex { Anim.NumberAnim { } }
+
     signal clicked(newValue: string);
+
+    Behavior on implicitWidth { Anim.NumberAnim { } }
 
     ButtonGroup {
         id: buttonGroup
@@ -70,9 +82,8 @@ UIModule {
 
         checked: true
 
-        Behavior on x { Anim.NumberAnim { } }
-
-        x: root.collapsed ? 0 : Math.min(root.group.buttons[root.index]?.x, root.implicitWidth - Styling.barHeight) ?? 0
+        property double targetX: root.group.buttons[root.index]?.x
+        x: targetX + (Styling.barHeight + row.spacing) * (root.visualIndex - root.index) ?? 0
 
         surface.text.text: root.group.buttons[root.index]?.value ?? ""
     }

@@ -1,13 +1,15 @@
 import QtQuick
 import Quickshell.Hyprland
 
-import qs.config
 import qs.services.apps
 import qs.components.ui
 import qs.services.qs
+import qs.config
 
 BarModule {
     id: root
+
+    Behavior on implicitWidth { animation: Anim.NumberAnim { duration: 0 } }
 
     surface {
         implicitWidth: swatch.implicitWidth

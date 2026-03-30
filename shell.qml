@@ -7,4 +7,8 @@ ShellRoot {
     Drawers { }
 
     Bindings { }
+
+    // onReloadCompleted: function() {
+    //     Quickshell.inhibitReloadPopup()
+    // }
 }

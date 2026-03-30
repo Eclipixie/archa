@@ -29,7 +29,7 @@ BarModule {
         ]
     }
 
-    c_hoverContents: UIModule {
+    hoverContents: UIModule {
         color: Colors.tertiary;
 
         implicitHeight: row.implicitHeight + seekSlider.implicitHeight + Styling.spacing

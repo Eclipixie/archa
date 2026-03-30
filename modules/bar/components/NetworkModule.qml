@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 
 import qs.services.system
 import qs.config
@@ -18,7 +19,7 @@ BarModule {
 
     function genText(): string {
         let str = statusChar();
-        if (str != "" && str != "?") 
+        if (!"?󰤮󰤫".includes(str)) 
             str += " " + (Network.activeAP?.strength ?? "0") + "%";
         return str;
     }
@@ -63,7 +64,7 @@ BarModule {
         ]
     }
 
-    c_hoverContents: Item {
+    hoverContents: Item {
         id: hoverRoot;
 
         implicitHeight: list.implicitHeight + controls.implicitHeight
@@ -175,6 +176,8 @@ BarModule {
                         }
 
                         Item {
+                            id: networkName
+
                             anchors {
                                 top: parent.top;
                                 bottom: parent.bottom;
@@ -192,6 +195,38 @@ BarModule {
                                     left: parent.left;
                                 }
                             }
+
+                            visible: false
+                        }
+
+                        LinearGradient {
+                            id: networkNameMask
+
+                            start: Qt.point(Math.max(0, width - 50), 0)
+                            end: Qt.point(Math.max(0, width - 20), 0)
+
+                            anchors {
+                                top: parent.top;
+                                bottom: parent.bottom;
+                                right: parent.right;
+                                left: strengthText.right;
+
+                                leftMargin: Styling.spacing;
+                            }
+
+                            gradient: Gradient {
+                                GradientStop { position: 0; color: Qt.rgba(0,0,0,1)}
+                                GradientStop { position: 1; color: Qt.rgba(0,0,0,0)}
+                            }
+
+                            visible: false
+                        }
+
+                        OpacityMask {
+                            anchors.fill: networkName
+
+                            source: networkName
+                            maskSource: networkNameMask
                         }
                     }
                 }
