@@ -33,12 +33,13 @@ BarModule {
         color: Colors.tertiary;
 
         implicitHeight: row.implicitHeight + seekSlider.implicitHeight + Styling.spacing
-        implicitWidth: row.implicitWidth + Styling.spacing * 2 // nfi why i need to add padding here
+        implicitWidth: (Styling.barHeight + Styling.spacing) * 7 - Styling.spacing
 
-        RowLayout {
+        Row {
             id: row
 
-            spacing: Styling.spacing;
+            property int buttonCount: 7
+            spacing: (parent.width - (Styling.barHeight * buttonCount)) / (buttonCount - 1)
 
             anchors {
                 left: parent.left;

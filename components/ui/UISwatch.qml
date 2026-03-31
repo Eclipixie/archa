@@ -47,6 +47,8 @@ Item {
         }
     }
 
+    // todo: implement animations for the repeater here
+
     Row {
         id: row
         spacing: (root.width - (Styling.barHeight * repeater.count)) / (repeater.count - 1)
@@ -83,7 +85,8 @@ Item {
         checked: true
 
         property double targetX: root.group.buttons[root.index]?.x
-        x: targetX + (Styling.barHeight + row.spacing) * (root.visualIndex - root.index) ?? 0
+        x: Math.max(0, Math.min(row.width - selector.width, 
+            targetX + (Styling.barHeight + row.spacing) * (root.visualIndex - root.index))) ?? 0
 
         surface.text.text: root.group.buttons[root.index]?.value ?? ""
     }

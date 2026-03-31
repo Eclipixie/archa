@@ -27,7 +27,7 @@ Item {
     onOpenChanged: if (open) drawerVisible = true
 
     implicitWidth: open ? 
-        Math.max(surface.implicitWidth, dropdownLoader.implicitWidth) :
+        Math.max(surface.implicitWidth, dropdownLoader.implicitWidth + Styling.spacing * 2) :
         surface.implicitWidth
     implicitHeight: drawerVisible ?
         surface.implicitHeight + dropdownLoader.implicitHeight + Styling.spacing * 2 :

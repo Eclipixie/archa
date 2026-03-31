@@ -123,7 +123,7 @@ BarModule {
 
     hoverContents: Item {
         implicitHeight: Styling.barHeight
-        implicitWidth: selector.implicitWidth + Styling.spacing * 2
+        implicitWidth: selector.implicitWidth
 
         UISwatch {
             id: selector
