@@ -84,7 +84,7 @@ Item {
 
         checked: true
 
-        property double targetX: root.group.buttons[root.index]?.x
+        property double targetX: root.group.buttons[root.index]?.x ?? 0
         x: Math.max(0, Math.min(row.width - selector.width, 
             targetX + (Styling.barHeight + row.spacing) * (root.visualIndex - root.index))) ?? 0
 

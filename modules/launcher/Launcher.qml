@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import qs.components.primitives
+import qs.components.ui
 import qs.config
 import qs.services.qs
 import qs.modules.launcher.entries
@@ -9,7 +10,9 @@ import qs.modules.launcher.entries
 UIModule {
     id: root
 
-    implicitHeight: search.implicitHeight + list.height + Styling.spacing * 2
+    implicitHeight: search.implicitHeight + 
+        pathReadout.implicitHeight + 
+        list.height + Styling.spacing * 4
     implicitWidth: 500
 
     visible: Visibilities.launcher
@@ -39,7 +42,8 @@ UIModule {
 
         branches: [
             BrowserLauncher { },
-            SettingsLauncher { }
+            SettingsLauncher { },
+            AppLauncher { }
         ]
     }
 
@@ -65,6 +69,9 @@ UIModule {
 
             background: UIModule {
                 anchors.fill: search
+
+                bottomLeftRadius: 0
+                bottomRightRadius: 0
             }
 
             font: Styling.bodyFont
@@ -101,12 +108,12 @@ UIModule {
                 if (searchlist.length == 0) return;
 
                 let selected = searchlist[0];
-
-                selected.launch();
                 
                 if (selected.branches.length == 0) {
                     root.treePath = [];
                     Visibilities.launcher = false;
+
+                    selected.launch();
                 }
                 else {
                     root.treePath.push(selected.name);
@@ -125,7 +132,33 @@ UIModule {
                 right: parent.right
             }
 
+            clip: true
+
             sourceComponent: root.current?.list ?? null
+        }
+
+        UITextModule {
+            id: pathReadout
+
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            topLeftRadius: 0
+            topRightRadius: 0
+
+            text {
+                anchors {
+                    left: pathReadout.left
+                    verticalCenter: pathReadout.verticalCenter
+                    centerIn: undefined
+
+                    margins: Styling.spacing * 2
+                }
+
+                text: "/"+root.treePath.join("/")
+            }
         }
     }
 }

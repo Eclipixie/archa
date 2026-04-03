@@ -10,11 +10,13 @@ ListView {
 
     delegate: listEntry;
 
-    implicitHeight: model.length * (Styling.barHeight + Styling.spacing)
+    boundsBehavior: Flickable.DragAndOvershootBounds
+
+    spacing: Styling.spacing
 
     property Component listEntry: Component {
-        Item {
-            id: wrapper;
+        UITextModule {
+            id: delegateRoot;
             required property var modelData
             required property int index
             readonly property string name: modelData.name
@@ -22,35 +24,26 @@ ListView {
             property bool focused: false
 
             width: root.width;
-            implicitHeight: surface.height + Styling.spacing;
 
-            UIModule {
-                id: surface;
+            color: delegateRoot.focused ? Colors.secondary : Colors.primary;
 
-                color: wrapper.focused ? Colors.secondary : Colors.primary;
+            radius: 0
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: { root.currentIndex = delegateRoot.index; }
+            }
+
+            text {
+                text: delegateRoot.name;
+                color: delegateRoot.focused ? Colors.primary : Colors.secondary;
 
                 anchors {
-                    top: wrapper.top;
-                    right: wrapper.right;
-                    left: wrapper.left;
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: { root.currentIndex = wrapper.index; }
-                }
-
-                UIText {
-                    text: wrapper.name;
-                    color: wrapper.focused ? Colors.primary : Colors.secondary;
-
-                    anchors {
-                        left: parent.left;
-                        verticalCenter: parent.verticalCenter;
-
-                        leftMargin: (parent.height - height) * .5 + 5;
-                    }
+                    centerIn: undefined
+                    left: delegateRoot.left
+                    verticalCenter: delegateRoot.verticalCenter
+                    margins: Styling.spacing * 2
                 }
             }
         }

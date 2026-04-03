@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 
 import qs.components.ui
+import qs.config
 
 QtObject {
     id: root
@@ -13,7 +14,13 @@ QtObject {
 
     property list<Launchable> searched: branches
 
-    property Component list: Component { UIList { model: root.searched } }
+    property Component list: Component { UIList { 
+        model: root.searched 
+        implicitHeight: Math.min(
+                model.length * (Styling.barHeight + Styling.spacing), 
+                15 * (Styling.barHeight + Styling.spacing)
+            ) - Styling.spacing
+    } }
 
     signal launch()
 
