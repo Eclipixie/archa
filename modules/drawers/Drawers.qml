@@ -8,6 +8,7 @@ import qs.modules.launcher
 import qs.util
 import qs.services.qs
 import qs.components.primitives
+import qs.modules.radial
 
 Variants {
     id: root
@@ -77,6 +78,14 @@ Variants {
                 implicitWidth: 200
 
                 visible: Visibilities.controlPanel
+            }
+
+            Radial {
+                anchors {
+                    right: parent.right
+                    bottom: parent.bottom
+                    // centerIn: parent
+                }
             }
         }
     }

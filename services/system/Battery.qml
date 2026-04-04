@@ -17,6 +17,33 @@ Singleton {
 
     property double percentage: calcCharge();
 
+    function batteryChar(): string {
+        if (UPower.onBattery) {
+            if (root.percentage <= 0.1) { return "󰂃" }
+            if (root.percentage <= 0.2) { return "󰁻" }
+            if (root.percentage <= 0.3) { return "󰁼" }
+            if (root.percentage <= 0.4) { return "󰁽" }
+            if (root.percentage <= 0.5) { return "󰁾" }
+            if (root.percentage <= 0.6) { return "󰁿" }
+            if (root.percentage <= 0.7) { return "󰂀" }
+            if (root.percentage <= 0.8) { return "󰂁" }
+            if (root.percentage <= 0.9) { return "󰂂" }
+            return "󰁹";
+        }
+        else {
+            if (root.percentage <= 0.1) { return "󰢜" }
+            if (root.percentage <= 0.2) { return "󰂆" }
+            if (root.percentage <= 0.3) { return "󰂇" }
+            if (root.percentage <= 0.4) { return "󰂈" }
+            if (root.percentage <= 0.5) { return "󰢝" }
+            if (root.percentage <= 0.6) { return "󰂉" }
+            if (root.percentage <= 0.7) { return "󰢞" }
+            if (root.percentage <= 0.8) { return "󰂊" }
+            if (root.percentage <= 0.9) { return "󰂋" }
+            return "󰂅";
+        }
+    }
+
     onCurrentChargeChanged: {
         if (percentage <= .2)
             Colors.gradientActive = false;
