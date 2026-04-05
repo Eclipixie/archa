@@ -8,22 +8,25 @@ import qs.config
 Readout {
     id: root
 
-    icon {
-        children: [
+    icon: Component {
+        UIModule {
+            id: iconObject
+
             UIText {
                 anchors.centerIn: parent
 
                 text: Network.statusChar()
             }
-        ]
+        }
     }
 
-    horizontalBarItem: bar
+    horizontalBarItem: Component {
+        Item {
+            id: bar
 
-    Item {
-        id: bar
-
-        implicitHeight: Styling.barHeight
-        implicitWidth: Styling.barHeight
+            implicitHeight: Styling.barHeight
+            implicitWidth: Styling.barHeight
+        }
     }
+
 }

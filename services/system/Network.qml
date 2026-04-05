@@ -31,7 +31,7 @@ Singleton {
 
             return strengthChar(strength);
         }
-        else if (Network.activeDevice.type == "ethernet")
+        else if (Network.activeDevice != null && Network.activeDevice.type == "ethernet")
             return ""
         return "󰤫"
     }

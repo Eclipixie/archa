@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 
 import qs.config
@@ -10,58 +12,59 @@ Readout {
 
     color: Colors.primary
 
-    icon {
-        children: [UIText {
-            anchors.centerIn: parent
+    icon: Component {
+        UIModule {
+            id: iconObject
 
-            text: Battery.batteryChar()
-            color: Battery.getStatusColor()
-        },
-        RadialBar {
-            dialColor: "transparent"
-            progressColor: Battery.getStatusColor()
+            UIText {
+                anchors.centerIn: parent
 
-            maxValue: 1
+                text: Battery.batteryChar()
+                color: Battery.getStatusColor()
+            }
 
-            dialWidth: 2
+            RadialBar {
+                dialColor: "transparent"
+                progressColor: Battery.getStatusColor()
 
-            value: Battery.percentage
+                maxValue: 1
 
-            anchors.fill: parent
+                dialWidth: 2
 
-            penStyle: Qt.FlatCap
-        }]
+                value: Battery.percentage
 
-        anchors.left: root.left
+                anchors.fill: parent
 
-        color: if (Battery.percentage <= .1) {
-            Colors.error
-        } else {
-            Colors.primary
+                penStyle: Qt.FlatCap
+            }
+
+            color: if (Battery.percentage <= .1) {
+                Colors.error
+            } else {
+                Colors.primary
+            }
         }
     }
 
-    horizontalBarItem: percentageWrapper
+    horizontalBarItem: Component {
+        Item {
+            id: percentageWrapper
 
-    Item {
-        id: percentageWrapper
+            implicitHeight: percentage.implicitHeight
 
-        anchors.right: parent.right
+            width: percentage.width + root.iconLoader.width - percentage.textMargin / 2
+            
+            opacity: root.state == "bar" ? 1 : 0
 
-        implicitHeight: percentage.implicitHeight
+            Behavior on opacity { Anim.NumberAnim { } }
 
-        width: percentage.width + root.icon.width - percentage.textMargin / 2
-        
-        opacity: root.state == "bar" ? 1 : 0
+            UITextModule {
+                id: percentage
 
-        Behavior on opacity { Anim.NumberAnim { } }
+                anchors.right: parent.right
 
-        UITextModule {
-            id: percentage
-
-            anchors.right: parent.right
-
-            text.text: MathUtil.roundPercentage(Battery.percentage) + "%"
+                text.text: MathUtil.roundPercentage(Battery.percentage) + "%"
+            }
         }
     }
 }
