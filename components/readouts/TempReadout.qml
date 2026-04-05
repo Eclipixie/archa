@@ -1,0 +1,80 @@
+import QtQuick
+import Quickshell
+
+import qs.services.system
+import qs.components.readouts
+import qs.components.primitives
+import qs.components.ui
+import qs.config
+
+Readout {
+    id: root
+
+    required property string primaryZone
+
+    readonly property double temp: Temperature.getTemp(root.primaryZone)
+
+    color: Colors.primary
+
+    icon {
+        children: [
+        UIText {
+            anchors.centerIn: parent
+
+            text: Temperature.tempChar(root.primaryZone)
+
+            color: if (root.temp >= 95) {
+                Colors.tertiary
+            } else if (root.temp >= 80) {
+                Colors.warning
+            } else { Colors.secondary }
+        },
+        RadialBar {
+            dialColor: "transparent"
+            progressColor: Temperature.getStatusColor(root.primaryZone)
+
+            minValue: 10
+            maxValue: 110
+
+            dialWidth: 2
+
+            value: Temperature.getTemp(root.primaryZone)
+
+            anchors.fill: parent
+
+            penStyle: Qt.FlatCap
+        }]
+
+        anchors.left: root.left
+
+        color: if (root.temp >= 95) {
+            Colors.error
+        } else {
+            Colors.primary
+        }
+    }
+
+    horizontalBarItem: temperatureWrapper
+
+    Item {
+        id: temperatureWrapper
+
+        anchors.right: parent.right
+
+        implicitHeight: temperature.implicitHeight
+
+        width: temperature.width + root.icon.width - temperature.textMargin / 2
+        
+        opacity: root.state == "bar" ? 1 : 0
+
+        Behavior on opacity { Anim.NumberAnim { } }
+
+        UITextModule {
+            id: temperature
+
+            anchors.right: parent.right
+
+            text.text: root.temp + "󰔄"
+        }
+    }
+}

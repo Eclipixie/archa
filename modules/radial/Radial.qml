@@ -54,6 +54,26 @@ Item {
             }
         }
 
+        RadialContainer {
+            theta: radial.minTheta + radial.thetaDelta * 2
+            radius: radial.radius
+
+            TempReadout {
+                primaryZone: "x86_pkg_temp"
+
+                state: Visibilities.superDown ? "bar" : "icon"
+            }
+        }
+
+        RadialContainer {
+            theta: radial.minTheta + radial.thetaDelta * 3
+            radius: radial.radius
+
+            NetworkReadout {
+                state: Visibilities.superDown ? "bar" : "icon"
+            }
+        }
+
         component RadialContainer: Item {
             width: childrenRect.width
             height: childrenRect.height

@@ -6,7 +6,7 @@ import qs.components.primitives
 import qs.components.ui
 
 Readout {
-    id: batteryReadout
+    id: root
 
     color: Colors.primary
 
@@ -15,28 +15,24 @@ Readout {
             anchors.centerIn: parent
 
             text: Battery.batteryChar()
-            color: if (Battery.percentage <= .1) {
-                Colors.tertiary
-            } else if (Battery.percentage <= .2) {
-                Colors.warning
-            } else { Colors.secondary }
+            color: Battery.getStatusColor()
         },
-        Item {
+        RadialBar {
+            dialColor: "transparent"
+            progressColor: Battery.getStatusColor()
+
+            maxValue: 1
+
+            dialWidth: 2
+
+            value: Battery.percentage
+
             anchors.fill: parent
 
-            Path {
-                startX: batteryReadout.icon.width / 2
-
-                PathArc {
-                    radiusX: batteryReadout.icon.width / 2
-                    radiusY: batteryReadout.icon.width / 2
-
-                    y: radiusY
-                }
-            }
+            penStyle: Qt.FlatCap
         }]
 
-        anchors.left: batteryReadout.left
+        anchors.left: root.left
 
         color: if (Battery.percentage <= .1) {
             Colors.error
@@ -46,7 +42,7 @@ Readout {
     }
 
     horizontalBarItem: percentageWrapper
-    
+
     Item {
         id: percentageWrapper
 
@@ -54,9 +50,9 @@ Readout {
 
         implicitHeight: percentage.implicitHeight
 
-        width: percentage.width + batteryReadout.icon.width - percentage.textMargin
+        width: percentage.width + root.icon.width - percentage.textMargin / 2
         
-        opacity: batteryReadout.state == "bar" ? 1 : 0
+        opacity: root.state == "bar" ? 1 : 0
 
         Behavior on opacity { Anim.NumberAnim { } }
 

@@ -8,6 +8,7 @@ import qs.modules.launcher
 import qs.util
 import qs.services.qs
 import qs.components.primitives
+import qs.components.ui
 import qs.modules.radial
 
 Variants {

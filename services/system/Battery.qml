@@ -44,6 +44,14 @@ Singleton {
         }
     }
 
+    function getStatusColor(): string {
+        if (!UPower.onBattery) return Colors.active;
+
+        if (root.percentage <= 0.1) return Colors.tertiary;
+        if (root.percentage <= 0.2) return Colors.warning;
+        return Colors.secondary;
+    }
+
     onCurrentChargeChanged: {
         if (percentage <= .2)
             Colors.gradientActive = false;
@@ -81,6 +89,7 @@ Singleton {
 
     property int counter: 0;
 
+    // check percentage every minute, check capacity every hour
     function tick() {
         p_checkCurrent.running = true;
 

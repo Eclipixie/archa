@@ -21,6 +21,29 @@ Singleton {
 
     property list<string> networkRows: [];
 
+    function statusChar(): string {
+        if (root.active) return "󰤮";
+
+        // print(Network.activeAP);
+
+        if (Network.activeAP != null) {
+            var strength = Network.activeAP.strength;
+
+            return strengthChar(strength);
+        }
+        else if (Network.activeDevice.type == "ethernet")
+            return ""
+        return "󰤫"
+    }
+
+    function strengthChar(strength: int): string {
+        if (strength < 20) return "󰤯";
+        if (strength < 40) return "󰤟";
+        if (strength < 60) return "󰤢";
+        if (strength < 80) return "󰤥";
+        return "󰤨";
+    }
+
     Variants {
         id: v_networks
 

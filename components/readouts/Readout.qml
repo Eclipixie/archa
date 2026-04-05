@@ -40,7 +40,7 @@ UIModule {
 
         PropertyChanges {
             root {
-                width: root.horizontalBarItem.width
+                width: root.horizontalBarItem?.width ?? undefined
             }
         }
     }
