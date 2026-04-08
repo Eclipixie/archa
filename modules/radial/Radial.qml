@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Quickshell
 
 import qs.components.primitives
 import qs.config
@@ -16,45 +15,55 @@ Item {
     implicitHeight: size
     implicitWidth: size
 
-    enum DisplayState {
-        Normal,
-        StackVertical
+    property list<Item> regionMasks: [
+        center
+    ].concat(radial.children)
+
+    enum DisplayMode {
+        Theta,
+        Y
     }
 
-    property int displayState: Radial.DisplayState.Normal
+    property int displayState: Visibilities.superDown ? Radial.DisplayMode.Y : Radial.DisplayMode.Theta
 
     UIModule {
         id: center
 
-        property double sizeRadius: root.size / 2
+        implicitWidth: radius * 2
+        implicitHeight: radius * 2
 
-        implicitWidth: sizeRadius * 2
-        implicitHeight: sizeRadius * 2
+        radius: (root.size + offset) / 2
 
-        radius: sizeRadius
+        property double offset: root.size * (1 - Math.sqrt(0.5)) / (1 + Math.sqrt(0.5))
 
         anchors {
             right: root.right
             bottom: root.bottom
-            margins: -sizeRadius * (1 - Math.sqrt(0.5))
+            margins: -offset
         }
     }
 
     Item {
         id: radial
 
+        // acts as a sort of centered anchor point to make working with the radials easier
+        //    (do not enable clip)
+        width: 0
+        height: 0
+
         anchors.centerIn: center
 
         property double radius: (root.size + Styling.barHeight) / 2 + Styling.spacing
 
-        property double maxOffset: center.sizeRadius - center.anchors.margins - Styling.barHeight * 2 - Styling.spacing
+        property double maxOffset: center.radius - center.anchors.margins - Styling.barHeight * 2 - Styling.spacing
 
-        property double minTheta: Math.PI - Math.asin(maxOffset / radius)
-        property double maxTheta: -Math.acos(maxOffset / radius)
+        property double minTheta: Math.asin(
+            (Styling.spacing + Styling.barHeight / 2 - (center.radius - center.offset))/
+            (center.radius + Styling.spacing + Styling.barHeight / 2))
 
         RadialContainer {
             minTheta: radial.minTheta
-            index: 1
+            index: 0
             radius: radial.radius
 
             BatteryReadout {
@@ -64,7 +73,7 @@ Item {
 
         RadialContainer {
             minTheta: radial.minTheta
-            index: 2
+            index: 1
             radius: radial.radius
 
             TempReadout {
@@ -76,7 +85,7 @@ Item {
 
         RadialContainer {
             minTheta: radial.minTheta
-            index: 3
+            index: 2
             radius: radial.radius
 
             NetworkReadout {
@@ -86,7 +95,7 @@ Item {
 
         RadialContainer {
             minTheta: radial.minTheta
-            index: 4
+            index: 3
             radius: radial.radius
 
             MPCReadout {
@@ -96,20 +105,26 @@ Item {
 
         component RadialContainer: Item {
             width: childrenRect.width
-            height: childrenRect.height
+            height: Styling.barHeight
 
-            required property int minTheta
+            required property double minTheta
             required property int index
             required property double radius
 
             readonly property double thetaDelta: (Styling.barHeight + Styling.spacing) / radius
-            readonly property double theta: minTheta + thetaDelta * (index + 2)
+            readonly property double theta: minTheta + index * (Styling.spacing + Styling.barHeight) / (center.radius + Styling.spacing + Styling.barHeight / 2)
 
-            x: -width + Styling.barHeight / 2 + Math.cos(theta) * radius
+            readonly property double yRelativeTheta: Math.asin((y + height - Styling.barHeight / 2) / (center.radius + Styling.spacing + Styling.barHeight / 2))
 
-            y: root.displayState == Radial.DisplayState.Normal ? 
-                -height / 2 + Math.sin(theta) * radius :
-                -height / 2 + Math.sin(minTheta) * radius + index * Styling.barHeight
+            Behavior on y { Anim.NumberAnim { } }
+
+            x: -(center.radius + Styling.spacing + Styling.barHeight / 2) * 
+                Math.cos(yRelativeTheta) - 
+                width + Styling.barHeight / 2
+
+            y: root.displayState == Radial.DisplayMode.Theta ?
+                -(center.radius + Styling.spacing + Styling.barHeight / 2) * Math.sin(theta) - height + Styling.barHeight / 2 :
+                center.radius - (center.offset + Styling.spacing + Styling.barHeight + index * (Styling.spacing + Styling.barHeight))
         }
     }
 }

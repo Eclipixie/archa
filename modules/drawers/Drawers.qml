@@ -60,11 +60,15 @@ Variants {
             RegionMasks {
                 id: regionMasks
 
-                bar: bar
-                launcher: launcher
+                maskSources: 
+                    bar.regionMasks
+                    .concat(launcher.regionMasks)
+                    .concat(radial.regionMasks)
             }
 
-            Bar { id: bar }
+            Bar {
+                id: bar
+            }
 
             Launcher {
                 id: launcher
@@ -82,6 +86,8 @@ Variants {
             }
 
             Radial {
+                id: radial
+
                 anchors {
                     right: parent.right
                     bottom: parent.bottom

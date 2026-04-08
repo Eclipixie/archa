@@ -7,17 +7,14 @@ import qs.modules.launcher
 Scope {
     id: root
 
-    required property Bar bar
-    required property Launcher launcher
-
-    property list<Item> items: (bar.regionMasks).concat(launcher.regionMasks)
+    property list<Item> maskSources
 
     property alias masks: panels.instances
 
     Variants {
         id: panels
 
-        model: root.items
+        model: root.maskSources
 
         delegate: Region {
             required property Item modelData

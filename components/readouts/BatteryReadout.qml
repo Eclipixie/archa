@@ -62,7 +62,7 @@ Readout {
 
                 anchors.right: parent.right
 
-                text.text: MathUtil.roundPercentage(Battery.percentage) + "%"
+                text.text: Battery.prettyPercentage
             }
         }
     }

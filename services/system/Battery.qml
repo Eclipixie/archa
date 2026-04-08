@@ -11,11 +11,12 @@ import qs.config
 
 Singleton {
     id: root
-    property string bat_id: System.batteryID;
-    property string currentCharge: "0";
-    property string fullCharge: "1";
+    property string bat_id: System.batteryID
+    property string currentCharge: "0"
+    property string fullCharge: "1"
 
-    property double percentage: calcCharge();
+    property double percentage: Number(currentCharge) / Number(fullCharge)
+    property string prettyPercentage: MathUtil.roundPercentage(percentage) + "%"
 
     function batteryChar(): string {
         if (UPower.onBattery) {

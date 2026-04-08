@@ -8,16 +8,10 @@ import qs.components.primitives
 Item {
     id: row;
 
-    property list<Item> regionMasks: [
-        container,
-        systemModule,
-        mpcModule,
-        fSettingsModule,
-        windowModule,
-        networkModule,
-        powerModule,
-        timeModule
-    ]
+    property list<Item> regionMasks: []
+        .concat(leftRow.children)
+        .concat(middleRow.children)
+        .concat(rightRow.children)
 
     implicitHeight: Styling.barHeight + Styling.spacing * 2;
 
