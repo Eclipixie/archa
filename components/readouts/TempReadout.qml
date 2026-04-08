@@ -35,7 +35,6 @@ Readout {
             }
 
             RadialBar {
-                dialColor: "transparent"
                 progressColor: Temperature.getStatusColor(root.primaryZone)
 
                 minValue: 10

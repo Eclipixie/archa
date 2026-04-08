@@ -4,6 +4,8 @@
 import QtQuick 2.15
 import QtQuick.Shapes 1.15
 
+import qs.config
+
 Item {
     id: control
 
@@ -24,8 +26,8 @@ Item {
     property int dialWidth: 15
 
     property color backgroundColor: "transparent"
-    property color dialColor: "#FF505050"
-    property color progressColor: "#FFA51BAB"
+    property color dialColor: "transparent"
+    property color progressColor: Colors.secondary
 
     property int penStyle: Qt.RoundCap
     property int dialType: RadialBar.DialType.FullDial

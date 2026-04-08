@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 
@@ -13,6 +15,13 @@ Item {
 
     implicitHeight: size
     implicitWidth: size
+
+    enum DisplayState {
+        Normal,
+        StackVertical
+    }
+
+    property int displayState: Radial.DisplayState.Normal
 
     UIModule {
         id: center
@@ -43,10 +52,9 @@ Item {
         property double minTheta: Math.PI - Math.asin(maxOffset / radius)
         property double maxTheta: -Math.acos(maxOffset / radius)
 
-        property double thetaDelta: (Styling.barHeight + Styling.spacing) / radius
-
         RadialContainer {
-            theta: radial.minTheta + radial.thetaDelta
+            minTheta: radial.minTheta
+            index: 1
             radius: radial.radius
 
             BatteryReadout {
@@ -55,7 +63,8 @@ Item {
         }
 
         RadialContainer {
-            theta: radial.minTheta + radial.thetaDelta * 2
+            minTheta: radial.minTheta
+            index: 2
             radius: radial.radius
 
             TempReadout {
@@ -66,10 +75,21 @@ Item {
         }
 
         RadialContainer {
-            theta: radial.minTheta + radial.thetaDelta * 3
+            minTheta: radial.minTheta
+            index: 3
             radius: radial.radius
 
             NetworkReadout {
+                state: Visibilities.superDown ? "bar" : "icon"
+            }
+        }
+
+        RadialContainer {
+            minTheta: radial.minTheta
+            index: 4
+            radius: radial.radius
+
+            MPCReadout {
                 state: Visibilities.superDown ? "bar" : "icon"
             }
         }
@@ -78,11 +98,18 @@ Item {
             width: childrenRect.width
             height: childrenRect.height
 
-            required property double theta
+            required property int minTheta
+            required property int index
             required property double radius
 
+            readonly property double thetaDelta: (Styling.barHeight + Styling.spacing) / radius
+            readonly property double theta: minTheta + thetaDelta * (index + 2)
+
             x: -width + Styling.barHeight / 2 + Math.cos(theta) * radius
-            y: -height / 2 + Math.sin(theta) * radius
+
+            y: root.displayState == Radial.DisplayState.Normal ? 
+                -height / 2 + Math.sin(theta) * radius :
+                -height / 2 + Math.sin(minTheta) * radius + index * Styling.barHeight
         }
     }
 }

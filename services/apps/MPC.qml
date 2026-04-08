@@ -7,11 +7,17 @@ import QtQuick
 Singleton {
     id: root;
 
-    property string info: " " + statusInfo + (statusInfo == "" || statusInfo == "!" ? "" : 
+    readonly property string info: " " + statusInfo + (statusInfo == "" || statusInfo == "!" ? "" : 
         " " + title + " | " + timeInfo);
     property string title: "";
-    property string timeInfo: "";
+    readonly property string timeInfo: prettyCurrentTime + "-" + prettyMaxTime;
     property string statusInfo: "";
+
+    readonly property int currentTime: prettyTimeToSeconds(prettyCurrentTime)
+    readonly property int maxTime: prettyTimeToSeconds(prettyMaxTime)
+
+    property string prettyCurrentTime: ""
+    property string prettyMaxTime: ""
 
     property alias flowControls: flowControlsObject;
 
@@ -39,18 +45,31 @@ Singleton {
 
     Process {
         id: p_statusRepeat;
-        command: ["mpc", "status", "%state%,%currenttime%-%totaltime%"];
+        command: ["mpc", "status", "%state%,%currenttime%,%totaltime%"];
         running: true;
 
         stdout: StdioCollector {
             onStreamFinished: {
                 let info = text.split("\n")[0].split(",");
                 root.statusInfo = root.statusChar(info[0]);
-                root.timeInfo = info[1];
+
+                root.prettyCurrentTime = info[1];
+                root.prettyMaxTime = info[2];
             }
         }
     }
     
+    function prettyTimeToSeconds(prettyTime: string): int {
+        let slices = prettyTime.split(":");
+
+        let total = 0;
+
+        total += 60 * Number(slices[0]);
+        total += Number(slices[1]);
+
+        return total;
+    }
+
     function statusChar(info: string): string {
         if (info == "playing")
             return "";

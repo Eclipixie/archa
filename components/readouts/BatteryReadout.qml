@@ -24,7 +24,6 @@ Readout {
             }
 
             RadialBar {
-                dialColor: "transparent"
                 progressColor: Battery.getStatusColor()
 
                 maxValue: 1
