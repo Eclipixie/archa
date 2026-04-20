@@ -40,13 +40,11 @@ Readout {
                 minValue: 10
                 maxValue: 110
 
-                dialWidth: 2
+                dialWidth: Styling.outlines
 
                 value: Temperature.getTemp(root.primaryZone)
 
                 anchors.fill: parent
-
-                penStyle: Qt.FlatCap
             }
 
             color: if (root.temp >= 95) {

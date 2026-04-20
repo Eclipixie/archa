@@ -28,16 +28,14 @@ Readout {
 
                 maxValue: 1
 
-                dialWidth: 2
+                dialWidth: Styling.outlines
 
                 value: Battery.percentage
 
                 anchors.fill: parent
-
-                penStyle: Qt.FlatCap
             }
 
-            color: if (Battery.percentage <= .1) {
+            color: if (Battery.percentage <= .1 && !Battery.charging) {
                 Colors.error
             } else {
                 Colors.primary

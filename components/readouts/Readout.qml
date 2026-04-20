@@ -18,8 +18,6 @@ UIModule {
     property Component verticalBarItem
     property Component menu
 
-    // clip: true
-
     state: "bar"
 
     State {

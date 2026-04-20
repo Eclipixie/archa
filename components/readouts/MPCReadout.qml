@@ -23,13 +23,11 @@ Readout {
             RadialBar {
                 maxValue: MPC.maxTime
 
-                dialWidth: 2
+                dialWidth: Styling.outlines
 
                 value: MPC.currentTime
 
                 anchors.fill: parent
-
-                penStyle: Qt.FlatCap
             }
         }
     }

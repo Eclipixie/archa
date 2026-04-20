@@ -103,6 +103,16 @@ Item {
             }
         }
 
+        RadialContainer {
+            minTheta: radial.minTheta
+            index: 4
+            radius: radial.radius
+
+            WorkspaceReadout {
+                state: Visibilities.superDown ? "bar" : "icon"
+            }
+        }
+
         component RadialContainer: Item {
             width: childrenRect.width
             height: Styling.barHeight

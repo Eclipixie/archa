@@ -15,8 +15,9 @@ Singleton {
     property string currentCharge: "0"
     property string fullCharge: "1"
 
-    property double percentage: Number(currentCharge) / Number(fullCharge)
-    property string prettyPercentage: MathUtil.roundPercentage(percentage) + "%"
+    readonly property double percentage: Number(currentCharge) / Number(fullCharge)
+    readonly property string prettyPercentage: MathUtil.roundPercentage(percentage) + "%"
+    readonly property bool charging: !UPower.onBattery
 
     function batteryChar(): string {
         if (UPower.onBattery) {
